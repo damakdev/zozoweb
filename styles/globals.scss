@@ -1,0 +1,131 @@
+:root {
+  --accent-color: #743b96;
+  --bg-primary: #f3f3f3;
+  // --bg-secondary: #181818;
+  // --bg-tertiary: #353535;
+  --bg-white: #ffffff;
+  --bg-black: #252529;
+  --text-white: #ffffff;
+  --text-primary: #525252;
+  --text-secondary: #5b667a;
+  --text-tertiary: #a1a1a1;
+  --border: 1.79591px solid #e8e8e8;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 2.8rem;
+  color: var(--text-secondary);
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 4.5rem;
+  color: var(--text-primary);
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 3.6rem;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--text-secondary);
+}
+
+p {
+  font-style: normal;
+  font-weight: 400;
+}
+
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+button:visited {
+  border: none;
+  border-radius: 0.5rem;
+  height: 6.4rem;
+  width: 100%;
+  font-weight: 500;
+  font-size: 2rem;
+  color: var(--text-white);
+  background-color: var(--accent-color);
+  box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.df {
+  display: flex;
+}
+
+.aic {
+  align-items: center;
+}
+
+.asst {
+  align-self: flex-start;
+}
+
+.jcc {
+  justify-content: center;
+}
+
+.fw {
+  width: 100%;
+}
+
+::selection {
+  background-color: var(--accent-color);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #626d58;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: 2rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent-color);
+}
+
+@media screen and (max-width: 1024px) {
+  html {
+    font-size: 60%;
+  }
+}
