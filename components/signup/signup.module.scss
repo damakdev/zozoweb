@@ -10,6 +10,10 @@
       width: 50%;
       padding: 2rem;
       background-color: var(--accent-color);
+      & svg {
+        height: 80%;
+        width: 80%;
+      }
     }
     form {
       display: flex;
