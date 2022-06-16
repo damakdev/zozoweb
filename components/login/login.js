@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EyeOn, EyeOff, GoogleIcon } from "../../public/svg/icons";
 import { LoginBanner } from "../../public/svg/images";
+import AdBanner from "../ui/ad-banner/ad-banner";
 import Link from "next/link";
 import Button from "../ui/button/button";
 import styles from "./login.module.scss";
@@ -8,18 +9,18 @@ import styles from "./login.module.scss";
 export default function Login() {
   const [inputType, setInputType] = useState("password");
 
+  function loginHandler(e) {
+    e.preventDefault();
+  }
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h3>
-          Sign up now to win 🎁 <span>Zozo Hide and Seek Playoff →</span>
-        </h3>
-      </div>
+      <AdBanner />
       <div className={styles.main}>
         <div>
           <LoginBanner />
         </div>
-        <form>
+        <form onSubmit={loginHandler}>
           <h1>Welcome Back</h1>
           <Link href="/">
             <a className={styles["google-auth"]}>
@@ -50,10 +51,10 @@ export default function Login() {
               <a className={styles["forgot-password"]}>Forgot password?</a>
             </Link>
           </div>
-          <Button>Sign up</Button>
+          <Button>Log in</Button>
           <p>
             Don’t have an account?
-            <Link href="/"> Sign up for free!</Link>
+            <Link href="/signup"> Sign up for free!</Link>
           </p>
         </form>
       </div>
