@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { EyeOn, EyeOff, GoogleIcon } from "../../public/svg/icons";
-import { LoginBanner } from "../../public/svg/images";
+import { SignUpBanner } from "../../public/svg/images";
 import AdBanner from "../ui/ad-banner/ad-banner";
 import Link from "next/link";
 import Button from "../ui/button/button";
-import styles from "./login.module.scss";
+import styles from "./signup.module.scss";
 
-export default function Login() {
+export default function SignUp() {
   const [inputType, setInputType] = useState("password");
 
-  function loginHandler(e) {
+  function signupHandler(e) {
     e.preventDefault();
   }
 
@@ -18,10 +18,10 @@ export default function Login() {
       <AdBanner />
       <div className={styles.main}>
         <div>
-          <LoginBanner />
+          <SignUpBanner />
         </div>
-        <form onSubmit={loginHandler}>
-          <h1>Welcome Back</h1>
+        <form onSubmit={signupHandler}>
+          <h1>Create Account</h1>
           <Link href="/">
             <a className={styles["google-auth"]}>
               <GoogleIcon />
@@ -29,6 +29,10 @@ export default function Login() {
             </a>
           </Link>
           <span>OR</span>
+          <div className={styles["form-group"]}>
+            <label htmlFor="text">Username</label>
+            <input type="text" id="text" name="text" />
+          </div>
           <div className={styles["form-group"]}>
             <label htmlFor="email">Email Address</label>
             <input type="email" id="email" name="email" />
@@ -43,18 +47,16 @@ export default function Login() {
             )}
           </div>
           <div className="df aic asst fw">
-            <div className="df aic">
-              <input type="checkbox" id="checkbox" name="checkbox" />
-              <label htmlFor="checkbox">Remember me</label>
-            </div>
-            <Link href="/">
-              <a className={styles["forgot-password"]}>Forgot password?</a>
-            </Link>
+            <p>
+              By continuing, you agree to Zozo{" "}
+              <Link href="/">conditions of use</Link> and{" "}
+              <Link href="/">Privacy notice.</Link>
+            </p>
           </div>
-          <Button>Log in</Button>
+          <Button>Sign up</Button>
           <p>
-            Don’t have an account?
-            <Link href="/signup"> Sign up for free!</Link>
+            Already have an account?
+            <Link href="/login"> Login!</Link>
           </p>
         </form>
       </div>
