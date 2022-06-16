@@ -1,0 +1,106 @@
+.container {
+  height: 100vh;
+  .main {
+    display: flex;
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 50%;
+      padding: 2rem;
+      background-color: var(--accent-color);
+      & svg {
+        height: 80%;
+        width: 80%;
+      }
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      padding: 0 6rem;
+      font-size: 1.7rem;
+      font-weight: 500;
+      h1 {
+        margin-bottom: 2rem;
+      }
+      .google-auth {
+        display: flex;
+        align-items: center;
+        color: var(--text-tertiary);
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 2.5rem;
+        border: var(--border);
+        border-radius: 10.7754px;
+        padding: 0.7rem 2rem;
+        margin-bottom: 1.5rem;
+        svg {
+          margin-right: 1rem;
+        }
+      }
+      span {
+        position: relative;
+        font-size: 23.2676px;
+        line-height: 27px;
+        margin-bottom: 2rem;
+        &::after {
+          position: absolute;
+          content: "";
+          width: 2rem;
+          height: 0.3rem;
+        }
+      }
+      .form-group {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        &:not(:last-child) {
+          margin-bottom: 1.5rem;
+        }
+        label {
+          color: var(--text-primary);
+          margin-bottom: 0.7rem;
+        }
+        input {
+          height: 4rem;
+          padding: 2rem;
+          border: none;
+        }
+        svg {
+          position: absolute;
+          right: 1rem;
+          top: 4.5rem;
+          height: 2rem;
+          width: 2rem;
+          cursor: pointer;
+        }
+      }
+      input[type="checkbox"] {
+        height: 2.4rem;
+        margin-right: 1rem;
+      }
+      .forgot-password {
+        margin-left: auto;
+        color: var(--text-secondary);
+      }
+      button {
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+      }
+      p {
+        font-weight: 500;
+        a {
+          color: var(--accent-color);
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
