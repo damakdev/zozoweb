@@ -5,9 +5,18 @@ import AdBanner from "../ui/ad-banner/ad-banner";
 import Link from "next/link";
 import Button from "../ui/button/button";
 import styles from "./login.module.scss";
+// import PurpleButton from "../ui/purpleButton";
+import dynamic from 'next/dynamic';
 
 export default function Login() {
   const [inputType, setInputType] = useState("password");
+
+ 
+
+const PurpleButton = dynamic(
+  () => import('../ui/purpleButton'),
+  { ssr: false }
+);
 
   function loginHandler(e) {
     e.preventDefault();
@@ -51,7 +60,13 @@ export default function Login() {
               <a className={styles["forgot-password"]}>Forgot password?</a>
             </Link>
           </div>
-          <Button>Log in</Button>
+          <PurpleButton
+						name="Log in"
+						width="100%"
+						paddingY="10"
+						isBoxShadow={true}
+					/>
+          
           <p>
             Don’t have an account?
             <Link href="/signup"> Sign up for free!</Link>

@@ -1,5 +1,6 @@
-import Login from "../components/login";
+
+import Home from "./Home";
 
 export default function index() {
-  return <Login />;
+  return <Home />;
 }

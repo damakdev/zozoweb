@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --accent-color: #743b96;
   --bg-primary: #f3f3f3;
@@ -15,10 +19,12 @@
 *,
 *::after,
 *::before {
-  margin: 0;
-  padding: 0;
+  margin: 0 ;
+  padding: 0 ;
   box-sizing: border-box;
 }
+
+
 
 html {
   font-size: 62.5%;
@@ -62,25 +68,26 @@ a,
 a:visited,
 a:hover {
   text-decoration: none;
+  cursor: pointer ;
 }
 
 ul {
   list-style: none;
 }
 
-button,
-button:visited {
-  border: none;
-  border-radius: 0.5rem;
-  height: 5rem;
-  width: 100%;
-  font-weight: 500;
-  font-size: 2rem;
-  color: var(--text-white);
-  background-color: var(--accent-color);
-  box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-}
+// button,
+// button:visited {
+//   border: none;
+//   border-radius: 0.5rem;
+//   height: 5rem;
+//   width: 100%;
+//   font-weight: 500;
+//   font-size: 2rem;
+//   color: var(--text-white);
+//   background-color: var(--accent-color);
+//   box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.15);
+//   cursor: pointer;
+// }
 
 .df {
   display: flex;
