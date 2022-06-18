@@ -6,13 +6,13 @@ import Link from "next/link";
 import dynamic from "next/dynamic"
 import Button from "../ui/button/button";
 import styles from "./signup.module.scss";
-// import PurpleButton from "../ui/purpleButton";
+// import Button from "../ui/Button";
 
 export default function SignUp() {
 	const [inputType, setInputType] = useState("password");
 
-  const PurpleButton = dynamic(
-    () => import('../ui/purpleButton'),
+  const Button = dynamic(
+    () => import('../ui/Button'),
     { ssr: false }
 )
 
@@ -60,10 +60,10 @@ export default function SignUp() {
 							<Link href="/">Privacy notice.</Link>
 						</p>
 					</div>
-					<PurpleButton
+					<Button
 						name="Sign up"
 						width="100%"
-						paddingY="10"
+						paddingY="10px"
 						isBoxShadow={true}
 					/>
 

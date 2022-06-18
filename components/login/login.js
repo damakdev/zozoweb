@@ -5,7 +5,7 @@ import AdBanner from "../ui/ad-banner/ad-banner";
 import Link from "next/link";
 import Button from "../ui/button/button";
 import styles from "./login.module.scss";
-// import PurpleButton from "../ui/purpleButton";
+// import Button from "../ui/Button";
 import dynamic from 'next/dynamic';
 
 export default function Login() {
@@ -13,8 +13,8 @@ export default function Login() {
 
  
 
-const PurpleButton = dynamic(
-  () => import('../ui/purpleButton'),
+const Button = dynamic(
+  () => import('../ui/Button'),
   { ssr: false }
 );
 
@@ -60,10 +60,10 @@ const PurpleButton = dynamic(
               <a className={styles["forgot-password"]}>Forgot password?</a>
             </Link>
           </div>
-          <PurpleButton
+          <Button
 						name="Log in"
 						width="100%"
-						paddingY="10"
+						paddingY="10px"
 						isBoxShadow={true}
 					/>
           

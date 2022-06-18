@@ -9,7 +9,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import styles from "../../styles/Nav.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PurpleButton from "../ui/purpleButton";
+import Button from "../ui/Button";
 import Link from "next/link";
 
 function Nav() {
@@ -53,11 +53,11 @@ function Nav() {
 
 					<Link href="/signup">
 						<a>
-							<PurpleButton
+							<Button
 								name="SIGN UP"
-								paddingY="7"
-								paddingX="30"
-								fontSize="14"
+								paddingY="7px"
+								paddingX="30px"
+								fontSize="14px"
 							/>
 						</a>
 					</Link>

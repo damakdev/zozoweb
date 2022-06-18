@@ -1,8 +1,7 @@
-.purpleButton,
-.purpleButton:visited {
-	background-color: var(--accent-color);
+.Button,
+.Button:visited {
 	border: none;
 	border-radius: 0.5rem;
-	color: var(--text-white);
+
 	cursor: pointer;
 }

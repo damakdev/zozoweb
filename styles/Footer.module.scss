@@ -1,0 +1,21 @@
+.first_section{
+      background-color: #743B96B5;
+      color:white;
+      width: 100%;
+}
+
+.first_section p{
+      font-weight: lighter;
+
+}
+
+.second_section, .third_section{
+      background-color: var(--accent-color);
+      color: white;
+}
+.third_section .img_cover{
+      padding: 10px 15px;
+      border-radius: 50%;
+      background-color: #ffffff95;
+      
+}
