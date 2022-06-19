@@ -1,12 +1,12 @@
 import React from "react";
-import Footer from "../components/Footer";
-import Nav from "../components/Nav";
+import CustomerLayout from "../components/CustomerLayout";
 
 function Home() {
 	return (
 		<>
-			<Nav />
-			<Footer />
+			<CustomerLayout>
+				<h1>Home</h1>
+			</CustomerLayout>
 		</>
 	);
 }
