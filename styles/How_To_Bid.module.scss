@@ -1,0 +1,14 @@
+.first_section, .second_section{
+      display: flex;
+      justify-content: space-between;
+}
+
+.first_section h1, .second_section h1{
+      color: var(--accent-color);
+      font-size: 54px;
+      font-weight: 400;
+}
+
+.second_section h1{
+      font-size: 45px;
+}
