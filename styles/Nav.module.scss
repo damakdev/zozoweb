@@ -1,0 +1,35 @@
+.search input {
+	border: none;
+	border: 1px solid #d9d9d9;
+	outline: none;
+	padding: 7px 20px;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.search input[type="text"]::placeholder {
+	padding: 10px 0px;
+}
+
+.search span {
+	border: 1px solid #d9d9d9;
+	border-left: none;
+	padding: 6.3px 15px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.container {
+	width: 90%;
+	margin: auto;
+}
+
+.secondNav{
+	background-color: var(--accent-color);
+	width: 100%;
+	color: white;
+}
+
+.secondNav li{
+	margin-right: 40px;
+}

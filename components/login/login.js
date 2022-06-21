@@ -5,9 +5,18 @@ import AdBanner from "../ui/ad-banner/ad-banner";
 import Link from "next/link";
 import Button from "../ui/button/button";
 import styles from "./login.module.scss";
+// import Button from "../ui/Button";
+import dynamic from 'next/dynamic';
 
 export default function Login() {
   const [inputType, setInputType] = useState("password");
+
+ 
+
+const Button = dynamic(
+  () => import('../ui/Button'),
+  { ssr: false }
+);
 
   function loginHandler(e) {
     e.preventDefault();
@@ -51,7 +60,13 @@ export default function Login() {
               <a className={styles["forgot-password"]}>Forgot password?</a>
             </Link>
           </div>
-          <Button>Log in</Button>
+          <Button
+						name="Log in"
+						width="100%"
+						paddingY="10px"
+						isBoxShadow={true}
+					/>
+          
           <p>
             Don’t have an account?
             <Link href="/signup"> Sign up for free!</Link>
