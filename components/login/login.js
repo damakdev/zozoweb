@@ -1,22 +1,14 @@
 import { useState } from "react";
 import { EyeOn, EyeOff, GoogleIcon } from "../../public/svg/icons";
 import { LoginBanner } from "../../public/svg/images";
-import AdBanner from "../ui/ad-banner/ad-banner";
 import Link from "next/link";
-import Button from "../ui/button/button";
+import dynamic from "next/dynamic";
 import styles from "./login.module.scss";
-// import Button from "../ui/Button";
-import dynamic from 'next/dynamic';
 
 export default function Login() {
   const [inputType, setInputType] = useState("password");
 
- 
-
-const Button = dynamic(
-  () => import('../ui/Button'),
-  { ssr: false }
-);
+  const Button = dynamic(() => import("../ui/Button"), { ssr: false });
 
   function loginHandler(e) {
     e.preventDefault();
@@ -24,7 +16,6 @@ const Button = dynamic(
 
   return (
     <div className={styles.container}>
-      <AdBanner />
       <div className={styles.main}>
         <div>
           <LoginBanner />
@@ -56,19 +47,19 @@ const Button = dynamic(
               <input type="checkbox" id="checkbox" name="checkbox" />
               <label htmlFor="checkbox">Remember me</label>
             </div>
-            <Link href="/">
+            <Link href="/forgot-password">
               <a className={styles["forgot-password"]}>Forgot password?</a>
             </Link>
           </div>
           <Button
-						name="Log in"
-						width="100%"
-						paddingY="10px"
-						isBoxShadow={true}
-					/>
-          
+            name="Log in"
+            width="100%"
+            paddingY="10px"
+            isBoxShadow={true}
+          />
+
           <p>
-            Don’t have an account?
+            Don&apos;t have an account?
             <Link href="/signup"> Sign up for free!</Link>
           </p>
         </form>
