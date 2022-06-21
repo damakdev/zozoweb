@@ -4,11 +4,11 @@
     display: flex;
     & > div {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       height: 100vh;
       width: 50%;
-      padding: 2rem;
+      padding: 0 2rem;
       background-color: var(--accent-color);
       & svg {
         height: 80%;
