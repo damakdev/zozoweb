@@ -1,0 +1,13 @@
+.button,
+.button:visited {
+  border: none;
+  border-radius: 0.5rem;
+  height: 5rem;
+  width: 100%;
+  font-weight: 500;
+  font-size: 2rem;
+  color: var(--text-white);
+  background-color: var(--accent-color);
+  box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}

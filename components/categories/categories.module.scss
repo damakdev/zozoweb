@@ -1,0 +1,22 @@
+.container {
+  height: 100%;
+  p {
+    color: var(--text-white);
+    padding: 0.9rem 1.2rem;
+    background-color: var(--accent-color);
+  }
+  ul {
+    background-color: var(--bg-white);
+    overflow-y: auto;
+    height: 40rem;
+
+    li {
+      padding: 0.9rem 1.2rem;
+      text-transform: capitalize;
+      &:hover {
+        background-color: var(--background-hover);
+        cursor: pointer;
+      }
+    }
+  }
+}

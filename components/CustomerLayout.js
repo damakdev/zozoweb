@@ -1,18 +1,19 @@
-import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
 
 function CustomerLayout({ children }) {
-	return (
-		<>
-			<Nav />
-			<div style={{ backgroundColor: "#E5E5E5" }}>
-				<div className="w-11/12 mx-auto">{children}</div>
-			</div>
-
-			<Footer />
-		</>
-	);
+  return (
+    <>
+      <Nav />
+      <main
+        style={{ marginTop: "15rem", padding: " 6rem" }}
+        className="mx-auto"
+      >
+        {children}
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default CustomerLayout;
