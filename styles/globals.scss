@@ -13,18 +13,18 @@
   --text-primary: #525252;
   --text-secondary: #5b667a;
   --text-tertiary: #a1a1a1;
+  --background-hover: #eeeeee;
   --border: 1.79591px solid #e8e8e8;
+  --box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.15);
 }
 
 *,
 *::after,
 *::before {
-  margin: 0 ;
-  padding: 0 ;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
-
-
 
 html {
   font-size: 62.5%;
@@ -68,26 +68,23 @@ a,
 a:visited,
 a:hover {
   text-decoration: none;
-  cursor: pointer ;
+  cursor: pointer;
+}
+
+input {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
 }
 
 ul {
   list-style: none;
 }
-
-// button,
-// button:visited {
-//   border: none;
-//   border-radius: 0.5rem;
-//   height: 5rem;
-//   width: 100%;
-//   font-weight: 500;
-//   font-size: 2rem;
-//   color: var(--text-white);
-//   background-color: var(--accent-color);
-//   box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.15);
-//   cursor: pointer;
-// }
 
 .df {
   display: flex;
