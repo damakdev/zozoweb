@@ -7,7 +7,7 @@ import FAQ from "./../assets/FAQ.png";
 function HowToBid() {
 	return (
 		<CustomerLayout>
-			<div className="bg-white w-11/12 m-auto">
+			<div className="bg-white w-11/12 m-auto mt-20">
 				<div className="w-11/12 mx-auto py-20 px-20">
 					<div className={styles.first_section}>
 						<div className="w-1/2">
@@ -58,7 +58,7 @@ function HowToBid() {
 							</p>
 						</div>
 
-                                    
+
 					</div>
 				</div>
 			</div>
