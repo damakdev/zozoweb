@@ -2,7 +2,7 @@ import { colors } from "../ui/colors";
 import Link from "next/link";
 import { Linkedin } from "../../public/svg/icons";
 import Image from "next/image";
-import logo from "../../assets/white-logo.svg";
+import logo from "../../assets/white-logo.png";
 import headphone from "../../assets/headphone.svg";
 import linkedin from "../../assets/linkedin.svg";
 import twitter from "../../assets/twitter.svg";
@@ -18,7 +18,9 @@ function Footer() {
 					style={{ maxWidth: 1440 }}
 					className={`flex justify-between py-7 align-center w-11/12 mx-auto `}
 				>
-					<Image src={logo} alt="Logo" width={120} />
+					<div className="my-auto">
+						<Image src={logo} alt="Logo" />
+					</div>
 					<div className="flex align-center">
 						<Image src={headphone} alt="contact" />
 

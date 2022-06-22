@@ -1,4 +1,4 @@
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo.png";
 import searchIcon from "../../assets/search.svg";
 import cart from "../../assets/cart.svg";
 import wishlist from "../../assets/wishlist.svg";
@@ -17,7 +17,7 @@ function Nav() {
       <header className={`${styles.header}   `}>
         <div className={styles.content}>
           <div>
-            <Image src={logo} alt="Zozo Logo" height={35} />
+            <Image src={logo} alt="Zozo Logo"  />
           </div>
           <div className=" flex justify-around">
             <div
