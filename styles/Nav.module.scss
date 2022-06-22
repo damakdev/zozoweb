@@ -11,7 +11,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  
+  z-index: 1;
 
   .content {
     display: flex;
@@ -23,12 +23,13 @@
 
 .nav {
   position: fixed;
-  margin-top: 10rem;
+  margin-top: 10.5rem;
   background-color: var(--accent-color);
   width: 100%;
   color: white;
   top: 0;
   left: 0;
+  z-index: 1;
   .content {
     ul {
       li {
