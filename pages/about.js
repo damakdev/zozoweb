@@ -32,6 +32,9 @@ function About() {
 						</div>
 					</div>
 					<div className={styles.last_img}>
+                                    
+                 
+
 						<Image src={about1} alt="about" />
 					</div>
 				</div>
