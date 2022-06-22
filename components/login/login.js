@@ -4,6 +4,7 @@ import { LoginBanner } from "../../public/svg/images";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import styles from "./login.module.scss";
+import Image from "next/image";
 
 export default function Login() {
   const [inputType, setInputType] = useState("password");
