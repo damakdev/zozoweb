@@ -74,7 +74,7 @@ function Nav() {
               </li>
             </Link>
 
-            <Link href="/">
+            <Link href="/how-to-bid">
               <li>
                 <a> How to Bid</a>
               </li>
@@ -86,13 +86,13 @@ function Nav() {
               </li>
             </Link>
 
-            <Link href="/">
+            <Link href="/about">
               <li>
                 <a> About</a>
               </li>
             </Link>
 
-            <Link href="/">
+            <Link href="/contact">
               <li>
                 <a> Contact</a>
               </li>

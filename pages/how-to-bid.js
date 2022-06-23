@@ -10,7 +10,7 @@ import  watermark from "./../assets/watermark.png";
 function HowToBid() {
 	return (
 		<CustomerLayout>
-			<div className={` ${styles.howtobid} bg-white w-11/12 m-auto mt-20 py-20 `}>
+			<div className={` ${styles.howtobid} bg-white w-11/12 m-auto  py-20 `}>
 			<div className={styles.watermark}>
 			<Image src={watermark} alt="Zozo logo" />
 			</div>

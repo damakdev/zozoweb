@@ -9,7 +9,7 @@ import styles from "./../styles/About.module.scss";
 function About() {
 	return (
 		<CustomerLayout>
-			<div className={` ${styles.about_page} bg-white my-20 `}>
+			<div className={` ${styles.about_page} bg-white  `}>
 				<div className="flex justify-between w-11/12 mx-auto py-20 px-20">
 					<div className={`  mt-20  `}>
 						<h1 className="mb-20">About Us</h1>
