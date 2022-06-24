@@ -1,3 +1,9 @@
+.about_page{
+      position: relative;
+      padding-bottom: 100px;
+}
+
+
 .about_page p{
       font-size: 18px;
       line-height: 30px;
@@ -18,3 +24,10 @@
       width: 1600px !important;
       height: 500px !important;
 }
+
+.watermark{
+      position: absolute;
+      bottom: 0;
+      left:40px;
+     
+    }
