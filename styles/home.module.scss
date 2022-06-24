@@ -1,6 +1,20 @@
-  .hero {
+.hero {
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   gap: 0 4rem;
   height: 40rem;
+  .vertical-sliders {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+.body {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .content {
+  }
 }
