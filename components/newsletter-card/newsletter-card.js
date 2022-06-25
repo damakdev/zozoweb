@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Blob } from "../../public/svg/icons";
-import Button from "../ui/Button/";
+import Button from "../ui/button/";
 import styles from "./newsletter-card.module.scss";
 
 export default function NewsletterCard() {
