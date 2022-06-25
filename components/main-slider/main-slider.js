@@ -24,7 +24,6 @@ export default function MainSlider({ data }) {
     if (index === 0) setIndex(data.length - 1);
   }
 
-  console.log(index);
   return (
     <div className={styles.container}>
       <AnimatePresence exitBeforeEnter>
