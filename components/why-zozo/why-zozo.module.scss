@@ -9,16 +9,17 @@
       width: 50rem;
       h1 {
         margin-bottom: 1.5rem;
+        color: var(--text-black);
       }
       h3 {
-        color: var(--bg-black);
+        color: var(--text-black);
         font-size: 1.5rem;
         font-weight: 700;
         margin-bottom: 0.3rem;
       }
       p {
         display: inline-block;
-        color: var(--bg-black);
+        color: var(--text-black);
         font-weight: 500;
         line-height: 150%;
       }
