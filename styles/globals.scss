@@ -10,6 +10,7 @@
   --bg-white: #ffffff;
   --bg-black: #252529;
   --text-white: #ffffff;
+  --text-black: #000000;
   --text-primary: #525252;
   --text-secondary: #5b667a;
   --text-tertiary: #a1a1a1;
@@ -106,8 +107,6 @@ ul {
 .fw {
   width: 100%;
 }
-
-
 
 ::selection {
   background-color: var(--accent-color);

@@ -10,11 +10,14 @@
   }
 }
 .body {
+  display: flex;
   .sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    margin-right: 4rem;
   }
   .content {
+    width: 100%;
+    & > div {
+      margin-bottom: 6rem;
+    }
   }
 }

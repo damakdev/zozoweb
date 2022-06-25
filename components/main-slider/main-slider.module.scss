@@ -37,7 +37,7 @@
     &:hover {
       background-color: var(--accent-color);
       svg path {
-        fill: white;
+        fill: var(--text-white);
       }
     }
     svg {

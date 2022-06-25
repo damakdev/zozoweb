@@ -1,0 +1,33 @@
+.container {
+  background-color: rgba(116, 59, 150, 0.1);
+  padding: 2rem 4rem;
+  .slide {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & > div {
+      width: 50rem;
+      h1 {
+        margin-bottom: 1.5rem;
+        color: var(--text-black);
+      }
+      h3 {
+        color: var(--text-black);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+      }
+      p {
+        display: inline-block;
+        color: var(--text-black);
+        font-weight: 500;
+        line-height: 150%;
+      }
+    }
+    img {
+      width: 36rem;
+      height: 20rem;
+      object-fit: cover;
+    }
+  }
+}
