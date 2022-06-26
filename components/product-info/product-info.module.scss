@@ -1,0 +1,162 @@
+.container {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 5rem;
+  background-color: var(--bg-white);
+  & > div {
+    &:not(:last-child) {
+      margin-right: 3rem;
+    }
+  }
+  .image-preview {
+    & > img {
+      height: 25rem;
+      width: 25rem;
+      object-fit: cover;
+      margin: 0 auto;
+    }
+    & > div {
+      margin-top: 2rem;
+      display: flex;
+      width: 30rem;
+      overflow-x: auto;
+      &::-webkit-scrollbar {
+        height: 0.4rem;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #c4c4c4;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #626d58;
+      }
+      img {
+        // padding: 1rem;
+        margin: 1rem;
+        height: 8rem;
+        width: 8rem;
+        object-fit: cover;
+        cursor: pointer;
+        // box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.15);
+        border: 2px solid transparent;
+      }
+      .selected {
+        border: 2px solid var(--accent-color);
+      }
+    }
+  }
+  .product-description {
+    width: 50rem;
+    h1 {
+      font-size: 2.5rem;
+      color: var(--text-black);
+      margin-bottom: 1rem;
+    }
+    .watchlist {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      span {
+        color: #004ce8;
+        &:not(:last-child) {
+          margin-right: 3rem;
+        }
+      }
+    }
+    h3 {
+      color: var(--accent-color);
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+    }
+    hr {
+      margin-bottom: 1rem;
+      width: 14rem;
+      border: 1px solid var(--accent-color);
+    }
+    p {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    .price {
+      margin-bottom: 1rem;
+      span {
+        font-size: 2.4rem;
+        color: var(--accent-color);
+        &:not(:last-child) {
+          margin-right: 3rem;
+        }
+        &:nth-child(2) {
+          color: var(--text-black);
+          font-weight: 500;
+        }
+      }
+    }
+    form {
+      display: flex;
+      input {
+        border: 2px solid #d9d9d9;
+        border-radius: 0.5rem;
+        width: 18rem;
+        padding: 0 2rem;
+        margin-right: 3rem;
+      }
+      button {
+        width: 18rem;
+      }
+    }
+  }
+  .ongoing-bidders {
+    width: 22rem;
+    h3 {
+      color: var(--text-white);
+      font-size: 2rem;
+      background-color: var(--accent-color);
+      padding: 1rem;
+    }
+    ul {
+      height: 35rem;
+      overflow-y: auto;
+      background-color: var(--bg-primary);
+      &::-webkit-scrollbar {
+        width: 0.4rem;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: #c4c4c4;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #626d58;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        padding: 2rem 1rem;
+        &:not(:last-child) {
+          border-bottom: 1px solid #e4e3e3;
+        }
+        img {
+          height: 4rem;
+          width: 4rem;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 0.2rem solid var(--bg-white);
+          margin-right: 1rem;
+        }
+        & > div {
+          h4 {
+            line-height: 1;
+            color: var(--text-black);
+            font-weight: 500;
+            margin-bottom: 0.7rem;
+          }
+          h5 {
+            line-height: 1;
+            color: var(--text-black);
+            margin-bottom: 0.7rem;
+          }
+          p {
+            line-height: 1;
+          }
+        }
+      }
+    }
+  }
+}
