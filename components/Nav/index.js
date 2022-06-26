@@ -36,7 +36,7 @@ function Nav() {
                 <Image src={wishlist} alt="Wishlist" width={20} />
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/cart">
               <a className="px-5 pt-4 ">
                 <Image src={cart} alt="Cart" width={20} />
               </a>
