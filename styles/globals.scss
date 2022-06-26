@@ -10,7 +10,7 @@
   --bg-white: #ffffff;
   --bg-black: #252529;
   --text-white: #ffffff;
-  --text-black: #000000;
+  --text-black: #262626;
   --text-primary: #525252;
   --text-secondary: #5b667a;
   --text-tertiary: #a1a1a1;
@@ -82,6 +82,10 @@ input {
   &[type="number"] {
     -moz-appearance: textfield;
   }
+}
+
+.mb-6 {
+  margin-bottom: 6rem;
 }
 
 ul {
