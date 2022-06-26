@@ -3,6 +3,7 @@ import Image from "next/image";
 import logo from "../assets/white-logo.png";
 import styles from "../styles/contact.module.scss";
 import Link from "next/link";
+import CustomerLayout from "./../components/CustomerLayout";
 import {
 	Facebook,
 	Linkedin,
@@ -11,6 +12,7 @@ import {
 	PhoneIcon,
 	Twitter,
 } from "../public/svg/icons";
+import Button from "../components/ui/Button";
 
 function Contact() {
 	return (
@@ -74,7 +76,74 @@ function Contact() {
 						</div>
 					</div>
 				</div>
-				<div className={`${styles.contact_form} w-1/2`}></div>
+				<div className={`${styles.contact_form} w-7/11 pt-20 mx-auto`}>
+					<h1>Contact us</h1>
+					<p className="pt-10 font-semibold">
+						Any questions or remarks? Just write us a message{" "}
+					</p>
+
+					<form className="pt-20">
+						<div className="flex">
+							<div className=" w-6/12">
+								<div>
+									<label>First name</label>
+									<input type="text" />
+								</div>
+
+								<div className="pt-20">
+									<label>Your Email</label>
+									<input type="text" />
+								</div>
+							</div>
+
+							<div className=" w-6/12 ml-10">
+								<div>
+									<label>Last name</label>
+									<input type="text" />
+								</div>
+
+								<div className="pt-20">
+									<label>Your Mobile number</label>
+									<input type="text" />
+								</div>
+							</div>
+						</div>
+						<h3 className="pt-20">
+							Choose your questions or remarks from this following category{" "}
+						</h3>
+						<div className="flex justify-between pt-10">
+							<div className={styles.radio_item}>
+								<input type="radio" name="ritem1" value="ropt2" />
+								<label>How to bid</label>
+							</div>
+
+							<div className={styles.radio_item}>
+								<input type="radio" name="ritem2" value="ropt1" />
+								<label>How to become a merchant</label>
+							</div>
+							<div className={styles.radio_item}>
+								<input type="radio" name="ritem3" value="ropt3" />
+
+								<label>Issues with wins</label>
+							</div>
+							<div className={styles.radio_item}>
+								<input type="radio" name="ritem" value="ropt4" />
+								<label>Others</label>
+							</div>
+						</div>
+
+						<div className="mb-10 pt-10">
+							<label>Message</label>
+							<textarea></textarea>
+						</div>
+						<Button
+							name="Submit"
+							width="100%"
+							isBoxShadow={true}
+							paddingY="1rem"
+						/>
+					</form>
+				</div>
 			</div>
 		</>
 	);
