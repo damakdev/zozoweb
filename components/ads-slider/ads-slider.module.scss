@@ -32,7 +32,7 @@
       }
       a {
         display: inline-block;
-        padding: 1rem 2rem;
+        padding: 0.8rem 1.8rem;
         background-color: var(--bg-white);
         color: var(--accent-color);
         font-weight: 500;
@@ -49,7 +49,7 @@
   }
   .dots {
     position: absolute;
-    bottom: 1.5rem;
+    bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
