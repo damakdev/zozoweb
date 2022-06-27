@@ -10,14 +10,15 @@ import box2 from "./../assets/cartoon.png";
 const Cart = () => {
   return (
     <CustomerLayout>
-      <div className="cart-wrapper flex justify-between gap-10">
+      <h1>Your Cart</h1>
+      <div className="cart-wrapper flex justify-between gap-10 mt-20">
         <div className={` ${styles.cart} bg-white w-2/3`}>
           <div className="flex gap-16 mt-20">
             <div>
               <Image src={box2} alt="cart" width={200} height={200} />
             </div>
             <div>
-              <h1>Your Zozo cart is empty</h1>
+              <h1 className="text-black">Your Zozo cart is empty</h1>
               <p className={`${styles.purple_text} mt-3`}>Bid on today's deals</p>
               <div className="flex gap-10 mt-12">
                 <div className="">
