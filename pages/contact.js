@@ -113,22 +113,23 @@ function Contact() {
 						</h3>
 						<div className="flex justify-between pt-10">
 							<div className={styles.radio_item}>
-								<input type="radio" name="ritem1" value="ropt2" />
-								<label>How to bid</label>
+								<input type="radio" id="ritema" name="ritem" value="ropt1" />
+								<label htmlFor="ritema">How to bid</label>
 							</div>
 
 							<div className={styles.radio_item}>
-								<input type="radio" name="ritem2" value="ropt1" />
-								<label>How to become a merchant</label>
+								<input type="radio" id="ritemb" name="ritem" value="ropt2" />
+								<label htmlFor="ritemb">How to become a merchant</label>
 							</div>
-							<div className={styles.radio_item}>
-								<input type="radio" name="ritem3" value="ropt3" />
 
-								<label>Issues with wins</label>
-							</div>
 							<div className={styles.radio_item}>
-								<input type="radio" name="ritem" value="ropt4" />
-								<label>Others</label>
+								<input type="radio" id="ritemc" name="ritem" value="ropt3" />
+								<label htmlFor="ritemc">Issues with wins</label>
+							</div>
+
+							<div className={styles.radio_item}>
+								<input type="radio" id="ritemd" name="ritem" value="ropt3" />
+								<label htmlFor="ritemd">Others</label>
 							</div>
 						</div>
 
