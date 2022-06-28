@@ -1,0 +1,103 @@
+.profile_bar{
+
+      ul{
+            border-bottom: 1px solid #D9D9D9;
+            cursor: pointer;
+      }
+
+      li{
+            border-left: 1px solid #D9D9D9;
+            font-size: 1.5rem;
+      }
+      li:first-child{
+            border-left: none;
+            color: var(--accent-color)
+      }
+}
+
+.profile_form{
+      h4{
+            letter-spacing: 1px;
+            font-size: 2rem;
+            margin-top: 20px;
+            font-weight: bolder;
+      }
+   p{
+      padding: 10px 0;
+      font-size: 1.5rem;
+   }
+   .labels{
+      font-weight: bolder;
+      h4{
+            letter-spacing: 1px;
+            font-size: 2rem;
+            margin-top: 20px;
+      }
+   }
+   .details{
+     margin-left: 20px;
+   }
+}
+
+.profile_subnav{
+     
+      border-bottom: 1px solid #D9D9D9; 
+      li:first-child{
+            border-bottom: 1px solid var(--accent-color); 
+      }
+
+}
+
+.toggle_button_cover{
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+      span{
+            font-size: 1.6rem;
+            padding-bottom:5px;
+      }
+      input[type=checkbox]{
+            height: 0;
+            width: 0;
+            visibility: hidden;
+            
+          }
+          
+          label {
+       
+            cursor: pointer;
+            text-indent: -9999px;
+            width: 65px;
+            height: 35px;
+            background: grey;
+            display: block;
+            border-radius: 100px;
+            position: relative;
+          }
+          
+          label:after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 25px;
+            height: 25px;
+            background: #fff;
+            border-radius: 90px;
+            transition: 0.3s;
+          }
+          
+          input:checked + label {
+            background: #bada55;
+          }
+          
+          input:checked + label:after {
+            left: calc(100% - 5px);
+            transform: translateX(-100%);
+          }
+          
+          label:active:after {
+            width: 30px;
+          }
+          
+}
