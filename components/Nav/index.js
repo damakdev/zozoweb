@@ -41,7 +41,7 @@ function Nav() {
                 <Image src={cart} alt="Cart" width={20} />
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/checkout">
               <a className="px-5 pt-4 ">
                 <Image src={profile} alt="Profile" width={20} />
               </a>
