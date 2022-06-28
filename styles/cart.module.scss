@@ -38,8 +38,14 @@
 .email {
 
     border: 1px solid #D9D9D9;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    padding: 5px 20px;
+    border-radius: 5px;
+    
+    padding: 5px 60px;
     width: 320px;
+}
+.email_icon {
+    position: relative;
+    top: 6px;
+    left: 30px;
+   
 }
