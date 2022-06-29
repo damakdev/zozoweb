@@ -8,9 +8,11 @@ function Button({
 	paddingX = 0,
 	width,
 	fontSize = 14,
+	fontWeight = 500,
 	isBoxShadow,
 	bgColor=colors.accentColor,
-	color="white"
+	color="white",
+	border="1px solid #743b96"
 }) {
 	const boxShadow = " 5px 15px 20px rgba(0, 0, 0, 0.15)";
 
@@ -22,6 +24,8 @@ function Button({
 		backgroundColor: bgColor,
 		color:color,
 		boxShadow: isBoxShadow === true ? boxShadow : "none",
+		border: border,
+		fontWeight: fontWeight,
 	};
 
 	return (

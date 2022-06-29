@@ -12,6 +12,7 @@ import Button from "../ui/Button";
 import styles from "../../styles/Nav.module.scss";
 
 function Nav() {
+
 	return (
 		<>
 			<header className={`${styles.header}   `}>
@@ -50,6 +51,7 @@ function Nav() {
 								<Image src={profile} alt="Profile" width={20} />
 							</a>
 						</Link>
+
 
 						<Link href="/login">
 							<a className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</a>
