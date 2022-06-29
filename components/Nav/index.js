@@ -35,12 +35,12 @@ function Nav() {
 								<Image src={searchIcon} alt="Search" width={20} />
 							</span>
 						</div>
-						<Link href="/">
+						<Link href="/wishlist">
 							<a className="px-5 pt-4 ">
 								<Image src={wishlist} alt="Wishlist" width={20} />
 							</a>
 						</Link>
-						<Link href="/">
+						<Link href="/cart">
 							<a className="px-5 pt-4 ">
 								<Image src={cart} alt="Cart" width={20} />
 							</a>
