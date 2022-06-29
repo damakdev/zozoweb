@@ -12,6 +12,7 @@ import Button from "../ui/Button";
 import styles from "../../styles/Nav.module.scss";
 
 function Nav() {
+
 	return (
 		<>
 			<header className={`${styles.header}   `}>
@@ -35,12 +36,12 @@ function Nav() {
 								<Image src={searchIcon} alt="Search" width={20} />
 							</span>
 						</div>
-						<Link href="/">
+						<Link href="/wishlist">
 							<a className="px-5 pt-4 ">
 								<Image src={wishlist} alt="Wishlist" width={20} />
 							</a>
 						</Link>
-						<Link href="/">
+						<Link href="/cart">
 							<a className="px-5 pt-4 ">
 								<Image src={cart} alt="Cart" width={20} />
 							</a>
@@ -50,6 +51,7 @@ function Nav() {
 								<Image src={profile} alt="Profile" width={20} />
 							</a>
 						</Link>
+
 
 						<Link href="/login">
 							<a className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</a>
