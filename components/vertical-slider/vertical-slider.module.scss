@@ -1,0 +1,39 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 18rem;
+  border-radius: 0.5rem;
+  .slide {
+    h3 {
+      position: absolute;
+      margin: 1rem 1.7rem;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-white);
+    }
+    img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .dots {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    & > div {
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 50%;
+      margin: 0.1rem 0;
+      background: rgba(116, 59, 150, 0.55);
+      cursor: pointer;
+    }
+    .active {
+      background-color: var(--accent-color);
+    }
+  }
+}

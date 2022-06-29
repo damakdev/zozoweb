@@ -1,0 +1,22 @@
+.list {
+  display: flex;
+  font-size: 1.9rem;
+  color: var(--bg-black);
+  li {
+    margin-right: 1rem;
+    a {
+      color: var(--accent-color);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    span {
+      margin-left: 1rem;
+      font-weight: bold;
+      line-height: 1rem;
+      svg {
+        height: 1rem;
+      }
+    }
+  }
+}

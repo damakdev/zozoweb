@@ -30,7 +30,7 @@ function Button({
 
 	return (
 		
-			<button className={styles.Button} style={customStyle}>
+			<button className={styles.Button} style={customStyle} type="submit">
 				{name}
 			</button>
 		
