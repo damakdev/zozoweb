@@ -20,7 +20,11 @@ function Contact() {
 			<div className={`${styles.contact} pt-10 flex`}>
 				<div className={`${styles.contact_info} w-1/2  pt-20`}>
 					<div className="w-9/12 mx-auto">
-						<Image src={logo} alt="Zozo Logo" />
+						<Link href="/">
+							<a>
+								<Image src={logo} alt="Zozo Logo" />
+							</a>
+						</Link>
 
 						<div className="mt-20">
 							<h3>Contact Information</h3>
