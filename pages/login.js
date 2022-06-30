@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from 'next/router'
 import { EyeOn, EyeOff, GoogleIcon } from "../public/svg/icons";
 import { LoginBanner } from "../public/svg/images";
 import Button from "../components/ui/Button";
@@ -6,10 +7,17 @@ import Link from "next/link";
 import styles from "../styles/login.module.scss";
 
 export default function Index() {
+  const router = useRouter()
+
   const [inputType, setInputType] = useState("password");
 
   function loginHandler(e) {
     e.preventDefault();
+    const token = "qwertyuiop"
+    localStorage.setItem("token", token)
+  
+    router.push('/cart')
+
   }
 
   return (

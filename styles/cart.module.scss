@@ -1,3 +1,4 @@
+// Cart css
 .cart {
     
     padding: 20px
@@ -19,6 +20,13 @@
     border: 1px solid white;
     height: 50px;
     margin-top: 50px;
+}
+.nav {
+    display: flex;
+}
+.cart-nav li {
+    list-style: none;
+    display: flex;
 }
 
 // Wishlist Styles
