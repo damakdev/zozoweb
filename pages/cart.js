@@ -28,12 +28,12 @@ const Cart = () => {
         {user ? (
           <div className="wrapper flex gap-20 mt-16">
             <div className="bg-white px-10 pt-10 w-full">
-              <div className={`${styles.nav} flex gap-60`}>
+              <div className={`${styles.nav} flex gap-60 `}>
                 <div onClick={() => setCurrentItem(1)}> <a href="#">Activity</a> </div>
                 <div onClick={() => setCurrentItem(2)}> <a href="#"> My ongoing bid</a> </div>
                 <div onClick={() => setCurrentItem(3)}> <a href="#">bid history</a> </div>
               </div>
-              <hr />
+              <hr className="mb-10"/>
 
               
                 {(currentItem === 1)?
