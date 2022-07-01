@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import styles from "../../styles/cart.module.scss";
 import Image from "next/image";
-
+import greenswitch from "../../assets/greenswitch.svg";
 import headphones from "../../assets/headphones.svg";
 
 
@@ -16,7 +16,10 @@ const Activity = () => {
                 <div>
                   <p>Items in my cart</p>
                 </div>
-                <div>Bid alerts</div>
+                <div className="flex gap-6"> 
+                  <div>Bid alerts</div>
+                <div><Image src={greenswitch} /></div>
+                </div>
               </div>
   
               <div>
