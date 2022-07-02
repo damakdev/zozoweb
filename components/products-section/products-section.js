@@ -33,7 +33,7 @@ export default function ProductsSection({ title, products }) {
       </div>
       <div className={styles.content}>
         {products.map((product, index) => (
-          <Link href="/" key={index}>
+          <Link href="/product/id" key={index}>
             <a className={styles.card}>
               <img src={product.image.src} alt="product image" />
               <h3>{product.productName}</h3>
