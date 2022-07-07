@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Zozo</title>
       </Head>
-      <AdBanner />
+      {/* <AdBanner /> */}
       <Layout>
         <Component {...pageProps} />
       </Layout>
