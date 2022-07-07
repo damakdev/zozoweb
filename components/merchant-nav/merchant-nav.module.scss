@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 1rem 6rem;
+  background-color: var(--accent-color);
+  a {
+    color: var(--text-white);
+    &:not(:last-child) {
+      margin-right: 4rem;
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
