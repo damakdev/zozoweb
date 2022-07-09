@@ -1,42 +1,19 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import MerchantSideBar from "../../components/merchant-sidebar/merchant-sidebar";
 import { Bell, LocationIcon } from "../../public/svg/icons";
 import styles from "../../styles/merchant-profile.module.scss";
 import MerchantLayout from "../../components/MerchantLayout";
 import Button from "../../components/ui/Button";
-import About from "../../components/Merchant-Profile/About";
-import AccountDetails from "../../components/Merchant-Profile/AccountDetails";
+import About from "../../components/Merchant/Merchant-Profile/About";
+import AccountDetails from "../../components/Merchant/Merchant-Profile/AccountDetails";
+import MerchantNav from "../../components/Merchant/Merchant_Nav";
 function Profile() {
-  const [details, setDetails] = useState("about")
+	const [details, setDetails] = useState("about");
 	return (
 		<MerchantLayout>
+			<MerchantNav title="Profile" />
 			<div className={styles.container}>
-				<div className={styles.nav}>
-					<div>
-						<h3>Profile</h3>
-						<p>Updated on 6. 7 . 2022 </p>
-					</div>
-
-					<div className={`${styles.nav_details} flex   items-center`}>
-						<div className="mr-6 p-4  border-l-2 border-gray-200">
-							<Bell />
-						</div>
-
-						<Image
-							src="/images/accountProfile.svg"
-							alt="profile picture"
-							width={20}
-							height={20}
-						/>
-
-						<div className=" ml-10 leading-normal">
-							<p>Akinpelumi Akinlade</p>
-							<p>@akinlade</p>
-						</div>
-					</div>
-				</div>
-
 				<div className="grid md:grid-cols-10 gap-10 mb-20 ">
 					<div className="col-span-2">
 						<Image
@@ -84,11 +61,25 @@ function Profile() {
 
 				<div className={` ${styles.profile_details} mt-10`}>
 					<ul className={`${styles.profile_subnav} flex`}>
-						<li className="py-5 ml-10 px-20  mr-20" onClick={()=>setDetails("about")}>About</li>
-						<li className="py-5 px-20 " onClick={()=>setDetails("accountDetails")}>Account details </li>
+						<li
+							className={` py-5 ml-10 px-20  mr-20 ${
+								details === "about" ? styles.active_tab : ""
+							}  `}
+							onClick={() => setDetails("about")}
+						>
+							About
+						</li>
+						<li
+							className={` py-5 px-20 ${
+								details !== "about" ? styles.active_tab : ""
+							}  `}
+							onClick={() => setDetails("accountDetails")}
+						>
+							Account details{" "}
+						</li>
 					</ul>
-					
-          {details === "about" ? <About /> : <AccountDetails/> }
+
+					{details === "about" ? <About /> : <AccountDetails />}
 				</div>
 			</div>
 		</MerchantLayout>

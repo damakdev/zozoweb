@@ -1,0 +1,23 @@
+.filterButton, .exportButton{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+     padding: 8px 20px ;
+      border-radius: 5px;
+      button{
+            margin-left:10px
+      }
+}
+
+.container{
+      padding-top: 12%;
+}
+
+.filterButton{
+      background-color: #F3F3F3;
+      margin-right: 20px;
+}
+.exportButton{
+      background-color: var(--accent-color);
+      color: white;
+}

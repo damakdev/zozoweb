@@ -1,0 +1,40 @@
+.container {
+	padding-top: 10%;
+}
+.sub_nav {
+	border-bottom: 1px solid #d9d9d9;
+	.active_tab {
+		border-bottom: 1px solid var(--accent-color);
+	}
+	li {
+		cursor: pointer;
+	}
+}
+
+.Dropdown,
+.createButton {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: 8px 20px;
+	border-radius: 5px;
+	button {
+		margin-left: 10px;
+	}
+}
+
+.Dropdown {
+	background-color: #f3f3f3;
+	margin-right: 20px;
+
+	select {
+		background-color: transparent !important;
+		padding: 10px;
+		width: 100px;
+		outline: none;
+	}
+}
+.createButton {
+	background-color: var(--accent-color);
+	color: white;
+}

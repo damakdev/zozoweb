@@ -6,7 +6,7 @@ function MerchantLayout({ children }) {
 	return (
 		<>
 			<MerchantSideBar />
-
+		
 			<div className={styles.children}>{children}</div>
 		</>
 	);

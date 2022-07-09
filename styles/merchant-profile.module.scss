@@ -1,10 +1,10 @@
 .container {
-	// margin-left:6.5%;
+	padding-top: 12%;
 	width: 100%;
-	padding-top: 3%;
+	z-index: -1;
 	padding-left: 30px;
 	padding-right: 30px;
-      padding-bottom: 50px;
+	padding-bottom: 50px;
 }
 
 .nav {
@@ -23,7 +23,7 @@
 }
 
 .children {
-	max-width: 93%;
+	min-width: 1250px;
 	margin-left: 7%;
 	background-color: white;
 }
@@ -32,20 +32,19 @@
 	background-color: #f3f3f3;
 	border-radius: 20px;
 	color: black;
-     
 }
 
 .profile_subnav {
 	border-bottom: 1px solid #d9d9d9;
-	li:first-child {
+	.active_tab {
 		border-bottom: 1px solid var(--accent-color);
 	}
-      li{
-            cursor: pointer;
-      }
+	li {
+		cursor: pointer;
+	}
 }
 .profile_form {
-      padding-bottom: 30px;
+	padding-bottom: 30px;
 	h4 {
 		font-size: 1.7rem;
 		margin-top: 20px;
