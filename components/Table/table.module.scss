@@ -1,0 +1,52 @@
+.table {
+	width: 95%;
+	text-align: left;
+	background-color: #f3f3f3;
+	border-radius: 20px;
+	.header {
+		background-color: #f3f3f3 !important;
+	}
+
+	.inner {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0 0.5em;
+		td {
+			color: black;
+		}
+		td,
+		th {
+			padding: 15px 10px;
+		}
+
+		tr:nth-child(odd) {
+			background-color: white;
+		}
+		thead {
+			color: #7d7d7d;
+			font-size: 17px;
+
+			th {
+				font-weight: lighter !important;
+			}
+		}
+	}
+}
+
+// .bidderID{
+//       display: flex;
+//       align-items: center;
+//       justify-content: space-around;
+//       width: 100px;
+//       padding: 10px;
+//       border-radius: 10px;
+ 
+// }
+
+// .bidderID:nth-child(even){
+//       background-color: #f3f3f3;
+// }
+
+// .bidderID:nth-child(odd){
+//       background-color: white  ;
+// }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+
 import {
   HomeIcon,
   UsersIcon,
@@ -14,7 +15,7 @@ export default function MerchantSideBar() {
   const links = [
     { icon: <HomeIcon />, url: "/" },
     { icon: <UsersIcon />, url: "/" },
-    { icon: <ReceiptIcon />, url: "/" },
+    { icon: <ReceiptIcon/>, url: "/" },
     { icon: <HomeIcon />, url: "/" },
     { icon: <WalletIcon />, url: "/" },
     { icon: <HomeIcon />, url: "/" },
