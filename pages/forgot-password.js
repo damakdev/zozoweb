@@ -1,9 +1,9 @@
 import { ForgotPasswordBanner } from "../public/svg/images";
 import Link from "next/link";
-import Button from "../components/ui/button/button";
+import Button from "../components/ui/button/";
 import styles from "../styles/forgot-password.module.scss";
 
-export default function index() {
+export default function Index() {
   function handleRequest(e) {
     e.preventDefault();
   }

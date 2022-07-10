@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MerchantNav from "../../components/merchant-nav";
-import styles from "../../styles/merchant-homepage.module.scss";
+import styles from "../../styles/merchant/homepage.module.scss";
 
 export default function Index() {
   return (
