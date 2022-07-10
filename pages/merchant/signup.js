@@ -2,7 +2,7 @@ import { useState } from "react";
 import { EyeOn, EyeOff, GoogleIcon } from "../../public/svg/icons";
 import Link from "next/link";
 import Logo from "../../components/logo";
-import Button from "../../components/ui/Button/";
+import Button from "../../components/ui/button/";
 import styles from "../../styles/merchant/signup.module.scss";
 
 export default function Index() {
