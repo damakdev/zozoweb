@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  background-image: url("../../public/images/merchant-homepage-background.png");
+  background-position: center;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-blend-mode: soft-light;
+  padding: 5rem 8rem;
+  nav {
+    background-color: transparent;
+    padding: 0;
+  }
+  .body {
+    h1 {
+      font-size: 6rem;
+      color: var(--text-white);
+      line-height: 7.5rem;
+      span {
+        color: var(--accent-color);
+      }
+    }
+  }
+  .footer {
+    margin-bottom: 5rem;
+    a {
+      display: inline-block;
+      text-align: center;
+      text-transform: uppercase;
+      padding: 1.3rem 3rem;
+      width: 20rem;
+      border-radius: 0.5rem;
+      opacity: 0.9;
+      transition: all 0.3s;
+      &:nth-child(1) {
+        background-color: var(--accent-color);
+        color: var(--text-white);
+        margin-right: 3rem;
+      }
+      &:nth-child(2) {
+        color: var(--accent-color);
+        background-color: var(--bg-white);
+      }
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
