@@ -1,12 +1,22 @@
+import AdBanner from "./ad-banner"
 import Nav from "./Nav";
 import Footer from "./Footer";
 
 function CustomerLayout({ children }) {
   return (
     <>
+      <AdBanner />
       <Nav />
-      <main style={{ marginTop: "16rem" }}>
-        <div className="w-11/12 mx-auto  py-20">{children}</div>
+      <main
+        style={{
+          marginTop: "16rem",
+          marginLeft: "auto",
+          marginRight: "auto",
+          maxWidth: "1400px",
+          padding: "5rem"
+        }}
+      >
+        {children}
       </main>
 
       <Footer />
