@@ -1,6 +1,5 @@
 import Head from "next/head";
-import AdBanner from "../components/ui/ad-banner/ad-banner";
-import Layout from "../components/ui/layout";
+import Layout from "../components/layout";
 import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
@@ -9,7 +8,6 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Zozo</title>
       </Head>
-      {/* <AdBanner /> */}
       <Layout>
         <Component {...pageProps} />
       </Layout>

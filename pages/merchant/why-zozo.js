@@ -1,6 +1,6 @@
 import MerchantNav from "../../components/merchant-nav";
 import Slide1 from "../../public/images/slider-image-1.jpg";
-import styles from "../../styles/why-zozo.module.scss";
+import styles from "../../styles/merchant/why-zozo.module.scss";
 
 export default function WhyZozo() {
   const list = [

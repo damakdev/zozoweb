@@ -8,10 +8,10 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { motion } from "framer-motion";
 import Router from "next/router";
 import Link from "next/link";
-import Button from "../components/ui/button/button";
+import Button from "../components/ui/button/";
 import styles from "../styles/change-password.module.scss";
 
-export default function index() {
+export default function Index() {
   return (
     <div className={styles.container}>
       <ChangePassword />
