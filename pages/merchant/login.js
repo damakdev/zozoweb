@@ -64,9 +64,9 @@ export default function Index() {
             <Link href="/merchant/forgot-password"> Forgot Password</Link>
           </div>
         </div>
-        
-          <Button>Log in</Button>
-    
+
+        <Button>Log in</Button>
+
         <p>
           Don't have an account?
           <Link href="/merchant/signup"> Signup for free!</Link>
