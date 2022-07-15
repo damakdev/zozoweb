@@ -6,7 +6,7 @@ import Button from "../../components/ui/button/button";
 import styles from "../../styles/merchant/signup.module.scss";
 
 export default function Index() {
-  const [checked, setChecked] = useState((false));
+  const [checked, setChecked] = useState(false);
   const [inputType1, setInputType1] = useState("password");
   const [inputType2, setInputType2] = useState("password");
 
@@ -49,7 +49,7 @@ export default function Index() {
             <EyeOn onClick={() => setInputType1("text")} />
           )}
         </div>
-        <div className="flex justify-between gap-96">
+        <div className="flex gap-96">
           <div>
             <label htmlFor="">
               <input
@@ -64,8 +64,9 @@ export default function Index() {
             <Link href="/merchant/forgot-password"> Forgot Password</Link>
           </div>
         </div>
-
-        <Button>Log in</Button>
+        
+          <Button>Log in</Button>
+    
         <p>
           Don't have an account?
           <Link href="/merchant/signup"> Signup for free!</Link>
