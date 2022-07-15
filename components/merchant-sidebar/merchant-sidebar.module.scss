@@ -1,12 +1,13 @@
 .container {
-  padding-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: fixed;
+  padding-top: 5rem;
+  padding-inline: 1rem;
   background-color: var(--accent-color);
   height: 100vh;
-  width: 7%;
+  width: 8rem;
   z-index: 6;
   .logo {
     margin-bottom: 3rem;
