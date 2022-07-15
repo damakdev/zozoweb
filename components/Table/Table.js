@@ -2,16 +2,20 @@ import React from "react";
 import { Bell, BlackDot } from "../../public/svg/icons";
 import styles from "../Table/table.module.scss";
 
-function Table() {
-	const thead = [
-		"Name",
-		"Item code",
-		"Event name",
-		"Bidder's name",
-		"Bidder's ID",
-		"Date",
-		"Action",
-	].map((title, index) => <th key={index}>{title}</th>);
+function Table({ data, thead, name, viewDetails}) {
+	let head = thead.map((title, index) => <th key={index}>{title}</th>);
+
+	const status = (status) => {
+		switch (status) {
+			case "success":
+				return <img src="/images/success.svg" alt="success" />;
+			case "pending":
+				return <img src="/images/pending.svg" alt="pending" />;
+			case "closed":
+				return <img src="/images/closed.svg" alt="closed" />;
+		}
+	};
+
 	return (
 		<div className={`${styles.table} mx-auto px-3 mb-20`}>
 			<table className={`table-auto ${styles.inner}   py-2`}>
@@ -21,60 +25,44 @@ function Table() {
 							{" "}
 							<input type="checkbox" />
 						</th>
-						{thead}
+						{head}
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>
-							{" "}
-							<input type="checkbox" />
-						</td>
-						<td>Iphone 11</td>
-						<td>Malcolm Lockyer</td>
-						<td>1961</td>
-						<td>Malcolm Lockyer</td>
-						<td>
-							678995
-							{/* <div className={styles.bidderID}>
-								<BlackDot /> 678995
-							</div> */}
-						</td>
-						<td>07-08-2019</td>
-						<td className="">
-							<Bell />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							{" "}
-							<input type="checkbox" />
-						</td>
-						<td>Iphone 11</td>
-						<td>Malcolm Lockyer</td>
-						<td>1961</td>
-						<td>Malcolm Lockyer</td>
-						<td>678995</td>
-						<td>07-08-2019</td>
-						<td>
-							<Bell />
-						</td>
-					</tr>
-					<tr>
-						<td>
-							{" "}
-							<input type="checkbox" />
-						</td>
-						<td>Iphone 11</td>
-						<td>Malcolm Lockyer</td>
-						<td>1961</td>
-						<td>Malcolm Lockyer</td>
-						<td>678995</td>
-						<td>07-08-2019</td>
-						<td>
-							<Bell />
-						</td>
-					</tr>
+					{name == "item-order" &&
+						data.map((item, index) => {
+							return (
+								<tr key={index}>
+									<td>
+										<input type="checkbox" />
+									</td>
+									<td>{item.name}</td>
+									<td>{item.code}r</td>
+									<td>{item.event}</td>
+									<td>{item.bidder_name}</td>
+									<td>{item.bidder_id}</td>
+									<td>{item.date}</td>
+									<td onClick={viewDetails}>...</td>
+								</tr>
+							);
+						})}
+
+					{name == "event" &&
+						data.map((item, index) => {
+							return (
+								<tr key={index}>
+									<td>
+										<input type="checkbox" />
+									</td>
+									<td>{item.name}</td>
+									<td>{item.end_date}</td>
+									<td>{item.start_date}</td>
+									<td>{item.num_registered}</td>
+									<td>{item.approved}</td>
+									<td>{status(item.status)}</td>
+								</tr>
+							);
+						})}
 				</tbody>
 			</table>
 		</div>
