@@ -10,6 +10,9 @@ import AccountDetails from "../../components/Merchant/Merchant-Profile/AccountDe
 import MerchantNav from "../../components/Merchant/Merchant_Nav";
 function Profile() {
 	const [details, setDetails] = useState("about");
+	const [isEdit, setIsEdit] = useState(false)
+
+	const canEdit = ()=>setIsEdit(!isEdit)
 	return (
 		<MerchantLayout>
 			<MerchantNav title="Profile" />
@@ -79,7 +82,7 @@ function Profile() {
 						</li>
 					</ul>
 
-					{details === "about" ? <About /> : <AccountDetails />}
+					{details === "about" ? <About isEdit={isEdit} canEdit={canEdit} /> : <AccountDetails isEdit={isEdit}  canEdit={canEdit}/>}
 				</div>
 			</div>
 		</MerchantLayout>

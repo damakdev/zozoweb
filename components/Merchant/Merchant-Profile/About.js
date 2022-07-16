@@ -1,10 +1,22 @@
 import React from "react";
+import { EditIcon } from "../../../public/svg/icons";
 import styles from "../../../styles/merchant-profile.module.scss";
+import Button from "../../ui/Button";
 
-function About() {
+function About({ canEdit, isEdit }) {
 	return (
 		<div className={`${styles.profile_form} w-11/12 mx-auto`}>
-			<h4> Contact Information</h4>
+			<div className="flex items-center justify-between w-1/5">
+				<h4> Contact Information</h4>
+
+				<span
+					className="flex items-center mt-8 cursor-pointer"
+					onClick={canEdit}
+				>
+					<p className="mr-3">Edit</p>
+					<EditIcon />
+				</span>
+			</div>
 
 			<div className="flex items-center">
 				<div className={styles.labels}>
@@ -18,15 +30,64 @@ function About() {
 				</div>
 
 				<div className={styles.details}>
-					<p>Akinpelumi Lade </p>
-					<p>0903747665155 </p>
-					<p>AkinpelumiLade23@gmail.com </p>
-					<p>5, trademark, mushin street lagos </p>
-					<p></p>
-					<p className="mt-9">May 15, 1995 </p>
-					<p>Male</p>
+					<input
+						defaultValue="Akinpelumi Lade"
+						className={`${!isEdit ? "border-b-2 border-black " : ""}`}
+						disabled={isEdit}
+					/>
+
+					<input
+						defaultValue="0903747665155"
+						className={`${!isEdit ? "border-b-2 border-black " : ""}`}
+						disabled={isEdit}
+					/>
+					<input
+						defaultValue="AkinpelumiLade23@gmail.com"
+						className={`${!isEdit ? "border-b-2 border-black " : ""}`}
+						disabled={isEdit}
+					/>
+					<input
+						defaultValue="5, trademark, mushin street lagos"
+						className={`${!isEdit ? "border-b-2 border-black " : ""} mb-20`}
+						disabled={isEdit}
+					/>
+
+					<div className="mt-20"> </div>
+					<input
+						defaultValue="May 15, 1995"
+						className={`${!isEdit ? "border-b-2 border-black " : ""}`}
+						disabled={isEdit}
+					/>
+
+					<input
+						defaultValue="Male"
+						className={`${!isEdit ? "border-b-2 border-black " : ""}`}
+						disabled={isEdit}
+					/>
 				</div>
 			</div>
+			{!isEdit && (
+				<div className="mt-20">
+					<Button
+						name="Cancel"
+						bgColor="#7D7D7D"
+						isBoxShadow={true}
+						paddingX="50px"
+						paddingY="8px"
+						border="none"
+					/>
+
+					<span className="ml-5">
+						<Button
+							name="Save"
+							isBoxShadow={true}
+							paddingX="60px"
+							paddingY="8px"
+							border="none"
+						/>
+					</span>
+				</div>
+			)}
 		</div>
 	);
 }
