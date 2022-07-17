@@ -14,7 +14,7 @@ export default function MerchantSideBar() {
   const [activeLink, setActiveLink] = useState(0);
   const links = [
     { icon: <HomeIcon />, url: "/" },
-    { icon: <UsersIcon />, url: "/" },
+    { icon: <UsersIcon />, url: "/merchant/dashboard/biodata" },
     { icon: <ReceiptIcon/>, url: "/" },
     { icon: <HomeIcon />, url: "/" },
     { icon: <WalletIcon />, url: "/" },
