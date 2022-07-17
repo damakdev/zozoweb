@@ -995,9 +995,10 @@ export function CashIcon(props) {
   );
 }
 
-export function EditIcon() {
+export function EditIcon(props) {
   return (
     <svg
+      {...props}
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -1022,9 +1023,10 @@ export function EditIcon() {
   );
 }
 
-export function ProgressBar() {
+export function ProgressBar(props) {
   return (
     <svg
+      {...props}
       width="68"
       height="68"
       viewBox="0 0 68 68"
@@ -1051,9 +1053,10 @@ export function ProgressBar() {
   );
 }
 
-export function ProgressBar2() {
+export function ProgressBar2(props) {
   return (
     <svg
+      {...props}
       width="70"
       height="70"
       viewBox="0 0 70 70"
