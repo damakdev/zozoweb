@@ -111,6 +111,30 @@
  
              }
          }
+        
          
      }
+     
  }
+ .success {
+    p {
+      text-align: center;
+      color: #0cbc8b;
+      line-height: 1.4;
+      font-size: 1.7rem;
+      margin-bottom: 4rem;
+    }
+    svg {
+      margin-inline: auto;
+      margin-bottom: 5rem;
+    }
+    button {
+      width: 23rem;
+      height: 6rem;
+      display: block;
+      margin-inline: auto;
+      margin-bottom: 2rem;
+      background-color: #0cbc8b;
+      
+    }
+  }

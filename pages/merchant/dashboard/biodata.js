@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { TimerIcon, NotificationBellIcon, WalletIcon } from "../../../public/svg/icons";
+import { TimerIcon, NotificationBellIcon, WalletIcon, ProgressBar } from "../../../public/svg/icons";
 import MerchantSideBar from "../../../components/merchant-sidebar";
 import Button from "../../../components/ui/button/";
 import styles from "../../../styles/merchant/biodata.module.scss";
@@ -21,6 +21,7 @@ const biodata = () => {
           </div>
           <div>
             <div className={styles["profile-info"]}>
+                <ProgressBar/>
               <NotificationBellIcon />
               <div>
                 <img

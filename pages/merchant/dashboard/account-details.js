@@ -3,6 +3,7 @@ import {
   TimerIcon,
   NotificationBellIcon,
   WalletIcon,
+  VerifiedMarkIcon, ProgressBar2
 } from "../../../public/svg/icons";
 import MerchantSideBar from "../../../components/merchant-sidebar";
 import Button from "../../../components/ui/button/";
@@ -11,21 +12,11 @@ import styles from "../../../styles/merchant/account-details.module.scss";
 
 const biodata = () => {
     const [modalDisplay, setModalDisplay] = useState(false);
-    function handleRequest(e) {
-        e.preventDefault();
-        setModalDisplay((modalDisplay) => !modalDisplay);
-      }
-    
-      useEffect(() => {
-        if (modalDisplay) {
-          const interval = setInterval(() => {
-            setModalDisplay(false);
-          }, 5000);
-          return () => {
-            clearInterval(interval);
-          };
-        }
-      }, [modalDisplay]);
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      setModalDisplay((modalDisplay) => !modalDisplay);
+    }
   return (
     <>
     <section className={styles.container}>
@@ -38,6 +29,7 @@ const biodata = () => {
           </div>
           <div>
             <div className={styles["profile-info"]}>
+                <ProgressBar2/>
               <NotificationBellIcon />
               <div>
                 <img
@@ -54,7 +46,7 @@ const biodata = () => {
         </div>
         <div className="p-20">
           <div className={styles.form}>
-            <form onSubmit={handleRequest}>
+            <form onSubmit={handleSubmit}>
               <div className="flex gap-80 mb-16">
                 <span>
                   <span className="ml-3">
@@ -113,24 +105,15 @@ const biodata = () => {
       </div>
     </section>
 
-    <Modal
-    display={modalDisplay}
-    title="Success"
-    close={handleRequest}
-  >
-    <div className={styles.verification}>
-      <p>
-        We have sent 4-digit pin to this email
-        <br />
-        ******den@gmail.com
-      </p>
-      
-      <div className={styles.countdown}>
-      
-      </div>
-      <button>Download Orientation Guide</button>
-    </div>
-  </Modal>
+    <Modal title="success" display={modalDisplay} close={handleSubmit}>
+        <div className={styles.success}>
+          <p>
+          You can click on the button below to <br /> download the orientation guide
+          </p>
+          <VerifiedMarkIcon />
+          <Button>Download Orientation Guide</Button>
+        </div>
+      </Modal>
   </>
   );
 };
