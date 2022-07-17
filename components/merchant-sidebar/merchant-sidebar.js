@@ -14,8 +14,12 @@ import styles from "./merchant-sidebar.module.scss";
 export default function MerchantSideBar() {
   const [activeLink, setActiveLink] = useState(0);
   const links = [
-    { title: "home", icon: <HomeIcon />, url: "/" },
-    { title: "bio-data", icon: <RefreshIcon />, url: "/" },
+    { title: "home", icon: <HomeIcon />, url: "/merchant/dashboard" },
+    {
+      title: "bio-data",
+      icon: <RefreshIcon />,
+      url: "/merchant/dashboard/biodata",
+    },
     { title: "report", icon: <ReceiptIcon />, url: "/" },
     { title: "wallet", icon: <WalletIcon />, url: "/" },
     { title: "events", icon: <MenuBoardIcon />, url: "/" },
