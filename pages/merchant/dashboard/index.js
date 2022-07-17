@@ -4,7 +4,7 @@ import {
   TimerIcon,
   NotificationBellIcon,
   CloseIcon,
-  DebitCardIocn,
+  DebitCardIcon,
   CashIcon,
 } from "../../../public/svg/icons";
 import MerchantSideBar from "../../../components/merchant-sidebar";
@@ -75,7 +75,7 @@ export default function Index() {
                 <h1>Funding overview </h1>
                 <div>
                   <div className={styles.escrow}>
-                    <DebitCardIocn />
+                    <DebitCardIcon />
                     <h1>
                       &#8358;5,000 <span>Escrow Balance</span>
                     </h1>
