@@ -8,9 +8,9 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Zozo</title>
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Component {...pageProps} />
+      {/* <Layout>
+      </Layout> */}
     </>
   );
 }
