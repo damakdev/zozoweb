@@ -3,23 +3,23 @@ import Link from "next/link";
 
 import {
   HomeIcon,
-  UsersIcon,
+  RefreshIcon,
   ReceiptIcon,
-  ProfileCircleIcon,
   WalletIcon,
+  MenuBoardIcon,
+  ProfileCircleIcon,
 } from "../../public/svg/icons";
 import styles from "./merchant-sidebar.module.scss";
 
 export default function MerchantSideBar() {
   const [activeLink, setActiveLink] = useState(0);
   const links = [
-    { icon: <HomeIcon />, url: "/" },
-    { icon: <UsersIcon />, url: "/" },
-    { icon: <ReceiptIcon/>, url: "/" },
-    { icon: <HomeIcon />, url: "/" },
-    { icon: <WalletIcon />, url: "/" },
-    { icon: <HomeIcon />, url: "/" },
-    { icon: <ProfileCircleIcon />, url: "/" },
+    { title: "home", icon: <HomeIcon />, url: "/" },
+    { title: "bio-data", icon: <RefreshIcon />, url: "/" },
+    { title: "report", icon: <ReceiptIcon />, url: "/" },
+    { title: "wallet", icon: <WalletIcon />, url: "/" },
+    { title: "events", icon: <MenuBoardIcon />, url: "/" },
+    { title: "profile", icon: <ProfileCircleIcon />, url: "/" },
   ];
 
   return (
@@ -31,6 +31,7 @@ export default function MerchantSideBar() {
             <Link href={item.url}>
               <a className={activeLink === index ? styles.active : null}>
                 {item.icon}
+                <span>{item.title}</span>
               </a>
             </Link>
           </li>
