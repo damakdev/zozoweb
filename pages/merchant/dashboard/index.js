@@ -3,6 +3,7 @@ import {
   RightArrow,
   TimerIcon,
   NotificationBellIcon,
+  NotificationBingIcon,
   CloseIcon,
   DebitCardIcon,
   CashIcon,
@@ -12,7 +13,7 @@ import Button from "../../../components/ui/button/";
 import styles from "../../../styles/merchant/dashboard.module.scss";
 
 export default function Index() {
-  const cards = [null, null, null, null, null];
+  const cards = [null, null, null, null, null, null, null];
   return (
     <section className={styles.container}>
       <MerchantSideBar />
@@ -112,58 +113,87 @@ export default function Index() {
                   <span>Closed</span>
                 </div>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th> </th>
-                    <th>Items</th>
-                    <th>Description</th>
-                    <th>Final price</th>
-                    <th>Countdown</th>
-                    <th>Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cards.map((item, index) => (
-                    <tr key={index}>
-                      <td>
-                        <input type="checkbox" />
-                      </td>
-                      <td>
-                        <img
-                          src="https://s3-alpha-sig.figma.com/img/fee9/0241/5b6f660acfad2e9a8a6fee90133a1f11?Expires=1658707200&Signature=c96IekTKe~E4-x1u4LK1Q6HI9olfmoY8VygfllpC3vH8hu2~QV4qgT0K-Gv45aoUBzzkY1Rqamqy~tjT6R6MEJlff80DC9wzwlSNYFBC2WxytyhKF0MMYghwTI5RT8N9jSp4~zcerQF299IZjEgGOR7zMky42tBYnL~EUas8Row583XR~ApCPPmVWm7tHrkcXs55G6HFtTHW6vdqWzIV7FafpwTW1~76bCPmFWgv5CqBw3fFr7ccEz~BqKvwk7mUf0ADmAWTpOMqkHl8nf4P-Qy2MO51C72MB8G-JZyd49f8vavzxjT8CIvf3vRuMjdtXwUQJoz9OF08pcFXmpyWvQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-                          alt=""
-                        />
-                      </td>
-                      <td>Iphone 11</td>
-                      <td>₦7,000</td>
-                      <td>00:00:00:00</td>
-                      <td>x</td>
+
+              <div style={{ height: "30rem", overflowY: "auto" }}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th> </th>
+                      <th>Items</th>
+                      <th>Description</th>
+                      <th>Final price</th>
+                      <th>Countdown</th>
+                      <th>Remove</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {cards.map((item, index) => (
+                      <tr key={index}>
+                        <td>
+                          <input type="checkbox" />
+                        </td>
+                        <td>
+                          <img
+                            src="https://s3-alpha-sig.figma.com/img/fee9/0241/5b6f660acfad2e9a8a6fee90133a1f11?Expires=1658707200&Signature=c96IekTKe~E4-x1u4LK1Q6HI9olfmoY8VygfllpC3vH8hu2~QV4qgT0K-Gv45aoUBzzkY1Rqamqy~tjT6R6MEJlff80DC9wzwlSNYFBC2WxytyhKF0MMYghwTI5RT8N9jSp4~zcerQF299IZjEgGOR7zMky42tBYnL~EUas8Row583XR~ApCPPmVWm7tHrkcXs55G6HFtTHW6vdqWzIV7FafpwTW1~76bCPmFWgv5CqBw3fFr7ccEz~BqKvwk7mUf0ADmAWTpOMqkHl8nf4P-Qy2MO51C72MB8G-JZyd49f8vavzxjT8CIvf3vRuMjdtXwUQJoz9OF08pcFXmpyWvQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                            alt=""
+                          />
+                        </td>
+                        <td>Iphone 11</td>
+                        <td>₦7,000</td>
+                        <td>00:00:00:00</td>
+                        <td>
+                          <CloseIcon />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
 
           <div className={styles.right}>
             <div className={styles.announcement}>
-              <h2>Announcement</h2>
+              <h2>
+                Announcements <span>3</span>
+              </h2>
               <div className={styles.cards}>
-                <div className={styles.card}>
-                  {/* <NotificationBellIcon width={24} /> */}
-                  <p>
-                    The platform will backup your data early this morning or
-                    late tonight, so please .......{" "}
-                  </p>
-                  <CloseIcon style={{position: "absolute", margin: ".7rem"}} width={18} />
-                  <span>06-08-2022 </span>
-                </div>
+                {cards.map((card, index) => (
+                  <div key={index} className={styles.card}>
+                    {/* <NotificationBingIcon width="24" /> */}
+                    <p>
+                      The platform will backup your data early this morning or
+                      late tonight, so please .......
+                    </p>
+                    <CloseIcon
+                      style={{ position: "absolute", margin: ".7rem" }}
+                      width={18}
+                    />
+                    <span>06-08-2022 </span>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className={styles["help-center"]}></div>
-            <div className={styles.download}></div>
-            <div className={styles.support}></div>
+            <div className={styles["help-center"]}>
+              <h2>Help center</h2>
+              <div>
+                <p>How it works</p>
+                <p>Items Manual</p>
+                <p>Dashboard conditions</p>
+                <p>Unable to log in to this system</p>
+              </div>
+            </div>
+            <div className={styles.download}>
+              <h1>
+                Download
+                <br />
+                Orientation Guide
+              </h1>
+            </div>
+            <div className={styles.support}>
+              <h1>Need help?</h1>
+              <p>24/7 support cernter</p>
+            </div>
           </div>
         </div>
       </div>
