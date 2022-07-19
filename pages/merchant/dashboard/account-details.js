@@ -69,7 +69,7 @@ const biodata = () => {
                   </span>
                 </span>
                 <span>
-                  <span className="mr-16">
+                  <span className="mr-12">
                     Card Number{" "}
                     <input type="text" placeholder="Adetola Adedeji" />
                   </span>
@@ -91,7 +91,7 @@ const biodata = () => {
               </div>
               <div>
               <label htmlFor="">
-                <input type="checkbox" />
+                <input type="checkbox" className="mr-2"/>
                 Remember for future use only
               </label>
             </div>
