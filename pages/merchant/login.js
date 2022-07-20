@@ -57,7 +57,7 @@ export default function Index() {
                 checked={checked}
                 onChange={handleChange}
               />
-              Remember me {checked}
+             <span className="ml-1 text-base  ">  Remember me {checked}</span>
             </label>
           </div>
           <div>
