@@ -1,10 +1,13 @@
 .container {
   display: flex;
-  //   height: 100vh;
+  max-width: 1500px;
+  margin-inline: auto;
+  height: 100%;
   .recent {
-    position: fixed;
+    position: relative;
     margin-left: 8rem;
     width: 25%;
+    min-width: 30rem;
     padding-inline: 1rem;
     background-color: var(--bg-primary);
     & > svg {
@@ -45,19 +48,21 @@
       margin-top: 1.5rem;
       overflow-y: auto;
       height: 80vh;
+      width: 100%;
       .card {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         position: relative;
         height: 11rem;
-        width: 20vw;
-        margin-inline: auto;
+        width: 25rem;
+        // min-width: 25rem;
         border-radius: 1rem;
         box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.15);
         background-color: var(--bg-white);
-        padding: 2rem 3rem;
+        padding: 2rem;
         overflow: hidden;
+        margin-inline: auto;
         margin-bottom: 2rem;
         &:not(:last-child) {
         }
@@ -84,7 +89,7 @@
           line-height: 1;
           color: var(--bg-black);
           span {
-            margin-left: 1.5rem;
+            margin-left: 1.1rem;
             font-size: 1.2rem;
             font-weight: 270;
           }
@@ -94,7 +99,7 @@
           font-weight: 270;
           line-height: 1;
           span {
-            margin-left: 1.5rem;
+            margin-left: 1.1rem;
             font-size: 1.2rem;
           }
         }
@@ -103,6 +108,7 @@
           top: 50%;
           right: 0;
           transform: translateY(-50%);
+          width: 4rem;
           margin-inline: 1rem;
           filter: drop-shadow(5px 10px 15px rgba(0, 0, 0, 0.15));
           cursor: pointer;
@@ -113,11 +119,12 @@
   .main {
     background-color: var(--bg-white);
     width: 100%;
-    margin-left: 30%;
-    .header {
+    height: 100vh;
+    & > .header {
       display: flex;
       justify-content: space-between;
       padding: 3rem;
+      box-shadow: 0 5px 11px rgb(0 0 0 / 7%);
       .title {
         h1 {
           font-size: 2rem;
@@ -172,14 +179,19 @@
       }
     }
     .body {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 5fr 2fr;
+      gap: 0 2rem;
       padding: 3rem;
+      height: 80vh;
+      overflow-y: auto;
       h3 {
         border-bottom: var(--border);
       }
       .left {
-        width: 45vw;
+        width: 100%;
+        // margin-right: 3rem;
+        // min-width: 55rem;
         .balance {
           display: flex;
           justify-content: space-between;
@@ -248,15 +260,87 @@
           display: flex;
           justify-content: space-between;
           margin-top: 2rem;
-          .graph,
+          .line-chart,
           .pie-chart {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
             background-color: var(--bg-primary);
             width: 49%;
-            height: 43vh;
+            .info {
+              display: flex;
+              justify-content: space-between;
+              position: relative;
+              width: 90%;
+              margin: 1rem auto;
+              background-color: var(--bg-white);
+              padding: 1rem;
+              &::before {
+                position: absolute;
+                content: "";
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 0.01rem;
+                height: 4rem;
+                background-color: var(--bg-black);
+              }
+              & > div {
+                h1 {
+                  display: flex;
+                  align-items: center;
+                  font-size: 1.4rem;
+                  line-height: 1;
+                  span {
+                    display: flex;
+                    align-items: center;
+                    padding: 0.3rem 0.7rem;
+                    margin-left: 1rem;
+                    font-size: 1.2rem;
+                    svg {
+                      margin-right: 0.3rem;
+                    }
+                  }
+                }
+                &:nth-child(1) {
+                  h1 {
+                    span {
+                      background-color: rgba(116, 59, 150, 0.2);
+                      border-radius: 1rem;
+                      color: var(--accent-color);
+                    }
+                  }
+                }
+                &:nth-child(2) {
+                  h1 {
+                    span {
+                      background-color: rgba(225, 178, 11, 0.2);
+                      border-radius: 1rem;
+                      color: #e1b20b;
+                    }
+                  }
+                }
+              }
+            }
           }
-          .graph {
+          .line-chart {
+            canvas {
+              margin-top: auto;
+            }
           }
           .pie-chart {
+            // h3 {
+            //   margin: 1rem;
+            //   font-size: 1.4rem;
+            // }
+            // .info {
+            //   margin: 0 auto;
+            // }
+            canvas {
+              height: 22rem !important;
+              width: 22rem !important;
+              margin-inline: auto;
+            }
           }
         }
         .events {
@@ -264,7 +348,7 @@
           .header {
             display: flex;
             align-items: center;
-            padding: 0;
+            justify-content: space-between;
             h1 {
               font-size: 2rem;
               font-weight: 400;
@@ -336,6 +420,11 @@
                     object-fit: cover;
                     margin-inline: auto;
                   }
+                  svg {
+                    width: 2rem;
+                    margin-inline: auto;
+                    cursor: pointer;
+                  }
                 }
               }
             }
@@ -343,19 +432,35 @@
         }
       }
       .right {
-        width: 18vw;
+        // width: 18vw;
+        width: 100%;
         .announcement {
           margin-top: 2rem;
-          height: 41rem;
           padding: 1.5rem;
           background-color: var(--bg-primary);
           border-radius: 1.5rem;
-          h2 {
-            font-size: 2rem;
-            font-weight: 500;
+          & > h2 {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-black);
+            span {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 2rem;
+              height: 2rem;
+              border-radius: 50%;
+              margin-left: 1rem;
+              background-color: var(--bg-white);
+            }
           }
           .cards {
             margin-top: 1rem;
+            height: 30rem;
+            padding-right: 0.8rem;
+            overflow-y: auto;
             .card {
               display: flex;
               position: relative;
@@ -363,14 +468,18 @@
               background-color: var(--bg-white);
               box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
               border-radius: 1rem;
+              width: 100%;
+              height: 9rem;
+              margin-bottom: 1rem;
               svg {
                 top: 0;
                 right: 0;
+                cursor: pointer;
               }
               p {
                 font-size: 1.3rem;
                 line-height: 1.4;
-                margin-inline: 1rem;
+                margin-right: 2rem;
               }
               span {
                 font-size: 1.2rem;
@@ -378,16 +487,59 @@
                 bottom: 0;
                 right: 0;
                 line-height: 1;
-                margin: .7rem;
+                margin: 0.7rem;
               }
             }
           }
         }
         .help-center {
+          //   height: 20rem;
+          margin-top: 2rem;
+          padding: 1.5rem;
+          background-color: var(--bg-primary);
+          border-radius: 1.5rem;
+          & > h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-black);
+          }
+          & > div {
+            p {
+              font-size: 1.3rem;
+              cursor: pointer;
+            }
+          }
         }
         .download {
+          margin-top: 2rem;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          background-color: var(--accent-color);
+          h1 {
+            font-size: 1.6rem;
+            text-align: center;
+            color: var(--text-white);
+            line-height: 2.4rem;
+            text-transform: uppercase;
+          }
         }
         .support {
+          margin-top: 2rem;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          background-image: url("https://s3-alpha-sig.figma.com/img/377e/715f/157f4937cc971ffc954a3c37d8eaa737?Expires=1658707200&Signature=P9dZCUFnmW6yKm9oH8vTh4RSpurT4RLTS9TK9T2D01i6dPPU-A2GfLQRkv5pDsHqKJhRCLXIvMDQz7QVM4NPfRsFFW7DUc59XOiY839xmWWVL2NKaGi~HX5O7FxYOlwmvv8doMp-XfooWPiZZS6I4NvGYHmf21f6nOOyOzpHyTXDPUDMF7qh5Sf8OUiZ~~wtB~gUv~BmBlld17vAKFec4LAzJghswBNjpkBIy4b1dR4-3lAMZ1CSFe-GnJGwPESPk5EsQ55X5TiDs9L9K70o17r1BwkrhAPHMrl1-j0wAbdhl~wHe~MVCSrEOhuUv1S81~Noc-kxQkBgAw88Mr4COA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+          background-position: center;
+          background-size: cover;
+          h1 {
+            font-size: 1.6rem;
+            text-align: center;
+            color: var(--text-white);
+            line-height: 2rem;
+          }
+          p {
+            color: var(--text-white);
+            text-align: center;
+          }
         }
       }
     }
