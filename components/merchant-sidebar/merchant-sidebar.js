@@ -20,10 +20,10 @@ export default function MerchantSideBar() {
       icon: <RefreshIcon />,
       url: "/merchant/dashboard/biodata",
     },
-    { title: "report", icon: <ReceiptIcon />, url: "/" },
+    { title: "orders", icon: <ReceiptIcon />, url: "/merchant/item-orders" },
     { title: "wallet", icon: <WalletIcon />, url: "/" },
-    { title: "events", icon: <MenuBoardIcon />, url: "/" },
-    { title: "profile", icon: <ProfileCircleIcon />, url: "/" },
+    { title: "events", icon: <MenuBoardIcon />, url: "/merchant/events" },
+    { title: "profile", icon: <ProfileCircleIcon />, url: "/merchant/profile" },
   ];
 
   return (
