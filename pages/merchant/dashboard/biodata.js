@@ -7,7 +7,7 @@ import styles from "../../../styles/merchant/biodata.module.scss";
 
 const biodata = () => {
   return (
-    <section className={styles.container}>
+    <section className={`${styles.container} bg-white`}>
       <MerchantSideBar />
       <div className={styles.main}>
         <div className={styles.header}>
