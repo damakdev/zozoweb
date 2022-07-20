@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   LeftArrow,
   RightArrow,
@@ -7,13 +8,40 @@ import {
   CloseIcon,
   DebitCardIcon,
   CashIcon,
+  UpwardTriangle,
+  DownwardTriangle,
 } from "../../../public/svg/icons";
+import { lineChartData, pieChartData } from "../../../public/data";
+import { motion } from "framer-motion";
 import MerchantSideBar from "../../../components/merchant-sidebar";
+import LineChart from "../../../components/line-chart";
+import PieChart from "../../../components/pie-chart";
 import Button from "../../../components/ui/button/";
 import styles from "../../../styles/merchant/dashboard.module.scss";
 
 export default function Index() {
   const cards = [null, null, null, null, null, null, null];
+  const [chartData, setchartData] = useState({
+    labels: lineChartData.map((item) => item.month),
+    datasets: [
+      {
+        id: 1,
+        label: "Pending",
+        data: lineChartData.map((item) => item.pending),
+        backgroundColor: "#E1B20B",
+        borderColor: "#E1B20B",
+        borderWidth: 1,
+      },
+      {
+        id: 2,
+        label: "Disbursed",
+        data: lineChartData.map((item) => item.disbursed),
+        backgroundColor: "#743B96",
+        borderColor: "#743B96",
+        borderWidth: 1,
+      },
+    ],
+  });
   return (
     <section className={styles.container}>
       <MerchantSideBar />
@@ -57,7 +85,7 @@ export default function Index() {
           <div className={styles["profile-info"]}>
             <NotificationBellIcon />
             <div>
-              <img
+              <motion.img
                 src="https://s3-alpha-sig.figma.com/img/e3f4/cd54/1e2dd8e0e7156a94e9ba564bddfff442?Expires=1658707200&Signature=hJi8OrjZc1iKoVfLfLizMSAqq1BtY~oYRjErGNoZeslB9FXOj2E1U0ydj0P~ndYtOHatpa9Dp3OkyEKh8G2MrZfsT1QSXAXR-Ywo9Alu1ZkhrpZIZXxOM8ndDYgL~Wog2TOp5GpCD8VYTvRSa8cIZosgtpDtlmQjz~HyamPHBi9LRNlJPYY1ufFYGe5W~L1UDYEIGZJfevYsEnTXT-wRddXRehcL4HWLRXaS0CuFogbqA-DukCvnZRRVP66KZ8oPPnAfVD~k74q4OwiTnUzr4v2Rb18~QzDCu9CXSQNowBIcix2L0qY5NaQZ0mpCMp-lYaCwvoanZTDMkUOcrdNApg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
                 alt=""
               />
@@ -100,8 +128,103 @@ export default function Index() {
             </div>
 
             <div className={styles.stats}>
-              <div className={styles.graph}></div>
-              <div className={styles["pie-chart"]}></div>
+              <div className={styles["line-chart"]}>
+                <div className={styles.info}>
+                  <div>
+                    <span>Disbursed Items</span>
+                    <h1>
+                      79{" "}
+                      <span>
+                        <UpwardTriangle />
+                        7%
+                      </span>
+                    </h1>
+                  </div>
+                  <div>
+                    <span>Pending Items</span>
+                    <h1>
+                      5{" "}
+                      <span>
+                        <DownwardTriangle />
+                        5%
+                      </span>
+                    </h1>
+                  </div>
+                </div>
+                <LineChart
+                  datasetIdKey="line-chart"
+                  data={chartData}
+                  options={{
+                    plugins: {
+                      legend: {
+                        position: "bottom",
+                        labels: {
+                          usePointStyle: true,
+                          pointStyle: "circle",
+                          padding: 15,
+                          boxWidth: 5,
+                        },
+                      },
+                    },
+                  }}
+                />
+              </div>
+              <div className={styles["pie-chart"]}>
+                {/* <h3>Total auction poster vs visit per auction</h3> */}
+                <div className={styles.info}>
+                  <div>
+                    <span>Disbursed Items</span>
+                    <h1>
+                      79{" "}
+                      <span>
+                        <UpwardTriangle />
+                        7%
+                      </span>
+                    </h1>
+                  </div>
+                  <div>
+                    <span>Pending Items</span>
+                    <h1>
+                      5{" "}
+                      <span>
+                        <DownwardTriangle />
+                        5%
+                      </span>
+                    </h1>
+                  </div>
+                </div>
+                <PieChart
+                  datasetIdKey="pie-chart"
+                  data={{
+                    labels: pieChartData.map((item) => item.label),
+                    datasets: [
+                      {
+                        id: 1,
+                        label: "Pending",
+                        data: pieChartData.map((item) => item.stats),
+                        backgroundColor: ["#E1B20B", "#743B96", "#8A92A6"],
+                        borderColor: "#f3f3f3",
+                        // borderColor: ["#E1B20B", "#743B96", "#8A92A6"],
+                        borderWidth: 2,
+                      },
+                    ],
+                  }}
+                  options={{
+                    plugins: {
+                      legend: {
+                        position: "right",
+                        // rtl: true,
+                        labels: {
+                          usePointStyle: true,
+                          pointStyle: "circle",
+                          padding: 15,
+                          boxWidth: 7,
+                        },
+                      },
+                    },
+                  }}
+                />
+              </div>
             </div>
 
             <div className={styles.events}>
@@ -133,7 +256,7 @@ export default function Index() {
                           <input type="checkbox" />
                         </td>
                         <td>
-                          <img
+                          <motion.img
                             src="https://s3-alpha-sig.figma.com/img/fee9/0241/5b6f660acfad2e9a8a6fee90133a1f11?Expires=1658707200&Signature=c96IekTKe~E4-x1u4LK1Q6HI9olfmoY8VygfllpC3vH8hu2~QV4qgT0K-Gv45aoUBzzkY1Rqamqy~tjT6R6MEJlff80DC9wzwlSNYFBC2WxytyhKF0MMYghwTI5RT8N9jSp4~zcerQF299IZjEgGOR7zMky42tBYnL~EUas8Row583XR~ApCPPmVWm7tHrkcXs55G6HFtTHW6vdqWzIV7FafpwTW1~76bCPmFWgv5CqBw3fFr7ccEz~BqKvwk7mUf0ADmAWTpOMqkHl8nf4P-Qy2MO51C72MB8G-JZyd49f8vavzxjT8CIvf3vRuMjdtXwUQJoz9OF08pcFXmpyWvQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
                             alt=""
                           />
@@ -192,7 +315,7 @@ export default function Index() {
             </div>
             <div className={styles.support}>
               <h1>Need help?</h1>
-              <p>24/7 support cernter</p>
+              <p>24/7 support center</p>
             </div>
           </div>
         </div>
