@@ -1109,3 +1109,36 @@ export function ProgressBar2(props) {
     </svg>
   );
 }
+
+export function UpwardTriangle(props) {
+  return (
+    <svg
+      {...props}
+      width="5"
+      height="3"
+      viewBox="0 0 5 3"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M2.5 0L4.66506 2.5L0.334936 2.5L2.5 0Z" fill="#743B96" />
+    </svg>
+  );
+}
+
+export function DownwardTriangle(props) {
+  return (
+    <svg
+      {...props}
+      width="5"
+      height="4"
+      viewBox="0 0 5 4"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.5 3.33301L0.334936 0.833008H4.66506L2.5 3.33301Z"
+        fill="#E1B20B"
+      />
+    </svg>
+  );
+}
