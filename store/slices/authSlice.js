@@ -1,10 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { register } from "../../services/api";
+
+// const zozo = JSON.parse(localStorage.getItem("zozo"));
+
+export const registerCustomer = createAsyncThunk(
+  `customer/register`,
+  async (body) => {
+      const response = await register(body);
+      console.log(response);
+      return response;
+    try {
+    } 
+    catch (error) {
+      return error;
+    }
+  }
+);
 
 const initialState = {
-  token: null,
-  user: null,
-  error: null,
-  loading: false,
+  customer: { token: null, user: null, error: null, loading: false },
+  merchant: { token: null, user: null, error: null, loading: false },
 };
 
 export const authSlice = createSlice({
@@ -12,21 +27,30 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      state.token = action.payload.token;
-      state.user = action.payload.user;
+      state.customer.token = action.payload.token;
+      state.customer.user = action.payload.user;
     },
     loginError: (state, action) => {
-      state.error = action.payload.error;
+      state.customer.error = action.payload.error;
     },
     loading: (state, action) => {
-      state.loading = action.payload.loading;
+      state.customer.loading = action.payload.loading;
     },
     logOut: (state) => {
-      state.token = null;
-      state.user = null;
-      state.error = null;
-      state.loading = false;
+      state.customer.token = null;
+      state.customer.user = null;
+      state.customer.error = null;
+      state.customer.loading = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(registerCustomer.pending, (state) => {
+      state.customer.loading = true;
+    });
+    builder.addCase(registerCustomer.fulfilled, (state, action) => {
+      state.customer.loading = false;
+      state.customer.user = action.payload.data;
+    });
   },
 });
 
