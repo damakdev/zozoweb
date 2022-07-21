@@ -65,9 +65,12 @@ function About({ canEdit, isEdit }) {
 						disabled={isEdit}
 					/>
 				</div>
+
+				
 			</div>
 			{!isEdit && (
 				<div className="mt-20">
+					<p>Hello world</p>
 					<Button
 						name="Cancel"
 						bgColor="#7D7D7D"
