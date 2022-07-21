@@ -143,4 +143,4 @@ const BioData = () => {
   );
 };
 
-export default biodata;
+export default BioData;
