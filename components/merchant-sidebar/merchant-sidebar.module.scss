@@ -1,12 +1,13 @@
 .container {
-  padding-top: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: fixed;
+  padding-top: 5rem;
+  padding-inline: 1rem;
   background-color: var(--accent-color);
   height: 100vh;
-  width: 7%;
+  width: 9rem;
   z-index: 6;
   .logo {
     margin-bottom: 3rem;
@@ -19,6 +20,10 @@
     li {
       padding: 1.4rem 0;
       a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         svg {
           //   height: 1rem;
           path {
@@ -33,20 +38,24 @@
             }
           }
         }
+        span {
+          color: var(--text-white);
+          text-transform: capitalize;
+        }
       }
       .active {
         position: relative;
-        path {
-          &:nth-child(1),
-          &:nth-child(2),
-          &:nth-child(3) {
-            opacity: 0.8;
-          }
-        }
+        // path {
+        //   &:nth-child(1),
+        //   &:nth-child(2),
+        //   &:nth-child(3) {
+        //     opacity: 0.8;
+        //   }
+        // }
         &::before {
           content: "";
           position: absolute;
-          bottom: -1rem;
+          bottom: -0.5rem;
           left: 50%;
           transform: translateX(-50%);
           background-color: var(--bg-white);

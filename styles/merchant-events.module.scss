@@ -38,3 +38,32 @@
 	background-color: var(--accent-color);
 	color: white;
 }
+
+.modal {
+	span{
+		color: red;
+	}
+	label {
+		display: block;
+		font-weight: 400;
+		font-size: 17px;
+		color: black;
+		margin-bottom: 15px;
+	}
+	input, textarea {
+		border: none;
+		background-color: #cac9c966;
+		padding: 10px 20px;
+		outline: none;
+	}
+
+
+	input:focus {
+		border-bottom: 1px solid black;
+	}
+	input:focus:last-child {
+		border-bottom: none;
+	}
+
+	
+}

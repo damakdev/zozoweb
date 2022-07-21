@@ -1,0 +1,140 @@
+.container {
+    background-color: white;
+     .main {
+         position: relative;
+         margin-left: 12rem;
+         padding-bottom: 5rem;
+ 
+         .header {
+             display: flex;
+             justify-content: space-between;
+             padding: 3rem;
+ 
+             .title {
+                 h1 {
+                     font-size: 2rem;
+                 }
+ 
+             }
+ 
+             .profile-info {
+                 display: flex;
+                 position: relative;
+ 
+                 &::before {
+                     position: absolute;
+                     top: 0;
+                     left: -4rem;
+                     height: 4rem;
+                     width: 0.2rem;
+                     border-radius: 3rem;
+                     background-color: var(--bg-primary);
+                     content: "";
+                 }
+ 
+                 svg {
+                     margin-right: 3rem;
+                 }
+ 
+                 &>div {
+                     display: flex;
+ 
+                     img {
+                         width: 4rem;
+                         height: 4rem;
+                         border-radius: 50%;
+                         object-fit: cover;
+                         margin-right: 1.5rem;
+                     }
+ 
+                     h3 {
+                         color: var(--bg-black);
+                         font-size: 2rem;
+ 
+                         span {
+                             font-size: 1.4rem;
+                             display: block;
+                             color: var(--text-primary);
+                             cursor: pointer;
+ 
+                             &:hover {
+                                 text-decoration: underline;
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+ 
+         .form {
+             border: 3px solid #D9D9D9;
+             border-radius: 0.5rem;
+             padding:5rem ;
+             padding-right: 10rem;
+             padding-left: 10rem;
+              span {
+                font-size: 16px;
+                font-weight: 700;
+                color: black;
+                
+              }
+             input[type=text] {
+                 width: 35rem;
+                 height: 5rem;
+                 border-radius: 0.5rem;
+                 border: 2px solid #D9D9D9;
+                
+             }
+ 
+         }
+         label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000;
+            input[type=checkbox] {
+                width: 1.3rem;
+                height: 1.3rem;
+                border-radius: 0.5rem;
+                border: 2px solid #D9D9D9;
+                
+               
+            }
+         }       
+ 
+         .save {
+             margin-top: 20rem;
+             display: flex;
+             justify-content: center;
+ 
+             button {
+                 width: 40rem;
+ 
+             }
+         }
+        
+         
+     }
+     
+ }
+ .success {
+    p {
+      text-align: center;
+      color: #0cbc8b;
+      line-height: 1.4;
+      font-size: 1.7rem;
+      margin-bottom: 4rem;
+    }
+    svg {
+      margin-inline: auto;
+      margin-bottom: 5rem;
+    }
+    button {
+      width: 23rem;
+      height: 6rem;
+      display: block;
+      margin-inline: auto;
+      margin-bottom: 2rem;
+      background-color: #0cbc8b;
+      
+    }
+  }

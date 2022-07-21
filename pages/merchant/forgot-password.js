@@ -1,24 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import OtpInput from "react-otp-input";
 import Link from "next/link";
+import Logo from "../../components/logo";
 import Button from "../../components/ui/button/";
 import Modal from "../../components/modal/modal";
 import ForgotPasswordBanner from "../../public/images/forgot-password-banner.png";
 import styles from "../../styles/merchant/forgot-password.module.scss";
 
 export default function Index() {
+  const [pin, setPin] = useState("");
   const [modalDisplay, setModalDisplay] = useState(false);
+  console.log(pin);
 
   function handleRequest(e) {
     e.preventDefault();
     setModalDisplay((modalDisplay) => !modalDisplay);
   }
 
+  useEffect(() => {
+    if (modalDisplay) {
+      const interval = setInterval(() => {
+        setModalDisplay(false);
+      }, 5000);
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [modalDisplay]);
+
   return (
     <>
       <div className={styles.container}>
+        <Logo/>
         <div className={styles.main}>
           <div>
-            {/* <ForgotPasswordBanner /> */}
             <img src={ForgotPasswordBanner.src} alt="" />
           </div>
           <form onSubmit={handleRequest}>
@@ -47,9 +63,25 @@ export default function Index() {
             <br />
             ******den@gmail.com
           </p>
-          <div>
-            <input type="text" />
+          <OtpInput
+            value={pin}
+            onChange={(pin) => setPin(pin)}
+            numInputs={4}
+            containerStyle={styles.inputs}
+            shouldAutoFocus
+          />
+          <div className={styles.countdown}>
+            <CountdownCircleTimer
+              isPlaying
+              size={55}
+              strokeWidth={2}
+              duration={5}
+              colors="#743b96"
+            >
+              {({ remainingTime }) => `${remainingTime}s`}
+            </CountdownCircleTimer>
           </div>
+          <button>Resend verification link</button>
         </div>
       </Modal>
     </>
