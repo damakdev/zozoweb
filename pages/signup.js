@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { EyeOn, EyeOff, GoogleIcon } from "../public/svg/icons";
@@ -23,7 +24,11 @@ export default function Index() {
       password,
     };
     try {
-      const response = await register({ title: "foo", body: "bar", userId: 1 });
+      // const response = await register({ title: "foo", body: "bar", userId: 1 });
+      const response = await axios.post(
+        `https://smart-park.xyz/api/v1/register`,
+        body
+      );
       console.log(response);
     } catch (error) {}
     // dispatch(registerCustomer(body));

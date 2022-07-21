@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
     }
     // const { token } = JSON.parse(localStorage.getItem("zozo"));
 
-    axios.defaults.baseURL = "https://smart-park.xyz/api/v1";
+    // axios.defaults.baseURL = "https://smart-park.xyz/api/v1";
     axios.defaults.headers.post["Content-Type"] = "application/json";
     // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
   }, [errorMessage]);
