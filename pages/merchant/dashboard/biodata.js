@@ -1,11 +1,16 @@
 import React from "react";
 import Link from "next/link";
-import { TimerIcon, NotificationBellIcon, WalletIcon, ProgressBar } from "../../../public/svg/icons";
+import {
+  TimerIcon,
+  NotificationBellIcon,
+  WalletIcon,
+  ProgressBar,
+} from "../../../public/svg/icons";
 import MerchantSideBar from "../../../components/merchant-sidebar";
 import Button from "../../../components/ui/button/";
 import styles from "../../../styles/merchant/biodata.module.scss";
 
-const biodata = () => {
+const BioData = () => {
   return (
     <section className={`${styles.container} bg-white`}>
       <MerchantSideBar />
@@ -21,7 +26,7 @@ const biodata = () => {
           </div>
           <div>
             <div className={styles["profile-info"]}>
-                <ProgressBar/>
+              <ProgressBar />
               <NotificationBellIcon />
               <div>
                 <img
@@ -91,27 +96,45 @@ const biodata = () => {
               <input type="text" />
             </form>
             <div className={styles.submit}>
-                <Link href="/merchant/dashboard/account-details"><Button>Submit</Button></Link>
-              
+              <Link href="/merchant/dashboard/account-details">
+                <Button>Submit</Button>
+              </Link>
             </div>
           </div>
           <div className="pr-20">
             <div className={styles.card1}>
-              <div className={styles.svg}><NotificationBellIcon /></div>
+              <div className={styles.svg}>
+                <NotificationBellIcon />
+              </div>
               <p>
                 Please type carefully and fill out the form with corporate’s
                 personal details.It will take 24 hours to verify your account
               </p>
             </div>
             <div className={styles.card2}>
-            <div className={styles.svg}> <WalletIcon/> </div>
-                <p>Proof of Address:Acceptable format;</p>
-                <ol type="1">
-                    <li>1. Note at any point in time. you can always save and continue later </li>
-                    <li>2. Note at any point in time. you can always save and continue later </li>
-                    <li>3. Note at any point in time. you can always save and continue later </li>
-                    <li>4. Note at any point in time. you can always save and continue later </li>
-                </ol>
+              <div className={styles.svg}>
+                {" "}
+                <WalletIcon />{" "}
+              </div>
+              <p>Proof of Address:Acceptable format;</p>
+              <ol type="1">
+                <li>
+                  1. Note at any point in time. you can always save and continue
+                  later{" "}
+                </li>
+                <li>
+                  2. Note at any point in time. you can always save and continue
+                  later{" "}
+                </li>
+                <li>
+                  3. Note at any point in time. you can always save and continue
+                  later{" "}
+                </li>
+                <li>
+                  4. Note at any point in time. you can always save and continue
+                  later{" "}
+                </li>
+              </ol>
             </div>
           </div>
         </div>
