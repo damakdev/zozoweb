@@ -20,7 +20,7 @@ export default function AdsSlider({ data }) {
           <div>
             <h1>{data[index]?.title}</h1>
             <p>{data[index]?.text}</p>
-            <Link href="">{data[index]?.cta}</Link>
+            <Link href="/">{data[index]?.cta}</Link>
           </div>
         </motion.div>
       </AnimatePresence>

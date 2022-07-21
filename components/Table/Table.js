@@ -42,7 +42,7 @@ function Table({ data, thead, name, viewDetails}) {
 									<td>{item.bidder_name}</td>
 									<td>{item.bidder_id}</td>
 									<td>{item.date}</td>
-									<td onClick={viewDetails}>...</td>
+									<td onClick={viewDetails} colSpan="2" className="cursor-pointer tracking-widest">...</td>
 								</tr>
 							);
 						})}

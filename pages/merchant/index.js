@@ -14,7 +14,7 @@ export default function Index() {
         </h1>
       </div>
       <div className={styles.footer}>
-        <Link href="/">Get Started</Link>
+        <Link href="/merchant/dashboard">Get Started</Link>
         <Link href="/merchant/login">Log In</Link>
       </div>
     </section>

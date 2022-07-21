@@ -13,7 +13,7 @@ import {
 import styles from "./merchant-sidebar.module.scss";
 
 export default function MerchantSideBar() {
-//	const [activeLink, setActiveLink] = useState(0);
+	const [activeLink, setActiveLink] = useState(0);
   const router = useRouter()
 	const links = [
 		{ title: "home", icon: <HomeIcon />, url: "/merchant/dashboard" },

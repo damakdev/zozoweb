@@ -1,15 +1,32 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { EyeOn, EyeOff, GoogleIcon } from "../public/svg/icons";
 import { SignUpBanner } from "../public/svg/images";
+import { registerCustomer } from "../store/slices/authSlice";
+import { register, login } from "../services/api";
 import Link from "next/link";
 import Button from "../components/ui/Button";
 import styles from "../styles/signup.module.scss";
 
 export default function Index() {
+  const dispatch = useDispatch();
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
   const [inputType, setInputType] = useState("password");
 
-  function signupHandler(e) {
+  async function signupHandler(e) {
     e.preventDefault();
+    const body = {
+      first_name: "John",
+      last_name: "Doe",
+      email: emailAddress,
+      password,
+    };
+    try {
+      const response = await register({ title: "foo", body: "bar", userId: 1 });
+      console.log(response);
+    } catch (error) {}
+    // dispatch(registerCustomer(body));
   }
 
   return (
@@ -33,11 +50,23 @@ export default function Index() {
           </div>
           <div className={styles["form-group"]}>
             <label htmlFor="email">Email Address</label>
-            <input type="email" id="email" name="email" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
+            />
           </div>
           <div className={styles["form-group"]}>
             <label htmlFor="password">Password</label>
-            <input type={inputType} id="password" name="password" />
+            <input
+              type={inputType}
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             {inputType === "text" ? (
               <EyeOff onClick={() => setInputType("password")} />
             ) : (
