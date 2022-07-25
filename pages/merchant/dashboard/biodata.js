@@ -41,8 +41,8 @@ const BioData = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-20">
-          <div className={styles.form}>
+        <div className="flex gap-10">
+          <div className={`${styles.form} w-2/3`}>
             <form action="">
               <h3 className="mb-20">Personal Information</h3>
               <div className="flex gap-10">
@@ -101,7 +101,7 @@ const BioData = () => {
               </Link>
             </div>
           </div>
-          <div className="pr-20">
+          <div className="pr-10 w-1/3">
             <div className={styles.card1}>
               <div className={styles.svg}>
                 <NotificationBellIcon />
