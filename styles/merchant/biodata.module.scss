@@ -1,14 +1,15 @@
 
 .container {
-   
-    .main {
-        background-color: white;
+    
+    background-color: white;
+    height: 100%;
   
-        position: fixed;
+    .main {
+       
+        
         margin-left: 9.5rem;
         padding-bottom: 5rem;
         
-
         .header {
             display: flex;
             justify-content: space-between;

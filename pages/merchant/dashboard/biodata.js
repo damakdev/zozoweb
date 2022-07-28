@@ -12,7 +12,7 @@ import styles from "../../../styles/merchant/biodata.module.scss";
 
 const BioData = () => {
   return (
-    <section className={`${styles.container} bg-white`}>
+    <section className={styles.container}>
       <MerchantSideBar />
       <div className={styles.main}>
         <div className={styles.header}>
@@ -107,9 +107,10 @@ const BioData = () => {
                 <NotificationBellIcon />
               </div>
               <p>
-                Please type carefully and fill out the form with corporate’s
-                personal details.It will take 24 hours to verify your account
+                Enter personal information required for identification. Fields
+                marked * are compulsory
               </p>
+              <p>It will take 24hours before your account can be validated*</p>
             </div>
             <div className={styles.card2}>
               <div className={styles.svg}>
