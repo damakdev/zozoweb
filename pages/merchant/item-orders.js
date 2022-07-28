@@ -2,7 +2,7 @@ import { useState } from "react";
 import Table from "../../components/Table/Table";
 import MerchantLayout from "../../components/MerchantLayout";
 import MerchantNav from "../../components/Merchant/Merchant_Nav";
-import styles from "../../styles/Items-order.module.scss";
+import styles from "../../styles/merchant/Items-order.module.scss";
 import {
 	FilterIcon,
 	Bell,
