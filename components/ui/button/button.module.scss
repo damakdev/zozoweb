@@ -1,5 +1,8 @@
 .button,
 .button:visited {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   border-radius: 0.5rem;
   height: 5rem;
