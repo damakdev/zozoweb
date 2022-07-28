@@ -41,7 +41,7 @@ const BioData = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-10">
+        <div className="flex gap-10 pl-5">
           <div className={`${styles.form} w-2/3`}>
             <form action="">
               <h3 className="mb-20">Personal Information</h3>
