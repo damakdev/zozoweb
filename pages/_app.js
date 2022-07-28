@@ -2,9 +2,10 @@ import axios from "axios";
 import Head from "next/head";
 import Layout from "../components/layout";
 import { useState, useEffect } from "react";
-import { store } from "../store";
+import { persistor, store } from "../store";
 import { Provider } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer, Slide, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.scss";
 
@@ -17,20 +18,21 @@ function MyApp({ Component, pageProps }) {
       return config;
     },
     function (error) {
-      setErrorMessage("error");
       // console.log(error);
+      setErrorMessage("Something went wrong with this request");
       return Promise.reject(error);
     }
   );
 
   axios.interceptors.response.use(
     function (response) {
-      // console.log(response);
+      console.log("response interceptor", response);
       return response;
     },
     function (error) {
-      setErrorMessage(error.message);
-      // console.log(error);
+      console.log("error interceptor", error);
+      setErrorMessage(error.response.data.message);
+      // setErrorMessage("error");
       return Promise.reject(error);
     }
   );
@@ -40,20 +42,35 @@ function MyApp({ Component, pageProps }) {
       toast.error(errorMessage);
       setErrorMessage(null);
     }
-    // const { token } = JSON.parse(localStorage.getItem("zozo"));
-
-    // axios.defaults.baseURL = "https://smart-park.xyz/api/v1";
-    axios.defaults.headers.post["Content-Type"] = "application/json";
-    // axios.defaults.headers.common["Authorization"] = "Bearer " + token;
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (localStorage.getItem("persist:zozo")) {
+      const { customer } = JSON.parse(localStorage.getItem("persist:zozo"));
+      const { token } = JSON.parse(customer);
+      console.log(token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}
+      `;
+    }
+    axios.defaults.baseURL = "https://bilikie.com/api/v1";
+    axios.defaults.headers.post["Content-Type"] = "application/json";
+  }, []);
 
   return (
     <Provider store={store}>
       <Head>
         <title>Zozo</title>
       </Head>
-      <ToastContainer />
-      <Component {...pageProps} />
+      <ToastContainer
+        position="bottom-left"
+        autoClose={2000}
+        hideProgressBar={true}
+        pauseOnFocusLoss={false}
+        transition={Slide}
+      />
+      <PersistGate loading={null} persistor={persistor}>
+        <Component {...pageProps} />
+      </PersistGate>
       {/* <Layout>
       </Layout> */}
     </Provider>
