@@ -2,7 +2,7 @@ import React from "react";
 import { HouseIcon } from "../../../public/svg/icons";
 import Table from "../../Table/Table";
 
-function Overview() {
+function BidAccess() {
 	const thead = [
 		"Date Initiated",
 		"Merchant ID",
@@ -192,4 +192,4 @@ function Overview() {
 	);
 }
 
-export default Overview;
+export default BidAccess;
