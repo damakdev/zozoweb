@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux";
+import { logOutCustomer } from "../../store/slices/authSlice";
 import logo from "../../public/images/logo-colored.png";
 import searchIcon from "../../assets/search.svg";
 import cart from "../../assets/cart.svg";
@@ -5,13 +7,14 @@ import wishlist from "../../assets/wishlist.svg";
 import profile from "../../assets/profile.svg";
 import Link from "next/link";
 import breadcrumb from "../../assets/breadcrumb.svg";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../ui/Button";
 import styles from "../../styles/Nav.module.scss";
 
 function Nav() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth.customer);
+
   return (
     <>
       <header className={`${styles.header}   `}>
@@ -51,20 +54,28 @@ function Nav() {
               </a>
             </Link>
 
-            <Link href="/login">
-              <a className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</a>
-            </Link>
+            {!user && (
+              <>
+                <Link href="/login">
+                  <a className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</a>
+                </Link>
 
-            <Link href="/signup">
-              <a>
-                <Button
-                  name="SIGN UP"
-                  paddingY="7px"
-                  paddingX="30px"
-                  fontSize="14px"
-                />
-              </a>
-            </Link>
+                <Link href="/signup">
+                  <a>
+                    <Button
+                      name="SIGN UP"
+                      paddingY="7px"
+                      paddingX="30px"
+                      fontSize="14px"
+                    />
+                  </a>
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <button onClick={() => dispatch(logOutCustomer())}>Logout</button>
+            )}
           </div>
         </div>
       </header>

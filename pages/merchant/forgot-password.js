@@ -32,7 +32,7 @@ export default function Index() {
   return (
     <>
       <div className={styles.container}>
-        <Logo/>
+        <Logo />
         <div className={styles.main}>
           <div>
             <img src={ForgotPasswordBanner.src} alt="" />
@@ -41,8 +41,13 @@ export default function Index() {
             <h1>Forgot Password?</h1>
             <p>Don&apos;t worry we will help you out!!</p>
             <div className={styles["form-group"]}>
-              <label htmlFor="email">Email Address</label>
-              <input type="email" id="email" name="email" />
+              {/* <label htmlFor="email">Email Address</label> */}
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email Address"
+              />
             </div>
             <Button>Request Password Change</Button>
             <span>
