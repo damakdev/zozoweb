@@ -91,7 +91,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const getBidEventAccess = createAsyncThunk(
+  export const getBidEvent = createAsyncThunk(
     `events/getBidEventAccess`,
     async (body) => {
       console.log(body);
@@ -106,7 +106,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const resendBidEventAccess = createAsyncThunk(
+  export const resendBidEvent = createAsyncThunk(
     `events/resendBidEventAccess`,
     async (body) => {
       console.log(body);
@@ -121,7 +121,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const accessBidEvent = createAsyncThunk(
+  export const accessBid = createAsyncThunk(
     `events/accessBidEvent`,
     async (body) => {
       console.log(body);
@@ -136,7 +136,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const bidOnEvent = createAsyncThunk(
+  export const getBidOnEvent = createAsyncThunk(
     `events/bidOnEvent`,
     async (body) => {
       console.log(body);
@@ -151,7 +151,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const getBiddingEventByStatus = createAsyncThunk(
+  export const biddingEventByStatus = createAsyncThunk(
     `events/getBiddingEventByStatus`,
     async (body) => {
       console.log(body);
@@ -166,7 +166,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const getSingleCustomerEvent = createAsyncThunk(
+  export const singleCustomerEvent = createAsyncThunk(
     `events/getSingleCustomerEvent`,
     async (body) => {
       console.log(body);
@@ -181,7 +181,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const getAllCustomerEvents = createAsyncThunk(
+  export const allCustomerEvents = createAsyncThunk(
     `events/getAllCustomerEvents`,
     async (body) => {
       console.log(body);
@@ -196,7 +196,7 @@ export const getApprovedBidding = createAsyncThunk(
     }
   );
 
-  export const removeCustomerEvent = createAsyncThunk(
+  export const getRemoveCustomerEvent = createAsyncThunk(
     `events/removeCustomerEvent`,
     async (body) => {
       console.log(body);
@@ -282,100 +282,100 @@ export const getApprovedBidding = createAsyncThunk(
           .addCase(    getBiddingEventsByCategoryNames.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(      getBidEventAccess.pending, (state, action) => {
+          .addCase(      getBidEvent.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(      getBidEventAccess.fulfilled, (state, action) => {
+          .addCase(      getBidEvent.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(      getBidEventAccess.rejected, (state, action) => {
+          .addCase(      getBidEvent.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(        resendBidEventAccess.pending, (state, action) => {
+          .addCase(        resendBidEvent.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(        resendBidEventAccess.fulfilled, (state, action) => {
+          .addCase(        resendBidEvent.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(        resendBidEventAccess.rejected, (state, action) => {
+          .addCase(        resendBidEvent.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(          accessBidEvent.pending, (state, action) => {
+          .addCase(          accessBid.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(          accessBidEvent.fulfilled, (state, action) => {
+          .addCase(          accessBid.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(          accessBidEvent.rejected, (state, action) => {
+          .addCase(          accessBid.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(          bidOnEvent.pending, (state, action) => {
+          .addCase(          getBidOnEvent.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(          bidOnEvent.fulfilled, (state, action) => {
+          .addCase(          getBidOnEvent.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(          bidOnEvent.rejected, (state, action) => {
+          .addCase(          getBidOnEvent.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(          getBiddingEventByStatus.pending, (state, action) => {
+          .addCase(          biddingEventByStatus.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(          getBiddingEventByStatus.fulfilled, (state, action) => {
+          .addCase(          biddingEventByStatus.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(          getBiddingEventByStatus.rejected, (state, action) => {
+          .addCase(          biddingEventByStatus.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(            getSingleCustomerEvent.pending, (state, action) => {
+          .addCase(            singleCustomerEvent.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(            getSingleCustomerEvent.fulfilled, (state, action) => {
+          .addCase(            singleCustomerEvent.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(            getSingleCustomerEvent.rejected, (state, action) => {
+          .addCase(            singleCustomerEvent.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(            getAllCustomerEvents.pending, (state, action) => {
+          .addCase(            allCustomerEvents.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(            getAllCustomerEvents.fulfilled, (state, action) => {
+          .addCase(            allCustomerEvents.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(            getAllCustomerEvents.rejected, (state, action) => {
+          .addCase(            allCustomerEvents.rejected, (state, action) => {
             state.status = "error";
           })
-          .addCase(            removeCustomerEvent.pending, (state, action) => {
+          .addCase(            getRemoveCustomerEvent.pending, (state, action) => {
             state.status = "loading";
           })
-          .addCase(            removeCustomerEvent.fulfilled, (state, action) => {
+          .addCase(            getRemoveCustomerEvent.fulfilled, (state, action) => {
             console.log(action.payload)
           //   const data = action.payload
           //   state.category = data
             state.status = "success";
           })
-          .addCase(            removeCustomerEvent.rejected, (state, action) => {
+          .addCase(            getRemoveCustomerEvent.rejected, (state, action) => {
             state.status = "error";
           })
           
