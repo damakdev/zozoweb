@@ -129,7 +129,7 @@ export default function Index() {
                 onClick={() => setNext(false)}
                 className="absolute h-6 -translate-y-60 left-24 cursor-pointer"
               />
-              <div className="grid grid-cols-2 w-100 gap-x-8">
+              <div className="grid grid-cols-2 w-full gap-x-8">
                 <div className={styles["form-group"]}>
                   <label htmlFor="firstName">First Name</label>
                   <input
