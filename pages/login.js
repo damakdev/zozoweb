@@ -1,25 +1,29 @@
 import { useState } from "react";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginCustomer } from "../store/slices/authSlice";
+import { ClipLoader } from "react-spinners";
 import { EyeOn, EyeOff, GoogleIcon } from "../public/svg/icons";
 import { LoginBanner } from "../public/svg/images";
-import Button from "../components/ui/Button";
+import Button from "../components/ui/button/";
 import Link from "next/link";
 import styles from "../styles/login.module.scss";
 
 export default function Index() {
-  const router = useRouter()
-
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth.customer);
+  const { token } = useSelector((state) => state.auth.customer);
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [inputType, setInputType] = useState("password");
 
-  function loginHandler(e) {
+  async function loginHandler(e) {
     e.preventDefault();
-    const token = "qwertyuiop"
-    localStorage.setItem("token", token)
-  
-    router.push('/cart')
-
+    dispatch(loginCustomer({ email, password }));
   }
-
+  if (token) router.push("/");
+  
   return (
     <div className={styles.container}>
       <div className={styles.main}>
@@ -37,11 +41,23 @@ export default function Index() {
           <span>OR</span>
           <div className={styles["form-group"]}>
             <label htmlFor="email">Email Address</label>
-            <input type="email" id="email" name="email" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className={styles["form-group"]}>
             <label htmlFor="password">Password</label>
-            <input type={inputType} id="password" name="password" />
+            <input
+              type={inputType}
+              id="password"
+              name="password"
+              value={[password]}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             {inputType === "text" ? (
               <EyeOff onClick={() => setInputType("password")} />
             ) : (
@@ -57,12 +73,9 @@ export default function Index() {
               <a className={styles["forgot-password"]}>Forgot password?</a>
             </Link>
           </div>
-          <Button
-            name="Log in"
-            width="100%"
-            paddingY="10px"
-            isBoxShadow={true}
-          />
+          <Button>
+            {loading ? <ClipLoader color="#ffffff" size={15} /> : "Log In"}
+          </Button>
 
           <p>
             Don&apos;t have an account?
