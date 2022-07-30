@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
 
   axios.interceptors.response.use(
     function (response) {
-      console.log("response interceptor", response);
+      // console.log("response interceptor", response);
       return response;
     },
     function (error) {
@@ -48,7 +48,6 @@ function MyApp({ Component, pageProps }) {
     if (localStorage.getItem("persist:zozo")) {
       const { customer } = JSON.parse(localStorage.getItem("persist:zozo"));
       const { token } = JSON.parse(customer);
-      console.log(token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}
       `;
     }
@@ -62,17 +61,17 @@ function MyApp({ Component, pageProps }) {
         <title>Zozo</title>
       </Head>
       <ToastContainer
-        position="bottom-left"
+        position="bottom-right"
         autoClose={2000}
         hideProgressBar={true}
         pauseOnFocusLoss={false}
         transition={Slide}
       />
       <PersistGate loading={null} persistor={persistor}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </PersistGate>
-      {/* <Layout>
-      </Layout> */}
     </Provider>
   );
 }

@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { _getApprovedBiddingEvents } from "../store/slices/eventsSlice";
+import { _getAllCategories } from "../store/slices/categoriesSlice";
 import CustomerLayout from "../components/CustomerLayout";
 import Categories from "../components/categories";
 import MainSlider from "../components/main-slider";
@@ -13,6 +17,9 @@ import Slide1 from "../public/images/slider-image-1.jpg";
 import styles from "../styles/home.module.scss";
 
 function Home() {
+  const dispatch = useDispatch();
+  const { biddingEvents } = useSelector((state) => state.events);
+  const { categories } = useSelector((state) => state.categories);
   const mainSlider = Array(5).fill({
     image: Slide1,
     text: `Bid now, Pay less,
@@ -58,7 +65,7 @@ seek win.`,
     <>
       <CustomerLayout>
         <section className={styles.hero}>
-          <Categories />
+          <Categories categories={categories} />
           <MainSlider data={mainSlider} />
           <div className={styles["vertical-sliders"]}>
             <VerticalSlider data={verticalSlider} />
@@ -75,8 +82,14 @@ seek win.`,
             <NewsletterCard />
           </div>
           <div className={styles.content}>
-            <ProductsSection products={products} title="trending products" />
-            <ProductsSection products={products} title="wishlist products" />
+            <ProductsSection
+              products={biddingEvents}
+              title="trending products"
+            />
+            <ProductsSection
+              products={biddingEvents}
+              title="wishlist products"
+            />
             <AdsSlider data={ads} />
             <WhyZozo data={whyZozo} />
           </div>

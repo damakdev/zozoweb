@@ -6,6 +6,7 @@ import styles from "./products-section.module.scss";
 
 export default function ProductsSection({ title, products }) {
   const [sort, setSort] = useState("popularity");
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -31,19 +32,39 @@ export default function ProductsSection({ title, products }) {
           <RightArrow />
         </span>
       </div>
-      <div className={styles.content}>
-        {products.map((product, index) => (
-          <Link href="/product/id" key={index}>
-            <a className={styles.card}>
-              <img src={product.image.src} alt="product image" />
-              <h3>{product.productName}</h3>
-              <p>Ends in: 00:00:00:00</p>
-              <span>&#8358;{formatNumber(product.price)}</span>
-              <b>Bid</b>
-            </a>
-          </Link>
-        ))}
-      </div>
+      {products && (
+        <div className={styles.content}>
+          {products?.map((product) => (
+            <Link
+              href={`/product/${product.product_id}`}
+              key={product.product_id}
+            >
+              <a className={styles.card}>
+                <img src={product.product.images.main} alt="product image" />
+                <h3>{product.product.name}</h3>
+                <p>Ends in: 00:00:00:00</p>
+                <span>&#8358;{formatNumber(+product.product.price)}</span>
+                <b>Bid</b>
+              </a>
+            </Link>
+          ))}
+        </div>
+      )}
+
+      {!products && (
+        <div className={styles["content-loading"]}>
+          {Array(8)
+            .fill(null)
+            ?.map((_, index) => (
+              <div key={index} className={styles.card}>
+                <div></div>
+                <h3></h3>
+                <p></p>
+                <span></span>
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 }
