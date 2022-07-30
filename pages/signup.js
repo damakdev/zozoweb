@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { EyeOn, EyeOff, GoogleIcon, LeftArrow } from "../public/svg/icons";
 import { SignUpBanner } from "../public/svg/images";
 import { registerCustomer } from "../store/slices/authSlice";
-import { register, checkEmail, getCurrentUser, login } from "../services/api";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import Link from "next/link";

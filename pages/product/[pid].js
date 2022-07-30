@@ -1,3 +1,7 @@
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleBiddingEvent } from "../../services/customer";
 import CustomerLayout from "../../components/CustomerLayout";
 import BreadCrumb from "../../components/bread-crumb";
 import ProductInfo from "../../components/product-info";
@@ -6,6 +10,12 @@ import AdsSlider from "../../components/ads-slider";
 import Slide1 from "../../public/images/slider-image-1.jpg";
 
 export default function Product() {
+  const router = useRouter();
+  const biddingEventId = router.query.pid;
+  const [biddingEvent, setBiddingEvent] = useState(null);
+  const { biddingEvents } = useSelector((state) => state.events);
+  const { user } = useSelector((state) => state.auth.customer);
+  console.log(biddingEvent);
   const breadCrumb = [
     {
       text: "Home",
@@ -32,13 +42,6 @@ export default function Product() {
     }),
   };
 
-  const products = Array(8).fill({
-    image: Slide1,
-    productName: `Yellow Headphones`,
-    price: 10000,
-    time: "2022-06-28T22:38:00.000Z",
-  });
-
   const ads = Array(5).fill({
     image: Slide1,
     title: `Exciting auctions you should win this week`,
@@ -46,14 +49,26 @@ export default function Product() {
     cta: `start selling`,
   });
 
+  useEffect(() => {
+    if (biddingEventId) {
+      getSingleBiddingEvent(user.id, biddingEventId).then((response) =>
+        setBiddingEvent(response.data.bidding_event)
+      );
+    }
+  }, [biddingEventId]);
+
+  if (!user) {
+    router.push("/");
+  }
+
   return (
     <CustomerLayout>
       <section className="mb-6">
         <BreadCrumb data={breadCrumb} />
-        <ProductInfo data={product} />
+        <ProductInfo data={biddingEvent} user={user} biddingEventId={biddingEventId} />
       </section>
       <section className="mb-6">
-        <ProductsSection products={products} title="similar products" />
+        <ProductsSection products={biddingEvents} title="similar products" />
       </section>
       <section>
         <AdsSlider data={ads} />
