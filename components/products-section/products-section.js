@@ -43,7 +43,7 @@ export default function ProductsSection({ title, products }) {
                 <img src={product.product.images.main} alt="product image" />
                 <h3>{product.product.name}</h3>
                 <p>Ends in: 00:00:00:00</p>
-                <span>&#8358;{formatNumber(product.product.price)}</span>
+                <span>&#8358;{formatNumber(+product.product.price)}</span>
                 <b>Bid</b>
               </a>
             </Link>
