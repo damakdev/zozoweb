@@ -9,7 +9,8 @@
       margin-right: 3rem;
     }
   }
-  .image-preview {
+  .image-preview,
+  .loading-image-preview {
     & > img {
       height: 25rem;
       width: 25rem;
@@ -45,7 +46,8 @@
       }
     }
   }
-  .product-description {
+  .product-description,
+  .loading-product-description {
     width: 50rem;
     h1 {
       font-size: 2.5rem;
@@ -104,7 +106,8 @@
       }
     }
   }
-  .ongoing-bidders {
+  .ongoing-bidders,
+  .loading-ongoing-bidders {
     width: 22rem;
     h3 {
       color: var(--text-white);
@@ -158,5 +161,77 @@
         }
       }
     }
+  }
+  .loading-image-preview {
+    & > div {
+      height: 25rem;
+      width: 25rem;
+      margin: 0 auto;
+      background-color: #dddddd;
+      background-size: 200% 100%;
+      background-image: linear-gradient(
+        90deg,
+        #ececec 0px,
+        #ddd 40px,
+        #ececec 80px
+      );
+      animation: 1s shine linear infinite;
+    }
+  }
+  .loading-product-description {
+    h1,
+    h3,
+    p,
+    form,
+    .watchlist,
+    .price {
+      background-color: #dddddd;
+      background-size: 200% 100%;
+      background-image: linear-gradient(
+        90deg,
+        #ececec 0px,
+        #ddd 40px,
+        #ececec 80px
+      );
+      animation: 1s shine linear infinite;
+    }
+    h1 {
+      height: 4.2rem;
+    }
+    .watchlist {
+      height: 2.6rem;
+      span {
+      }
+    }
+    h3 {
+      height: 18rem;
+    }
+    p {
+      height: 5rem;
+    }
+    .price {
+      height: 2.6rem;
+    }
+    form {
+      height: 5rem;
+
+    }
+  }
+  .loading-ongoing-bidders {
+    background-color: #dddddd;
+    background-size: 200% 100%;
+      background-image: linear-gradient(
+        90deg,
+        #ececec 0px,
+        #ddd 40px,
+        #ececec 80px
+      );
+      animation: 1s shine linear infinite;
+  }
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
   }
 }
