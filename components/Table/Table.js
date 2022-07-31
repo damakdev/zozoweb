@@ -36,7 +36,6 @@ function Table({
 	};
 
 	const eventStatus = (status) => {
-		
 		switch (status.toLowerCase()) {
 			case "approved":
 				return <img src="/images/eventApproved.svg" alt="approved" />;
@@ -283,6 +282,87 @@ function Table({
 										<td>{item.name}</td>
 										<td>{item.reciept}</td>
 										<td>{eventStatus(item.status)}</td>
+									</tr>
+								);
+							})}
+
+						{name == "cashout" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										{/* <td>
+										<input type="checkbox" />
+									</td> */}
+										<td>{item.cashout}</td>
+										<td>{item.merchant_name}</td>
+										<td>{eventStatus(item.status)}</td>
+										<td
+											onClick={viewDetails}
+											colSpan="2"
+											className="cursor-pointer tracking-widest"
+										>
+											<Dots />
+										</td>
+										{/* <td>{status(item.status)}</td> */}
+									</tr>
+								);
+							})}
+
+						{name == "userMgt" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										{/* <td>
+										<input type="checkbox" />
+									</td> */}
+										<td className="flex items-center ">
+											<img className=" mr-8" src="/images/Photo.png" />
+											{item.first}
+										</td>
+										<td>{item.last}</td>
+										<td>{item.email}</td>
+										<td>{item.role}</td>
+										<td
+											onClick={viewDetails}
+											colSpan="2"
+											className="cursor-pointer tracking-widest"
+										>
+											<Dots />
+										</td>
+										{/* <td>{status(item.status)}</td> */}
+									</tr>
+								);
+							})}
+
+						{name == "cms" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										{/* <td>
+										<input type="checkbox" />
+									</td> */}
+										<td className="flex items-center ">{item.id}</td>
+										<td>{item.product}</td>
+										<td>{item.cate}</td>
+										<td>{item.code}</td>
+										<td colSpan={3}>
+											<Button
+												name="Edit"
+												paddingX="35px"
+												paddingY="7px"
+												className="mr-6"
+												border="none"
+											/>
+
+											<Button
+												name="Delete"
+												paddingX="35px"
+												paddingY="7px"
+												bgColor="#EB5757"
+												border="none"
+											/>
+										</td>
+										{/* <td>{status(item.status)}</td> */}
 									</tr>
 								);
 							})}

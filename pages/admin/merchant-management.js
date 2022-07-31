@@ -11,7 +11,7 @@ function MerchantMgt() {
 		"Date Created",
 		"First name",
 		"Last name",
-            "Phone Number",
+		"Phone Number",
 		"Email",
 		"Verification Status",
 	];
@@ -50,7 +50,9 @@ function MerchantMgt() {
 	return (
 		<AdminLayout>
 			<div className="pt-10 w-11/12 mx-auto pb-20 mt-1">
-				<h3 className="my-20 text-semibold text-black">Merchant Management</h3>
+				<h3 className="py-20 text-5xl font-semibold mt-1 text-semibold text-black">
+					Merchant Management
+				</h3>
 				<Table
 					name="merchantMgt"
 					thead={thead}
@@ -58,7 +60,6 @@ function MerchantMgt() {
 					viewDetails={viewDetails}
 				/>
 			</div>
-
 
 			<Modal
 				title="Merchant Information"
