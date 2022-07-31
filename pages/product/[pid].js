@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getSingleBiddingEvent } from "../../services/customer";
 import CustomerLayout from "../../components/CustomerLayout";
 import BreadCrumb from "../../components/bread-crumb";
@@ -15,7 +15,7 @@ export default function Product() {
   const [biddingEvent, setBiddingEvent] = useState(null);
   const { biddingEvents } = useSelector((state) => state.events);
   const { user } = useSelector((state) => state.auth.customer);
-  console.log(biddingEvent);
+
   const breadCrumb = [
     {
       text: "Home",
@@ -50,9 +50,9 @@ export default function Product() {
   });
 
   useEffect(() => {
-    if (biddingEventId) {
+    if (biddingEventId && user) {
       getSingleBiddingEvent(user.id, biddingEventId).then((response) =>
-        setBiddingEvent(response.data.bidding_event)
+        setBiddingEvent(response.data)
       );
     }
   }, [biddingEventId]);
@@ -65,7 +65,11 @@ export default function Product() {
     <CustomerLayout>
       <section className="mb-6">
         <BreadCrumb data={breadCrumb} />
-        <ProductInfo data={biddingEvent} user={user} biddingEventId={biddingEventId} />
+        <ProductInfo
+          data={biddingEvent}
+          user={user}
+          biddingEventId={biddingEventId}
+        />
       </section>
       <section className="mb-6">
         <ProductsSection products={biddingEvents} title="similar products" />
