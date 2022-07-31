@@ -185,8 +185,12 @@ const eventsSlice = createSlice({
     });
     builder
       .addCase(_getApprovedBiddingEvents.fulfilled, (state, action) => {
-        state.biddingEvents = action.payload.data.bidding_event;
-        state.status = "success";
+        if (action.payload) {
+          state.biddingEvents = action.payload.data.bidding_event;
+          state.status = "success";
+          return;
+        }
+        state.status = "error";
       })
       .addCase(_getApprovedBiddingEvents.rejected, (state, action) => {
         state.status = "error";
