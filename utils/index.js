@@ -18,5 +18,7 @@ export function convertUtc(utc) {
 }
 
 export function formatNumber(number) {
-  return number.toLocaleString();
+  return number.toLocaleString("en-US", {
+    minimumIntegerDigits: 2,
+  });
 }

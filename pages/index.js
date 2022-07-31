@@ -2,6 +2,11 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { _getApprovedBiddingEvents } from "../store/slices/eventsSlice";
 import { _getAllCategories } from "../store/slices/categoriesSlice";
+import {
+  getCurrentUser,
+  verifyAccount,
+  resolveAccountVerification,
+} from "../services/customer";
 import CustomerLayout from "../components/CustomerLayout";
 import Categories from "../components/categories";
 import MainSlider from "../components/main-slider";
@@ -60,6 +65,13 @@ seek win.`,
     subtitle: `We are reliable`,
     text: `We come correct in all our dealings. We partner with top, trusted brands to give you high-quality products that offer real value for every penny you spend. No scams. No Counterfeits. Everything here is legit; take our words for it.`,
   });
+
+  // useEffect(() => {
+  //   getCurrentUser({
+  //     email_secret: 8778,
+  //     account_email: "akinlade.co@gmail.com",
+  //   }).then((response) => console.log(response));
+  // }, []);
 
   return (
     <>
