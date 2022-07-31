@@ -38,7 +38,7 @@ function CMS() {
 			<div className="pt-10 pb-20 mt-1" style={{ backgroundColor: "#E5E5E5" }}>
 				<div className="flex items-center justify-between w-11/12 mx-auto">
 					<h3 className="py-20 text-5xl font-semibold mt-1 text-semibold text-black">
-						User Management
+						CMS
 					</h3>
 
 					<div className="">

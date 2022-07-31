@@ -334,16 +334,14 @@ function Table({
 								);
 							})}
 
-{name == "cms" &&
+						{name == "cms" &&
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
 										{/* <td>
 										<input type="checkbox" />
 									</td> */}
-										<td className="flex items-center ">
-											{item.id}
-										</td>
+										<td className="flex items-center ">{item.id}</td>
 										<td>{item.product}</td>
 										<td>{item.cate}</td>
 										<td>{item.code}</td>

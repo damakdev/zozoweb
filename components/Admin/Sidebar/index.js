@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
+import Image from "next/image";
 import {
 	DashboardIcon,
 	RefreshIcon,
@@ -19,53 +19,100 @@ import styles from "../../../styles/admin/admin-sidebar.module.scss";
 function AdminSidebar() {
 	const router = useRouter();
 	const links = [
-		{ title: "Dashboard", icon: <DashboardIcon />, url: "/admin/dashboard" },
-	
+		{
+			title: "Dashboard",
+			icon: <DashboardIcon fill="#D5C4DF" />,
+			active: <DashboardIcon fill="#743B96" />,
+			url: "/admin/dashboard",
+		},
+
 		{
 			title: "Customer",
-			icon: <AdminCustomer />,
+			icon: <AdminCustomer fill="#D5C4DF" />,
+			active: <AdminCustomer fill="#743B96" />,
 			url: "/admin/customer-management",
 		},
-		{ title: "Merchant", icon: <AdminMerchant />, url: "/admin/merchant-management" },
+		{
+			title: "Merchant",
+			icon: <AdminMerchant fill="#D5C4DF" />,
+			active: <AdminMerchant fill="#743B96" />,
+			url: "/admin/merchant-management",
+		},
 		{
 			title: "Transaction",
-			icon: <AdminTransaction />,
+			icon: <AdminTransaction fill="#D5C4DF" />,
+			active: <AdminTransaction fill="#743B96" />,
 			url: "/admin/transaction-report",
 		},
-		{ title: "Bid", icon: <AdminDefault />, url:"/admin/bids" },
-		{ title: "Auction", icon: <AdminDefault />, url: "/admin/event-management" },
-		{ title: "CMS", icon: <AdminDefault />, url: "/admin/cms" },
-		{ title: "Audit", icon: <AdminDefault />, url: "/admin/audit" },
-		{ title: "Wallet", icon: <AdminDefault />, url: "/merchant/profile" },
+		{ title: "Bid", icon: <AdminDefault />, url: "/admin/bids" },
+		{
+			title: "Auction",
+			icon: <AdminDefault fill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
+			url: "/admin/event-management",
+		},
+		{
+			title: "CMS",
+			icon: <AdminDefault ill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
+			url: "/admin/cms",
+		},
+		{
+			title: "Audit",
+			icon: <AdminDefault ill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
+			url: "/admin/audit",
+		},
+		{
+			title: "Wallet",
+			icon: <AdminDefault ill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
+			url: "/merchant/profile",
+		},
 		{
 			title: "Shipping Request",
-			icon: <AdminDefault />,
+			icon: <AdminDefault ill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
 			url: "/admin/shipping",
 		},
-		{ title: "Cashout Request", icon:<AdminDefault />, url: "/admin/cashout-request" },
-		{ title: "User role", icon: <AdminDefault />, url: "/admin/user-management" },
+		{
+			title: "Cashout Request",
+			icon: <AdminDefault ill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
+			url: "/admin/cashout-request",
+		},
+		{
+			title: "User role",
+			icon: <AdminDefault ill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
+			url: "/admin/user-management",
+		},
 	];
 	return (
 		<div className={styles.container}>
-			<div className={styles.logo}> </div>
-			<ul>
+			<div className="w-10/12 mx-auto">
+				{" "}
+				<Image src="/images/adminlogo.png" height={40} width={150} />{" "}
+			</div>
+			<ul className="w-full mt-10">
 				{links.map((item, index) => (
-					
-					<li
-						key={index}
-						className="flex items-center  pl-3  pr-10"
-						//onClick={() => setActiveLink(index)}
-					>
+					<>
 						<Link href={item.url}>
-							<a
-								className={router.pathname === item.url ? styles.active : null}
+							<li
+								key={index}
+								className={`flex items-center   cursor-pointer  ${
+									router.pathname == item.url ? styles.active : " "
+								}`}
+								//onClick={() => setActiveLink(index)}
 							>
-								{item.icon}
-							</a>
-						
-					</Link>
-						<h3 className=" ml-3 text-white text-2xl">{item.title}</h3>
-					</li>
+								<a className="pl-10">
+									{router.pathname == item.url ? item.active : item.icon}
+								</a>
+
+								<h3 className=" ml-3 text-white text-2xl">{item.title}</h3>
+							</li>
+						</Link>
+					</>
 				))}
 			</ul>
 		</div>
