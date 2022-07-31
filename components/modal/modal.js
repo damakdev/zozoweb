@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import useLockBodyScroll from "../../hooks/useLockBodyScroll";
 import { CloseIcon } from "../../public/svg/icons";
 import styles from "./modal.module.scss";
 
 export default function Modal({ display, close, children, title }) {
-  useLockBodyScroll();
+  useEffect(() => {
+    if (display) {
+      document.querySelector("html").style.overflow = "hidden";
+    }
+    if (!display) {
+      document.querySelector("html").style.removeProperty("overflow");
+    }
+  }, [display]);
 
   return (
     <AnimatePresence>
