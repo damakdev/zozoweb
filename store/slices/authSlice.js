@@ -1,24 +1,37 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { register } from "../../services/api";
-
-// const zozo = JSON.parse(localStorage.getItem("zozo"));
+import { register, login } from "../../services/customer";
 
 export const registerCustomer = createAsyncThunk(
   `customer/register`,
   async (body) => {
-      const response = await register(body);
-      console.log(response);
-      return response;
     try {
-    } 
-    catch (error) {
-      return error;
+      const response = await register(body);
+      return response;
+    } catch (error) {
+      return error.response.data.message;
+    }
+  }
+);
+
+export const loginCustomer = createAsyncThunk(
+  `customer/login`,
+  async (body) => {
+    try {
+      const response = await login(body);
+      return response;
+    } catch (error) {
+      return error.response.data.message;
     }
   }
 );
 
 const initialState = {
-  customer: { token: null, user: null, error: null, loading: false },
+  customer: {
+    token: null,
+    user: null,
+    error: null,
+    loading: false,
+  },
   merchant: { token: null, user: null, error: null, loading: false },
 };
 
@@ -26,17 +39,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loginSuccess: (state, action) => {
-      state.customer.token = action.payload.token;
-      state.customer.user = action.payload.user;
-    },
-    loginError: (state, action) => {
-      state.customer.error = action.payload.error;
-    },
-    loading: (state, action) => {
-      state.customer.loading = action.payload.loading;
-    },
-    logOut: (state) => {
+    logOutCustomer: (state) => {
       state.customer.token = null;
       state.customer.user = null;
       state.customer.error = null;
@@ -49,10 +52,26 @@ export const authSlice = createSlice({
     });
     builder.addCase(registerCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
-      state.customer.user = action.payload.data;
+      if (action.payload.status == 400) {
+        return;
+      }
+      state.customer.user = action.payload.data?.account;
+      state.customer.token = action.payload.data?.account.token;
+    });
+    builder.addCase(loginCustomer.pending, (state) => {
+      state.customer.loading = true;
+    });
+    builder.addCase(loginCustomer.fulfilled, (state, action) => {
+      state.customer.loading = false;
+      if (action.payload.status == 400) {
+        // state.customer.loading = false;
+        return;
+      }
+      state.customer.user = action.payload.data.user;
+      state.customer.token = action.payload.data.token;
     });
   },
 });
 
-export const { loginSuccess, loginError, loading, logOut } = authSlice.actions;
+export const { logOutCustomer } = authSlice.actions;
 export default authSlice.reducer;

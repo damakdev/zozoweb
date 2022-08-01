@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CloseIcon } from "../../public/svg/icons";
 import styles from "./modal.module.scss";
 
 export default function Modal({ display, close, children, title }) {
+  useEffect(() => {
+    if (display) {
+      document.querySelector("html").style.overflow = "hidden";
+    }
+    if (!display) {
+      document.querySelector("html").style.removeProperty("overflow");
+    }
+  }, [display]);
 
   return (
     <AnimatePresence>
@@ -11,7 +20,7 @@ export default function Modal({ display, close, children, title }) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{opacity: 0}}
+            exit={{ opacity: 0 }}
             transition={{ type: "tween" }}
             className={styles.backdrop}
             onClick={close}
@@ -20,7 +29,7 @@ export default function Modal({ display, close, children, title }) {
             key={display}
             initial={{ scale: 0, x: "-50%", y: "-50%" }}
             animate={{ scale: 1 }}
-            exit={{ scale: 0, opacity:0 }}
+            exit={{ scale: 0, opacity: 0 }}
             className={styles.modal}
           >
             <div className={styles.head}>

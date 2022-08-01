@@ -1,3 +1,12 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { _getApprovedBiddingEvents } from "../store/slices/eventsSlice";
+import { _getAllCategories } from "../store/slices/categoriesSlice";
+import {
+  getCurrentUser,
+  verifyAccount,
+  resolveAccountVerification,
+} from "../services/customer";
 import CustomerLayout from "../components/CustomerLayout";
 import Categories from "../components/categories";
 import MainSlider from "../components/main-slider";
@@ -13,77 +22,93 @@ import Slide1 from "../public/images/slider-image-1.jpg";
 import styles from "../styles/home.module.scss";
 
 function Home() {
-	const mainSlider = Array(5).fill({
-		image: Slide1,
-		text: `Bid now, Pay less,
+  const dispatch = useDispatch();
+  const { biddingEvents } = useSelector((state) => state.events);
+  const { categories } = useSelector((state) => state.categories);
+  const mainSlider = Array(5).fill({
+    image: Slide1,
+    text: `Bid now, Pay less,
 and Save big on
 items you love.`,
-	});
+  });
 
-	const verticalSlider = Array(5).fill({
-		image: Slide1,
-		text: `Today’s hide and 
+  const verticalSlider = Array(5).fill({
+    image: Slide1,
+    text: `Today’s hide and 
 seek win.`,
-	});
+  });
 
-	const products = Array(8).fill({
-		image: Slide1,
-		productName: `Yellow Headphones`,
-		price: 10000,
-		time: "2022-06-28T22:38:00.000Z",
-	});
+  const products = Array(8).fill({
+    image: Slide1,
+    productName: `Yellow Headphones`,
+    price: 10000,
+    time: "2022-06-28T22:38:00.000Z",
+  });
 
-	const testimonials = Array(5).fill({
-		image: Slide1,
-		username: `Akinpelumi Akinlade`,
-		title: `influencer`,
-		testimonial: `They’ve always got a lot of super exciting items on auctions and you can win so much more on Zozo by shearing your wins on instagram or facebook also one thing you can count on is that the enjoyment in zozo is nonstop`,
-	});
+  const testimonials = Array(5).fill({
+    image: Slide1,
+    username: `Akinpelumi Akinlade`,
+    title: `influencer`,
+    testimonial: `They’ve always got a lot of super exciting items on auctions and you can win so much more on Zozo by shearing your wins on instagram or facebook also one thing you can count on is that the enjoyment in zozo is nonstop`,
+  });
 
-	const ads = Array(5).fill({
-		image: Slide1,
-		title: `Exciting auctions you should win this week`,
-		text: `They've always got a lot of super exciting items on auctions and you can win so much more on Zozo by shearing your wins on instagram or facebook also one thing you can count on is that the enjoyment in zozo is nonstop`,
-		cta: `start selling`,
-	});
+  const ads = Array(5).fill({
+    image: Slide1,
+    title: `Exciting auctions you should win this week`,
+    text: `They've always got a lot of super exciting items on auctions and you can win so much more on Zozo by shearing your wins on instagram or facebook also one thing you can count on is that the enjoyment in zozo is nonstop`,
+    cta: `start selling`,
+  });
 
-	const whyZozo = Array(5).fill({
-		image: Slide1,
-		title: `Why Zozo.ng`,
-		subtitle: `We are reliable`,
-		text: `We come correct in all our dealings. We partner with top, trusted brands to give you high-quality products that offer real value for every penny you spend. No scams. No Counterfeits. Everything here is legit; take our words for it.`,
-	});
+  const whyZozo = Array(5).fill({
+    image: Slide1,
+    title: `Why Zozo.ng`,
+    subtitle: `We are reliable`,
+    text: `We come correct in all our dealings. We partner with top, trusted brands to give you high-quality products that offer real value for every penny you spend. No scams. No Counterfeits. Everything here is legit; take our words for it.`,
+  });
 
-	return (
-		<>
-			<CustomerLayout>
-				<section className={styles.hero}>
-					<Categories />
-					<MainSlider data={mainSlider} />
-					<div className={styles["vertical-sliders"]}>
-						<VerticalSlider data={verticalSlider} />
-						<VerticalSlider data={verticalSlider} />
-					</div>
-				</section>
-				<OptionsBanner />
-				<section className={styles.body}>
-					<div className={styles.sidebar}>
-						<BidInfoCard data={products} title="Ongoing Bids" />
-						<BidInfoCard data={products} title="Upcoming Bids " />
-						<BidInfoCard data={products} title="Top Bids" />
-						<TestimonialCard data={testimonials} />
-						<NewsletterCard />
-					</div>
-					<div className={styles.content}>
-						<ProductsSection products={products} title="trending products" />
-						<ProductsSection products={products} title="wishlist products" />
-						<AdsSlider data={ads} />
-						<WhyZozo data={whyZozo} />
-					</div>
-				</section>
-			</CustomerLayout>
-		</>
-	);
+  // useEffect(() => {
+  //   getCurrentUser({
+  //     email_secret: 8778,
+  //     account_email: "akinlade.co@gmail.com",
+  //   }).then((response) => console.log(response));
+  // }, []);
+
+  return (
+    <>
+      <CustomerLayout>
+        <section className={styles.hero}>
+          <Categories categories={categories} />
+          <MainSlider data={mainSlider} />
+          <div className={styles["vertical-sliders"]}>
+            <VerticalSlider data={verticalSlider} />
+            <VerticalSlider data={verticalSlider} />
+          </div>
+        </section>
+        <OptionsBanner />
+        <section className={styles.body}>
+          <div className={styles.sidebar}>
+            <BidInfoCard data={products} title="Ongoing Bids" />
+            <BidInfoCard data={products} title="Upcoming Bids " />
+            <BidInfoCard data={products} title="Top Bids" />
+            <TestimonialCard data={testimonials} />
+            <NewsletterCard />
+          </div>
+          <div className={styles.content}>
+            <ProductsSection
+              products={biddingEvents}
+              title="trending products"
+            />
+            <ProductsSection
+              products={biddingEvents}
+              title="wishlist products"
+            />
+            <AdsSlider data={ads} />
+            <WhyZozo data={whyZozo} />
+          </div>
+        </section>
+      </CustomerLayout>
+    </>
+  );
 }
 
 export default Home;
