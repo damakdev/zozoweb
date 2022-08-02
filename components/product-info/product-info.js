@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
 import { motion } from "framer-motion";
 import { useCountdown } from "../../hooks/useCountdown";
@@ -9,12 +10,14 @@ import {
   bidOnEvent,
 } from "../../services/customer";
 import { ClipLoader } from "react-spinners";
+import { toast } from "react-toastify";
 import OtpInput from "react-otp-input";
 import Modal from "../modal/modal";
 import Button from "../ui/button/";
 import styles from "./product-info.module.scss";
 
 export default function ProductInfo({ data, user, biddingEventId }) {
+  const router = useRouter();
   const [days, hours, minutes, seconds] = useCountdown(
     // product.start_time,
     "2022-05-08T22:38:00.000Z",
@@ -23,14 +26,11 @@ export default function ProductInfo({ data, user, biddingEventId }) {
   );
   // const [index, setIndex] = useState(0);
   const [amount, setAmount] = useState("");
-  const [loadingAccess, setLoadingAccess] = useState(false);
-  const [loadingBid, setLoadingBid] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(false);
-  // const [txnReference, setTxnReference] = useState(null);
+  const [reload, setReload] = useState(false);
   const [accessCode, setAccessCode] = useState(null);
-  const [eventAccess, setEventAccess] = useState(null);
   const [modalDisplay, setModalDisplay] = useState(false);
-  const [accessGranted, setAccessGranted] = useState(false);
 
   const config = {
     reference: new Date().getTime().toString(),
@@ -43,41 +43,41 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 
   async function bidHandler(e) {
     e.preventDefault();
-    setLoadingBid(true);
-    const body = {
-      bidding_event_id: biddingEventId,
-      customer_id: user.customer.id.toString(),
-      stake: +amount,
-    };
-    console.log(body);
+    if (data.access_status === "approved") {
+      setLoading(true);
+      const body = {
+        bidding_event_id: biddingEventId,
+        customer_id: user.customer.id.toString(),
+        stake: +amount,
+      };
+      console.log(body);
 
-    try {
-      const response = await bidOnEvent(body);
-      console.log(response);
-      setLoadingBid(false);
-    } catch (error) {
-      setLoadingBid(false);
+      try {
+        const response = await bidOnEvent(body);
+        setLoading(false);
+        toast.success(response.data.message, {
+          autoClose: 7000,
+        });
+        setReload(true);
+      } catch (error) {
+        setLoading(false);
+      }
+
+      return;
     }
 
-    // return;
-    // if (data.access_status === "none") {
-    // }
+    if (data.access_status === "requested") {
+      setModalDisplay(true);
+    }
 
-    // if (data.access_status === "none") {
-    //   // initializePayment(onSuccess, onClose);
-    //   setModalDisplay(true);
-    // }
-  }
-
-  function initPayment() {
-    initializePayment(onSuccess, onClose);
-    // setModalDisplay(true);
+    if (data.access_status === "none") {
+      initializePayment(onSuccess, onClose);
+    }
   }
 
   async function onSuccess(reference) {
-    setLoadingAccess(true);
+    setLoading(true);
     console.log(reference);
-    // setTxnReference(reference);
     const body = {
       bidding_event_id: biddingEventId,
       customer_id: user.customer.id.toString(),
@@ -85,16 +85,16 @@ export default function ProductInfo({ data, user, biddingEventId }) {
     };
     try {
       const response = await getBidEventAccess(body);
-      setEventAccess(response.data.event_access);
       console.log(response.data.event_access);
-      setModalDisplay(false);
+      setModalDisplay(true);
       toast.success(response.data.message, {
         autoClose: 7000,
       });
       console.log(response);
-      setLoadingAccess(false);
+      setLoading(false);
     } catch (error) {
-      setLoadingAccess(false);
+      setModalDisplay(true);
+      setLoading(false);
     }
   }
 
@@ -103,32 +103,44 @@ export default function ProductInfo({ data, user, biddingEventId }) {
   }
 
   async function accessEvent() {
-    setLoadingAccess(true);
+    setLoading(true);
     const body = {
       bidding_event_id: biddingEventId,
       customer_id: user.customer.id.toString(),
-      access_code: eventAccess.access_code || accessCode,
-      // access_code: accessCode,
+      access_code: accessCode,
     };
     try {
       const response = await accessBidEvent(body);
-      //  setEventAccess(response.data.event_access);
-      setAccessGranted(true);
       toast.success(response.data.message, {
         autoClose: 7000,
       });
       console.log(response);
-      setLoadingAccess(false);
+      setLoading(false);
       setModalDisplay(false);
+      setReload(true);
     } catch (error) {
-      setLoadingAccess(false);
+      setLoading(false);
       setModalDisplay(false);
+      toast.success(response.data.message, {
+        autoClose: 7000,
+      });
     }
   }
 
   useEffect(() => {
     if (days + hours + minutes + seconds !== 0) setCountdown(true);
   }, [data?.bidding_event]);
+
+  useEffect(() => {
+    if (reload) {
+      const timeOut = setTimeout(() => {
+        router.reload();
+      }, 5000);
+      return () => {
+        clearTimeout(timeOut);
+      };
+    }
+  }, [reload, router]);
 
   return (
     <>
@@ -180,56 +192,47 @@ export default function ProductInfo({ data, user, biddingEventId }) {
                 )}
               </div>
               <form onSubmit={bidHandler}>
-                {/* {data.access_status === "approved" && (
+                {data.access_status === "approved" && (
                   <input
                     type="number"
                     placeholder="Place your amount"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                   />
-                )} */}
-                <input
-                  type="number"
-                  placeholder="Place your amount"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                />
-                <Button style={{ marginRight: "1rem" }}>
-                  {/* {loadingAccess ? (
-                    <ClipLoader color="#ffffff" size={15} />
-                  ) : data.access_status === "approved" ? (
-                    "Bid Now"
-                  ) : (
-                    "Access Bid"
-                  )} */}
-                  {loadingBid ? (
-                    <ClipLoader color="#ffffff" size={15} />
-                  ) : (
-                    "Bid Now"
-                  )}
-                </Button>
-                <Button type="button" onClick={initPayment}>
-                  {loadingAccess ? (
-                    <ClipLoader color="#ffffff" size={15} />
-                  ) : (
-                    "Access Bid"
-                  )}
-                </Button>
-              </form>
-              <Button
-                type="button"
-                style={{ marginTop: "1rem" }}
-                onClick={() => setModalDisplay(true)}
-              >
-                {loadingAccess ? (
-                  <ClipLoader color="#ffffff" size={15} />
-                ) : (
-                  "Enter Access Code"
                 )}
-              </Button>
-              {/* <Button>
-              {loadingAccess ? <ClipLoader color="#ffffff" size={15} /> : "Bid Now"}
-            </Button> */}
+                {data.isMember && <Button type="button">Update Bid</Button>}
+                {!data.isMember && (
+                  <>
+                    {data.access_status === "approved" && (
+                      <Button>
+                        {loading ? (
+                          <ClipLoader color="#ffffff" size={15} />
+                        ) : (
+                          "Bid Now"
+                        )}
+                      </Button>
+                    )}
+                    {data.access_status === "requested" && (
+                      <Button style={{ width: "22rem" }}>
+                        {loading ? (
+                          <ClipLoader color="#ffffff" size={15} />
+                        ) : (
+                          "Enter Access Code"
+                        )}
+                      </Button>
+                    )}
+                    {data.access_status === "none" && (
+                      <Button>
+                        {loading ? (
+                          <ClipLoader color="#ffffff" size={15} />
+                        ) : (
+                          "Access Bid"
+                        )}
+                      </Button>
+                    )}
+                  </>
+                )}
+              </form>
             </div>
             <div className={styles["ongoing-bidders"]}>
               <h3>Ongoing Bidders</h3>
@@ -271,36 +274,32 @@ export default function ProductInfo({ data, user, biddingEventId }) {
         )}
       </div>
 
-        <Modal
-          display={modalDisplay}
-          title="Enter access code"
-          close={() => {
-            setModalDisplay(false);
-            setAccessCode(null);
-          }}
-        >
-          <div className={styles["access-code"]}>
-            <p>
-              An access code has been sent to
-              <br />
-              your email
-            </p>
-            <OtpInput
-              value={accessCode}
-              onChange={(code) => setAccessCode(code)}
-              numInputs={4}
-              containerStyle={styles.inputs}
-              shouldAutoFocus
-            />
-            <Button onClick={accessEvent}>
-              {loadingAccess ? (
-                <ClipLoader color="#ffffff" size={15} />
-              ) : (
-                "Continue"
-              )}
-            </Button>
-          </div>
-        </Modal>
+      <Modal
+        display={modalDisplay}
+        title="Enter access code"
+        close={() => {
+          setModalDisplay(false);
+          setAccessCode(null);
+        }}
+      >
+        <div className={styles["access-code"]}>
+          <p>
+            An access code has been sent to
+            <br />
+            your email
+          </p>
+          <OtpInput
+            value={accessCode}
+            onChange={(code) => setAccessCode(code)}
+            numInputs={4}
+            containerStyle={styles.inputs}
+            shouldAutoFocus
+          />
+          <Button onClick={accessEvent}>
+            {loading ? <ClipLoader color="#ffffff" size={15} /> : "Continue"}
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 }

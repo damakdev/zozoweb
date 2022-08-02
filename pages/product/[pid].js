@@ -51,7 +51,7 @@ export default function Product() {
 
   useEffect(() => {
     if (biddingEventId && user) {
-      getSingleBiddingEvent(user.id, biddingEventId).then((response) =>
+      getSingleBiddingEvent(user.customer.id, biddingEventId).then((response) =>
         setBiddingEvent(response.data)
       );
     }
