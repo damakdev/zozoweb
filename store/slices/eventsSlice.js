@@ -124,10 +124,11 @@ export const _bidOnEvent = createAsyncThunk(
 
 export const _getBiddingEventByStatus = createAsyncThunk(
   `events/getBiddingEventByStatus`,
-  async (body) => {
+  async (body ) => {
     try {
       const response = await getBiddingEventByStatus(body);
       return response;
+      console.log(response.data)
     } catch (error) {
       // return error.response.data.message;
     }
@@ -193,6 +194,20 @@ const eventsSlice = createSlice({
         state.status = "error";
       })
       .addCase(_getApprovedBiddingEvents.rejected, (state, action) => {
+        state.status = "error";
+      })
+      .addCase(_getBiddingEventByStatus.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(_getBiddingEventByStatus.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.biddingEventsStatus = action.payload.data.bidding_event;
+          state.status = "success";
+          return;
+        }
+        state.status = "error";
+      })
+      .addCase(_getBiddingEventByStatus.rejected, (state, action) => {
         state.status = "error";
       });
     // builder
@@ -306,17 +321,7 @@ const eventsSlice = createSlice({
     //   .addCase(singleCustomerEvent.rejected, (state, action) => {
     //     state.status = "error";
     //   })
-    //   .addCase(allCustomerEvents.pending, (state, action) => {
-    //     state.status = "loading";
-    //   })
-    //   .addCase(allCustomerEvents.fulfilled, (state, action) => {
-    //     //   const data = action.payload
-    //     //   state.category = data
-    //     state.status = "success";
-    //   })
-    //   .addCase(allCustomerEvents.rejected, (state, action) => {
-    //     state.status = "error";
-    //   })
+     
     //   .addCase(getRemoveCustomerEvent.pending, (state, action) => {
     //     state.status = "loading";
     //   })

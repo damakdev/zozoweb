@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import authSlice from "./slices/authSlice";
 import categoriesSlice from "./slices/categoriesSlice";
 import eventsSlice from "./slices/eventsSlice";
+import userSlice from "./slices/userSlice";
 import thunk from "redux-thunk";
 
 const persistConfig = {
@@ -18,6 +19,7 @@ export const store = configureStore({
     auth: persistedReducer,
     categories: categoriesSlice,
     events: eventsSlice,
+    user : userSlice,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: [thunk],
