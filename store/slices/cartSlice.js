@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 const initialState = {
 	isLoading: false,
 	cart: [],
@@ -27,15 +27,25 @@ const cartSlice = createSlice({
 					(prev, cur) => Number(prev) + Number(cur.price),
 					0
 				);
+				toast.success(`${newEvent.name} successfully added to cart`, {
+					autoClose: 4000,
+				});
 			} else {
 				let isExist = state.cart.find((event) => event.id == newEvent.id);
 				if (!isExist) {
 					state.cart.push(newEvent);
-					console.log(state.cart, "line 34");
 					state.subTotal = state.cart.reduce(
 						(prev, cur) => Number(prev) + Number(cur.price),
 						0
 					);
+
+					toast.success(`${newEvent.name} successfully added to cart`, {
+						autoClose: 4000,
+					});
+				} else {
+					toast.error(`${newEvent.name} already exist in cart`, {
+						autoClose: 4000,
+					});
 				}
 			}
 		},
@@ -44,16 +54,23 @@ const cartSlice = createSlice({
 			console.log(action.payload);
 			if (isExist) {
 				state.cart = state.cart.filter((item) => item.id !== action.payload.id);
-				
+
 				state.subTotal = state.cart.reduce(
 					(prev, cur) => Number(prev) + Number(cur.price),
 					0
 				);
+
+				toast.success(`${action.payload.name}removed cart`, {
+					autoClose: 4000,
+				});
 			}
 		},
 
 		clearCart: (state, action) => {
-			state.cart = []
+			state.cart = [];
+			toast.success(`Cart cleared successfully`, {
+				autoClose: 4000,
+			});
 		},
 	},
 });

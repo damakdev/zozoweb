@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 const Cart = () => {
 	const [currentItem, setCurrentItem] = useState(1);
 
-	const { token } = useSelector((state) => state.auth.customer);
+	const { user } = useSelector((state) => state.auth.customer);
 	const { subTotal, cart } = useSelector((state) => state.cart);
 
 	useEffect(() => {}, []);
@@ -23,7 +23,7 @@ const Cart = () => {
 	return (
 		<CustomerLayout>
 			<h1>Your Cart</h1>
-			{cart.length > 0 && token ? (
+			{cart.length > 0 && user ? (
 				<div className="wrapper flex gap-20 mt-16">
 					<div className="bg-white px-10 pt-10 w-full">
 						<div className={`${styles.nav} flex gap-60 `}>
@@ -126,7 +126,7 @@ const Cart = () => {
 								<p className={`${styles.purple_text} mt-3`}>
 									Bid on today's deals
 								</p>
-								{!token && (
+								{!user && (
 									<div className="flex gap-10 mt-12">
 										<div className="">
 											<Link href="/login">
@@ -158,7 +158,7 @@ const Cart = () => {
 									</div>
 								)}
 
-								{token && (
+								{user && (
 									<Link href="/">
 										<Button
 											name="Continue Shopping"

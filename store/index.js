@@ -26,7 +26,6 @@ export const store = configureStore({
 		cart: cartSlice,
 		
 
-		// events: eventSlice
 	},
 	devTools: process.env.NODE_ENV !== "production",
 	middleware: [thunk],
