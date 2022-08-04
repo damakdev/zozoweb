@@ -4,7 +4,7 @@ import greenswitch from "../../assets/greenswitch.svg";
 import shoes from "../../assets/shoes.svg";
 import star from "../../assets/star.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { _getWonBiddingEvents } from "../../store/slices/eventsSlice";
+import { _getWonBidEvents } from "../../store/slices/eventsSlice";
 import { useEffect } from "react";
 
 const BidHistory = () => {
@@ -15,7 +15,7 @@ const BidHistory = () => {
 
 	console.log(user);
 	useEffect(() => {
-		dispatch(_getWonBiddingEvents(user.id));
+		dispatch(_getWonBidEvents(user.id));
 	}, [dispatch]);
 	return (
 		<div className={`${styles.bid_history} pb-60`}>
