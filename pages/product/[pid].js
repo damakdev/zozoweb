@@ -61,6 +61,7 @@ export default function Product() {
     router.push("/");
   }
 
+
   return (
     <CustomerLayout>
       <section className="mb-6">
