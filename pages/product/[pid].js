@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { getSingleBiddingEvent } from "../../services/customer";
+import { getSingleBidEvent } from "../../services/customer";
 import CustomerLayout from "../../components/CustomerLayout";
 import BreadCrumb from "../../components/bread-crumb";
 import ProductInfo from "../../components/product-info";
@@ -51,7 +51,7 @@ export default function Product() {
 
   useEffect(() => {
     if (biddingEventId && user) {
-      getSingleBiddingEvent(user.customer.id, biddingEventId).then((response) =>
+      getSingleBidEvent(user.customer.id, biddingEventId).then((response) =>
         setBiddingEvent(response.data)
       );
     }
