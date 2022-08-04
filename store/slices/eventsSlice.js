@@ -225,7 +225,7 @@ const eventsSlice = createSlice({
 					if (action.payload) {
 						console.log(action.payload)
 						console.log("yh")
-						state.biddingEvents = action.payload.data.bidding_event;
+						state.biddingEventsStatus = action.payload.data.bidding_event;
 						state.status = "success";
 						return;
 					}
