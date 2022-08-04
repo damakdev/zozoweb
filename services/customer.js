@@ -44,23 +44,23 @@ export function getProductsByCategoryName() {
   return axios.post(`/customer/product/category/name`);
 }
 
-export function getApprovedBiddingEvents() {
+export function getApprovedBidEvents() {
   return axios.get(`customer/bidding`);
 }
 
-export function searchApprovedBiddingEvents(query) {
+export function searchApprovedBidEvents(query) {
   return axios.get(`/customer/bidding/search?search=${query}`);
 }
 
-export function getSingleBiddingEvent(customer_id, event_id) {
+export function getSingleBidEvent(customer_id, event_id) {
   return axios.get(`/customer/bidding/details/${customer_id}/${event_id}`);
 }
 
-export function getWonBiddingEvents(customer_id) {
+export function getWonBidEvents(customer_id) {
   return axios.get(`/customer/bidding/wins/${customer_id}`);
 }
 
-export function getBiddingEventsByCategoryNames(body) {
+export function getBidEventsByCategoryNames(body) {
   return axios.post(`/customer/bidding/category`, body);
 }
 
@@ -84,7 +84,7 @@ export function updateStake(body) {
   return axios.patch(`/customer/bidding/update`, body);
 }
 
-export function getBiddingEventByStatus(body) {
+export function getBidEventByStatus(body) {
   return axios.post(`/customer/bidding/status`, body);
 }
 

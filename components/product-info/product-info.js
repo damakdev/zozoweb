@@ -10,7 +10,7 @@ import {
 	bidOnEvent,
 } from "../../services/customer";
 import { ClipLoader } from "react-spinners";
-import { useDispatch } from  "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import OtpInput from "react-otp-input";
 import Modal from "../modal/modal";
@@ -43,10 +43,10 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 	};
 
 	const initializePayment = usePaystackPayment(config);
-	const addToCart = ()=>{
-		console.log(data.bidding_event)
-		dispatch(addCart(data.bidding_event))
-	}
+	const addToCart = () => {
+		console.log(data.bidding_event);
+		dispatch(addCart(data.bidding_event));
+	};
 
 	async function bidHandler(e) {
 		e.preventDefault();
@@ -54,7 +54,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 			setLoading(true);
 			const body = {
 				bidding_event_id: biddingEventId,
-				customer_id: user.customer.id.toString(),
+				customer_id: user.id.toString(),
 				stake: +amount,
 			};
 			console.log(body);
@@ -87,7 +87,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 		console.log(reference);
 		const body = {
 			bidding_event_id: biddingEventId,
-			customer_id: user.customer.id.toString(),
+			customer_id: user.id.toString(),
 			payment_reference: reference.reference,
 		};
 		try {
@@ -113,7 +113,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 		setLoading(true);
 		const body = {
 			bidding_event_id: biddingEventId,
-			customer_id: user.customer.id.toString(),
+			customer_id: user.id.toString(),
 			access_code: accessCode,
 		};
 		try {
@@ -149,8 +149,6 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 		}
 	}, [reload, router]);
 
-	
-
 	return (
 		<>
 			<div className={styles.container}>
@@ -177,7 +175,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 							<div className={styles.watchlist}>
 								<span>On Auction </span>
 								<span className="cursor-pointer">Add to watchlist</span>
-							
+
 								<span className="cursor-pointer" onClick={addToCart}>
 									Add to Cart
 								</span>

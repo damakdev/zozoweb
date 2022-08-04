@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { _getApprovedBiddingEvents } from "../store/slices/eventsSlice";
 import { _getAllCategories } from "../store/slices/categoriesSlice";
+import { _getBiddingEventsByStatus} from "../store/slices/eventsSlice";
 import {
   getCurrentUser,
   verifyAccount,
@@ -24,7 +25,18 @@ import styles from "../styles/home.module.scss";
 function Home() {
   const dispatch = useDispatch();
   const { biddingEvents } = useSelector((state) => state.events);
+  const { biddingEventsStatus } = useSelector((state) => state.events);
+  
+  
   const { categories } = useSelector((state) => state.categories);
+
+  
+
+  
+  
+
+  
+  
   const mainSlider = Array(5).fill({
     image: Slide1,
     text: `Bid now, Pay less,
@@ -87,9 +99,9 @@ seek win.`,
         <OptionsBanner />
         <section className={styles.body}>
           <div className={styles.sidebar}>
-            <BidInfoCard data={products} title="Ongoing Bids" />
-            <BidInfoCard data={products} title="Upcoming Bids " />
-            <BidInfoCard data={products} title="Top Bids" />
+            <BidInfoCard data={biddingEventsStatus} title="Ongoing Bids" />
+            <BidInfoCard data={biddingEventsStatus} title="Upcoming Bids " />
+            <BidInfoCard data={biddingEventsStatus} title="Top Bids" />
             <TestimonialCard data={testimonials} />
             <NewsletterCard />
           </div>

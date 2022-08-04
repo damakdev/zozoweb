@@ -1,8 +1,9 @@
 import React from 'react'
 
-function LoginActivity() {
+function LoginActivity(props) {
   return (
-    <div>Registered; 14 july 2022 </div>
+    
+    <div>Registered at {props.title}</div>
   )
 }
 

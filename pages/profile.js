@@ -8,9 +8,15 @@ import styles from "./../styles/Profile.module.scss";
 import LoginActivity from "../components/Profile/LoginActivity";
 import Reminder from "../components/Profile/Reminder";
 import CreateLink from "../components/Profile/CreateLink";
+import { useDispatch, useSelector } from "react-redux";
 
 function Profile() {
+	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.auth.customer);
 	const [profileTab, setProfileTab] = useState("loginDetails");
+
+	
+
 	return (
 		<CustomerLayout>
 			<div>
@@ -44,7 +50,7 @@ function Profile() {
 							</li>
 						</ul>
 						<div className="pl-10 py-10">
-							{profileTab === "loginDetails" && <LoginActivity />}
+							{profileTab === "loginDetails" && <LoginActivity title={user.createdAt.slice(0, 10)} />}
 							{profileTab === "reminder" && <Reminder />}
 							{profileTab === "link" && <CreateLink />}
 						</div>
@@ -72,10 +78,10 @@ function Profile() {
 							</div>
 
 							<div className={styles.details}>
-								<p>Akinpelumi Lade </p>
-								<p>0903747665155 </p>
-								<p>AkinpelumiLade23@gmail.com </p>
-								<p>5, trademark, mushin street lagos </p>
+								<p>{user.first_name} {user.last_name}</p>
+								<p>{user.phone_number} </p>
+								<p>{user.email} </p>
+								<p>{user.address.id} {user.address.street}  {user.address.city}  {user.address.country} </p>
 								<p></p>
 								<p className="mt-9">May 15, 1995 </p>
 								<p>Male</p>
