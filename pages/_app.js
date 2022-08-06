@@ -1,11 +1,14 @@
 import axios from "axios";
 import Head from "next/head";
 import Layout from "../components/layout";
+import { MerchantAuthGuard } from "../components/authGuards";
+import { CustomerAuthGuard } from "../components/authGuards";
+import { AdminAuthGuard } from "../components/authGuards";
 import { useState, useEffect } from "react";
 import { persistor, store } from "../store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { ToastContainer, Slide, toast } from "react-toastify";
+import { ToastContainer, Zoom, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.scss";
 
@@ -61,15 +64,29 @@ function MyApp({ Component, pageProps }) {
         <title>Zozo</title>
       </Head>
       <ToastContainer
-        position="bottom-right"
-        autoClose={2000}
+        position="top-center"
+        autoClose={1000}
         hideProgressBar={true}
         pauseOnFocusLoss={false}
-        transition={Slide}
+        transition={Zoom}
       />
       <PersistGate loading={null} persistor={persistor}>
         <Layout>
-          <Component {...pageProps} />
+          {Component.requireMerchantAuth ? (
+            <MerchantAuthGuard>
+              <Component {...pageProps} />
+            </MerchantAuthGuard>
+          ) : Component.requireCustomerAuth ? (
+            <CustomerAuthGuard>
+              <Component {...pageProps} />
+            </CustomerAuthGuard>
+          ) : Component.requireAdminAuth ? (
+            <AdminAuthGuard>
+              <Component {...pageProps} />
+            </AdminAuthGuard>
+          ) : (
+            <Component {...pageProps} />
+          )}
         </Layout>
       </PersistGate>
     </Provider>
