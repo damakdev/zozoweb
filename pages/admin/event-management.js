@@ -8,6 +8,8 @@ import Button from "../../components/ui/Button";
 function Bids() {
 	const [modalDisplay, setModalDisplay] = useState(false);
 
+	const dispatch = useDispatch()
+	// const {eventsLoading} = 
 	const viewDetails = () => {
 		setModalDisplay((modalDisplay) => !modalDisplay);
 	};

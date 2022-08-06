@@ -23,7 +23,7 @@ export default function Index() {
     dispatch(_loginCustomer({ email, password }));
   }
   if (token) router.push("/");
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.main}>

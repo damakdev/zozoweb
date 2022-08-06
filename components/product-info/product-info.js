@@ -11,14 +11,17 @@ import {
   bidOnEvent,
 } from "../../services/customer";
 import { ClipLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import OtpInput from "react-otp-input";
 import Modal from "../modal/modal";
 import Button from "../ui/button/";
 import styles from "./product-info.module.scss";
+import { addCart } from "../../store/slices/cartSlice";
 
 export default function ProductInfo({ data, user, biddingEventId }) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [days, hours, minutes, seconds] = useCountdown(
     // product.start_time,
     "2022-05-08T22:38:00.000Z",
@@ -41,6 +44,10 @@ export default function ProductInfo({ data, user, biddingEventId }) {
   };
 
   const initializePayment = usePaystackPayment(config);
+  const addToCart = () => {
+    console.log(data.bidding_event);
+    dispatch(addCart(data.bidding_event));
+  };
 
   async function bidHandler(e) {
     e.preventDefault();
@@ -48,7 +55,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
       setLoading(true);
       const body = {
         bidding_event_id: biddingEventId,
-        customer_id: user.customer.id.toString(),
+        customer_id: user.id.toString(),
         stake: +amount,
       };
       console.log(body);
@@ -81,7 +88,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
     console.log(reference);
     const body = {
       bidding_event_id: biddingEventId,
-      customer_id: user.customer.id.toString(),
+      customer_id: user.id.toString(),
       payment_reference: reference.reference,
     };
     try {
@@ -107,7 +114,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
     setLoading(true);
     const body = {
       bidding_event_id: biddingEventId,
-      customer_id: user.customer.id.toString(),
+      customer_id: user.id.toString(),
       access_code: accessCode,
     };
     try {
@@ -174,6 +181,29 @@ export default function ProductInfo({ data, user, biddingEventId }) {
                 <span>
                   <HeartIcon style={{ cursor: "pointer" }} />
                   Add to watchlist
+                </span>
+              </div>
+              <h3>{data.bidding_event?.product.description}</h3>
+              <hr />
+              <p>
+                {" "}
+                With each bid, the price goes up ₦0.01 and the timer starts over
+                from 10 seconds
+              </p>
+              <div className={styles.price}>
+                <span>
+                  &#8358;{formatNumber(+data.bidding_event?.product.price)}
+                </span>
+              </div>
+            </div>
+            <div className={styles["product-description"]}>
+              <h1>{data.bidding_event?.product.name}</h1>
+              <div className={styles.watchlist}>
+                <span>On Auction </span>
+                <span className="cursor-pointer">Add to watchlist</span>
+
+                <span className="cursor-pointer" onClick={addToCart}>
+                  Add to Cart
                 </span>
               </div>
               <h3>{data.bidding_event?.product.description}</h3>

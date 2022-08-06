@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Bell } from "../../../public/svg/icons";
 function Navbar() {
 	return (
-		<div className="bg-white w-full h-32">
+		<div className="bg-white w-full h-32 ">
 			<div className="flex flex-row-reverse pt-7 items-center mr-10">
 				<div className=" ml-10 leading-normal">
 					<p className="font-semibold">Akinpelumi Akinlade</p>

@@ -57,6 +57,16 @@ export const _loginMerchant = createAsyncThunk(
   }
 );
 
+//ADMIN LOGIN
+export const loginAdmin = createAsyncThunk(`admin/login`, async (body) => {
+  try {
+    const response = await login(body);
+    return response;
+  } catch (error) {
+    return error.response.data.message;
+  }
+});
+
 const initialState = {
   customer: {
     token: null,
@@ -65,6 +75,7 @@ const initialState = {
     loading: false,
   },
   merchant: { token: null, user: null, error: null, loading: false },
+  admin: { token: null, user: null, error: null, loading: false },
 };
 
 export const authSlice = createSlice({
@@ -150,6 +161,19 @@ export const authSlice = createSlice({
       }
       state.merchant.user = action.payload.data.user;
       state.merchant.token = action.payload.data.token;
+    });
+    // ADMIN LOGIN
+    builder.addCase(loginAdmin.pending, (state) => {
+      state.admin.loading = true;
+    });
+    builder.addCase(loginAdmin.fulfilled, (state, action) => {
+      state.admin.loading = false;
+      if (action.payload.status == 400) {
+        // state.customer.loading = false;
+        return;
+      }
+      state.admin.user = action.payload.data.user;
+      state.admin.token = action.payload.data.token;
     });
   },
 });

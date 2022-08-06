@@ -8,8 +8,12 @@ import profile from "../assets/profile.svg";
 import QR from "../assets/qr.png";
 import plus from "../assets/plus.svg";
 import box1 from "./../assets/cartoon.png";
+import { useSelector } from "react-redux";
 
 const Wishlist = () => {
+  const { categories } = useSelector((state) => state.categories);
+  
+
   return (
     <CustomerLayout>
       <h1>Default Watchlist</h1>
@@ -33,6 +37,11 @@ const Wishlist = () => {
               className={`${styles.select}`}
             >
               <option value="">Category</option>
+              
+              <option value=""> </option>
+             {categories?.map((category) => (
+                <option value="" key={category.id}> {category.name}</option>
+        ))}
             </select>
           </div>
         </div>
@@ -44,7 +53,7 @@ const Wishlist = () => {
             <h3 className="text-black">Default Watchlist</h3>
             <span>
               {" "}
-              <Image src={plus} /> <Link href="  ">Create a new List</Link>{" "}
+              <Image src={plus} /> <Link href="">Create a new List</Link>{" "}
             </span>
           </div>
           <div className="card2 bg-white mt-10 pt-10 px-20">
@@ -66,7 +75,7 @@ const Wishlist = () => {
                 </p>
                 <div className="flex gap-10 mt-12">
                   <div className="">
-                    <Link href="">
+                    <Link href="/login">
                       <Button
                         name="SIGN IN TO YOUR ACCOUNT"
                         paddingY="7px"
@@ -77,7 +86,7 @@ const Wishlist = () => {
                     </Link>
                   </div>
                   <div>
-                    <Link href="">
+                    <Link href="/signup">
                       <Button
                         name="SIGN UP NOW"
                         paddingY="7px"

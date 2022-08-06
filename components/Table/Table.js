@@ -138,16 +138,16 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										{/* <td>
-										<input type="checkbox" />
-									</td> */}
-										<td>{item.date}</td>
-										<td>{item.firstName}</td>
-										<td>{item.lastName}</td>
-										<td>{item.email}</td>
-										<td>{item.status}</td>
+										<td>
+										{++index}
+									</td>
+										<td>{new Date(item.account.createdAt).toDateString()}</td>
+										<td>{item.account.first_name}</td>
+										<td>{item.account.last_name}</td>
+										<td>{item.account.email}</td>
+										<td ><span className={`${item.account.verified ? "text-green-600 " : "text-red-600 "} text-2xl`}>{item.account.verified ? "Verified" : "Unverified"}</span></td>
 										<td
-											onClick={viewDetails}
+											onClick={()=>viewDetails(item.id)}
 											colSpan="2"
 											className="cursor-pointer tracking-widest"
 										>
