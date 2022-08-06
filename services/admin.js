@@ -22,3 +22,19 @@ export function getSingleMerchant(id){
 export function getAllEventsList(){
       return axios.get("/admin/bidding")
 }
+
+export function adminSingleEvent(id){
+      return axios.get(`/admin/bidding/${id}`)
+}
+
+export function startBidEvent(id){
+      return axios.get(`/admin/bidding/start/${id}`)
+}
+
+export function stopBidEvent(id){
+      return axios.get(`/admin/bidding/end/${id}`)
+}
+
+export function cancelBidEvent(id){
+      return axios.get(`/admin/bidding/cancel/${id}`)
+}

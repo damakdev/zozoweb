@@ -8,7 +8,7 @@ import userSlice from "./slices/userSlice";
 import thunk from "redux-thunk";
 import adminAuthSlice from "./slices/adminSlice/usersSlice";
 import usersSlice from "./slices/adminSlice/usersSlice";
-import eventSlice from "./slices/adminSlice/eventSlice";
+import adminEvent from "./slices/adminSlice/adminEventSlice";
 import cartSlice from "./slices/cartSlice";
 
 const persistConfig = {
@@ -24,6 +24,10 @@ export const store = configureStore({
 		categories: categoriesSlice,
 		events: eventsSlice,
 		cart: cartSlice,
+
+		//ADMIN
+		users: usersSlice,
+		adminEvent: adminEvent
 	},
 	devTools: process.env.NODE_ENV !== "production",
 	middleware: [thunk],

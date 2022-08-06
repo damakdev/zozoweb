@@ -36,16 +36,19 @@ function Table({
 	};
 
 	const eventStatus = (status) => {
-		switch (status.toLowerCase()) {
-			case "approved":
+		switch (status) {
+			case  true:
 				return <img src="/images/eventApproved.svg" alt="approved" />;
-			case "declined":
+			case  false:
 				return <img src="/images/eventDeclined.svg" alt="declined" />;
 			// case "closed":
 			// 	return <img src="/images/closed.svg" alt="closed" />;
 		}
 	};
 
+	const formatAmount = (amount) => {
+		return Number(amount).toLocaleString();
+	};
 	return (
 		<>
 			<div className="flex mb-10 flex-row-reverse mr-20">
@@ -138,16 +141,24 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										<td>
-										{++index}
-									</td>
+										<td>{++index}</td>
 										<td>{new Date(item.account.createdAt).toDateString()}</td>
 										<td>{item.account.first_name}</td>
 										<td>{item.account.last_name}</td>
 										<td>{item.account.email}</td>
-										<td ><span className={`${item.account.verified ? "text-green-600 " : "text-red-600 "} text-2xl`}>{item.account.verified ? "Verified" : "Unverified"}</span></td>
+										<td>
+											<span
+												className={`${
+													item.account.verified
+														? "text-green-600 "
+														: "text-red-600 "
+												} text-2xl`}
+											>
+												{item.account.verified ? "Verified" : "Unverified"}
+											</span>
+										</td>
 										<td
-											onClick={()=>viewDetails(item.id)}
+											onClick={() => viewDetails(item.id)}
 											colSpan="2"
 											className="cursor-pointer tracking-widest"
 										>
@@ -202,22 +213,33 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										{/* <td>
-										<input type="checkbox" />
-									</td> */}
-										<td>{item.date}</td>
-										<td>{item.event_id}</td>
-										<td>{item.product_name}</td>
-										<td>{item.price}</td>
-										<td>{item.winner}</td>
+										<td>{++index}</td>
+										<td>{item.product.name}</td>
+										<td>{formatAmount(item.access_amount)}</td>
+										<td>{formatAmount(item.minimum_amount)}</td>
+										<td>{new Date(item.start_time).toDateString()}</td>
+										<td>{new Date(item.end_time).toDateString()}</td>
+										<td>
+											<span
+												className={`${
+													item.approved ? "text-green-600 " : "text-red-600 "
+												} text-2xl`}
+											>
+												{item.approved ? "Verified" : "Unverified"}
+											</span>
+										</td>
+										<td>
+											{item.ended
+												? formatAmount(item.last_amount)
+												: "Undecided"}
+										</td>
+										<td>{item.ended ? item.last_amount : "Undecided"}</td>
 										<td
-											onClick={viewDetails}
-											colSpan="2"
+											onClick={()=>viewDetails(item.id)}
 											className="cursor-pointer tracking-widest"
 										>
 											<Dots />
 										</td>
-										{/* <td>{status(item.status)}</td> */}
 									</tr>
 								);
 							})}
@@ -229,15 +251,15 @@ function Table({
 										{/* <td>
 										<input type="checkbox" />
 									</td> */}
-										<td>{item.date}</td>
-										<td>{item.event_name}</td>
-										<td>{item.start_date}</td>
+											<td>{++index}</td>
+										<td>{item.product.name.substr(0, 22)}</td>
+										<td>{new Date(item.start_time).toDateString()}</td>
+										<td>{new Date(item.end_time).toDateString()}</td>
 										<td>{item.merchant_name}</td>
-										<td>{eventStatus(item.status)}</td>
-										<td>{item.amount}</td>
+										<td>{eventStatus(item.approved)}</td>
+										<td>{formatAmount(item.minimum_amount)}</td>
 										<td
-											onClick={viewDetails}
-											colSpan="2"
+											onClick={()=>viewDetails(item.id)}
 											className="cursor-pointer tracking-widest"
 										>
 											<Dots />

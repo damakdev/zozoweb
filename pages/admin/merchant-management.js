@@ -30,16 +30,16 @@ function MerchantMgt() {
 	const { user, merchantDetailsLoading } = useSelector(
 		(state) => state.users.merchantDetails
 	);
-
+console.log(isLoading)
 	const viewDetails = (id) => {
 		dispatch(singleMerchant(id));
-
+	
 		setModalDisplay((modalDisplay) => !modalDisplay);
 	};
 
 	useEffect(() => {
 		dispatch(merchantList());
-	}, [dispatch, user]);
+	}, [dispatch]);
 
 	console.log(users)
 	return (
@@ -48,7 +48,7 @@ function MerchantMgt() {
 				<h3 className="py-20 text-5xl font-semibold mt-1 text-semibold text-black">
 					Merchant Management
 				</h3>
-				{!isLoading && (
+				{users && (
 					<Table
 						name="customerMgt"
 						thead={thead}
@@ -67,7 +67,7 @@ function MerchantMgt() {
 					<div className={`${styles.modal} overflow-y-auto`}>
 						<div className="grid grid-cols-2 justify-around w-9/12 mx-auto items-center">
 							<div>
-								<img src="/images/pic2.png" className="rounded-lg h-4/12 " />
+								<img src={user.account.avatar} className="rounded-lg h-4/12 " />
 							</div>
 
 							<div className="ml-7 ">

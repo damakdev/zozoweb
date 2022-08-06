@@ -47,6 +47,7 @@ export const verifyUser = createAsyncThunk("users/verifyUser", async (body) => {
 
 //MERCHANT
 export const merchantList = createAsyncThunk("users/merchantList", async () => {
+	
 	return await getMerchants();
 });
 

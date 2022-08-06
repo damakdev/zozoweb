@@ -67,7 +67,7 @@ function AdminSidebar() {
 			title: "Wallet",
 			icon: <AdminDefault ill="#D5C4DF" />,
 			active: <AdminDefault fill="#743B96" />,
-			url: "/merchant/profile",
+			url: "/admin/wallet",
 		},
 		{
 			title: "Shipping Request",

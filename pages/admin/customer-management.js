@@ -39,7 +39,7 @@ function CustomerMgt() {
 
 	useEffect(() => {
 		dispatch(customerList());
-	}, [dispatch, user]);
+	}, [dispatch, user, users]);
 
 	return (
 		<AdminLayout>
@@ -65,7 +65,7 @@ function CustomerMgt() {
 					<div className={`${styles.modal} overflow-y-auto`}>
 						<div className="grid grid-cols-2 justify-around w-9/12 mx-auto items-center">
 							<div>
-								<img src="/images/pic2.png" className="rounded-lg h-4/12 " />
+								<img src={user.account.avatar} className="rounded-lg h-4/12 " />{" "}
 							</div>
 
 							<div className="ml-7 ">

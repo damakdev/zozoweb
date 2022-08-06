@@ -174,10 +174,10 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 							<h1>{data.bidding_event?.product.name}</h1>
 							<div className={styles.watchlist}>
 								<span>On Auction </span>
-								<span className="cursor-pointer">Add to watchlist</span>
+								{/* <span className="cursor-pointer">Add to watchlist</span> */}
 
 								<span className="cursor-pointer" onClick={addToCart}>
-									Add to Cart
+									Add to Watchlist
 								</span>
 							</div>
 							<h3>{data.bidding_event?.product.description}</h3>
