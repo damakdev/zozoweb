@@ -3,7 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CloseIcon } from "../../public/svg/icons";
 import styles from "./modal.module.scss";
 
-export default function Modal({ display, close, children, title }) {
+export default function Modal({
+  display,
+  close,
+  children,
+  title,
+  width,
+  height,
+}) {
   useEffect(() => {
     if (display) {
       document.querySelector("html").style.overflow = "hidden";
@@ -31,12 +38,15 @@ export default function Modal({ display, close, children, title }) {
             animate={{ scale: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             className={styles.modal}
+            style={{ width: width }}
           >
             <div className={styles.head}>
               <h1>{title}</h1>
               <CloseIcon onClick={close} />
             </div>
-            <div className={styles.body}>{children}</div>
+            <div className={styles.body} style={{ height: height }}>
+              {children}
+            </div>
           </motion.div>
         </>
       )}

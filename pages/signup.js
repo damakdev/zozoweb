@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { EyeOn, EyeOff, GoogleIcon, LeftArrow } from "../public/svg/icons";
 import { SignUpBanner } from "../public/svg/images";
-import { registerCustomer } from "../store/slices/authSlice";
+import { _registerCustomer } from "../store/slices/authSlice";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import Link from "next/link";
@@ -55,7 +55,7 @@ export default function Index() {
       },
       account_type: "customer",
     };
-    dispatch(registerCustomer(body));
+    dispatch(_registerCustomer(body));
   }
 
   useEffect(() => {
@@ -184,7 +184,7 @@ export default function Index() {
                   />
                 </div>
               </div>
-              <div className="df aic asst fw">
+              <div className="text-center">
                 <p>
                   By continuing, you agree to Zozo{" "}
                   <Link href="/">conditions of use</Link> and{" "}

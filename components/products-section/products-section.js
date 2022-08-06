@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useCountdown } from "../../hooks/useCountdown";
+import { toast } from "react-toastify";
 import { LeftArrow, RightArrow } from "../../public/svg/icons";
 import { formatNumber, truncateString } from "../../utils";
 import Modal from "../modal/modal";
@@ -75,7 +76,9 @@ export default function ProductsSection({ title, products }) {
         >
           <div className={styles.login}>
             <p>Log in to continue</p>
-            <Link href="/login">Login</Link>
+            <Link href="/login">
+              <a onClick={() => setModalDisplay(false)}>Login</a>
+            </Link>
           </div>
         </Modal>
       )}
@@ -96,7 +99,8 @@ function Card({ product, openModal }) {
     if (user) {
       return;
     }
-    openModal();
+    // openModal();
+    toast.warning("Login to continue!");
   }
 
   useEffect(() => {
@@ -105,8 +109,8 @@ function Card({ product, openModal }) {
 
   return (
     <Link
-      href={user ? `/product/${product.product_id}` : "javascript:void(0)"}
-      key={product.product_id}
+      href={user ? `/product/${product.id}` : "javascript:void(0)"}
+      key={product.id}
     >
       <a onClick={(product) => eventHandler(product)} className={styles.card}>
         <img src={product.product.images.main} alt="" />

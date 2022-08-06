@@ -1,85 +1,117 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-
-import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { logOutMerchant } from "../../store/slices/authSlice";
+import { toast } from "react-toastify";
 import {
-	HomeIcon,
-	RefreshIcon,
-	ReceiptIcon,
-	WalletIcon,
-	MenuBoardIcon,
-	ProfileCircleIcon,
+  HomeIcon,
+  RefreshIcon,
+  ReceiptIcon,
+  WalletIcon,
+  MenuBoardIcon,
+  ProfileCircleIcon,
+  LogOutIcon,
 } from "../../public/svg/icons";
+import Link from "next/link";
+import Modal from "../modal";
+import Logo from "../logo";
+import Button from "../ui/button/button";
 import styles from "./merchant-sidebar.module.scss";
 
 export default function MerchantSideBar() {
-	const router = useRouter();
-	const links = [
-		{
-			title: "Home",
-			icon: <HomeIcon fill="#D5C4DF" />,
-			active: <HomeIcon fill="#743B96" />,
-			url: "/merchant/dashboard",
-		},
-		{
-			title: "Bio-data",
-			icon: <RefreshIcon fill="#D5C4DF"  />,
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [modalDisplay, setModalDisplay] = useState(false);
+  const links = [
+    {
+      title: "Home",
+      icon: <HomeIcon fill="#D5C4DF" />,
+      active: <HomeIcon fill="#743B96" />,
+      url: "/merchant/dashboard",
+    },
+    {
+      title: "Bio-data",
+      icon: <RefreshIcon fill="#D5C4DF" />,
       active: <RefreshIcon fill="#743B96" />,
-			url: "/merchant/dashboard/biodata",
-		},
-		{
-			title: "Orders",
-			icon: <ReceiptIcon fill="#D5C4DF" />,
-			active: <ReceiptIcon fill="#743B96" />,
-			url: "/merchant/item-orders",
-		},
-		// {
-		// 	title: "wallet",
-		// 	icon: <WalletIcon fill="#D5C4DF" />,
-		// 	active: <WalletIcon fill="#743B96" />,
-		// 	url: "/",
-		// },
-		{
-			title: "Events",
-			icon: <MenuBoardIcon fill="#D5C4DF" />,
-			active: <MenuBoardIcon fill="#743B96" />,
-			url: "/merchant/events",
-		},
-		{
-			title: "Profile",
-			icon: <ProfileCircleIcon fill="#D5C4DF" />,
-			active: <ProfileCircleIcon fill="#743B96" />,
-			url: "/merchant/profile",
-		},
-	];
+      url: "/merchant/dashboard/biodata",
+    },
+    {
+      title: "Orders",
+      icon: <ReceiptIcon fill="#D5C4DF" />,
+      active: <ReceiptIcon fill="#743B96" />,
+      url: "/merchant/item-orders",
+    },
+    // {
+    // 	title: "wallet",
+    // 	icon: <WalletIcon fill="#D5C4DF" />,
+    // 	active: <WalletIcon fill="#743B96" />,
+    // 	url: "/",
+    // },
+    {
+      title: "Events",
+      icon: <MenuBoardIcon fill="#D5C4DF" />,
+      active: <MenuBoardIcon fill="#743B96" />,
+      url: "/merchant/events",
+    },
+    {
+      title: "Profile",
+      icon: <ProfileCircleIcon fill="#D5C4DF" />,
+      active: <ProfileCircleIcon fill="#743B96" />,
+      url: "/merchant/profile",
+    },
+  ];
 
-	return (
-		<div className={styles.container}>
-			<div className="w-10/12 mx-auto">
-				{" "}
-				<Image src="/images/adminlogo.png" height={40} width={150} />{" "}
-			</div>
-			<ul className="w-full mt-20">
-				{links.map((item, index) => (
-					<>
-						<Link href={item.url}>
-							<li
-								key={index}
-								className={`flex items-center  mt-10  cursor-pointer  ${
-									router.pathname == item.url ? styles.active : " "
-								}`}
-								//onClick={() => setActiveLink(index)}
-							>
-								<a className="pl-10">
-									{router.pathname == item.url ? item.active : item.icon}
-								</a>
+  return (
+    <>
+      <div className={styles.container}>
+        <Logo />
 
-								<h3 className=" ml-3 text-white text-2xl">{item.title}</h3>
-							</li>
-						</Link>
-					</>
-				))}
-			</ul>
-		</div>
-	);
+        <ul>
+          {links.map((item, index) => (
+            <>
+              <li
+                key={index}
+                className={`flex items-center  cursor-pointer  ${
+                  router.pathname == item.url ? styles.active : " "
+                }`}
+              >
+                <Link href={item.url}>
+                  <a>
+                    {router.pathname == item.url ? item.active : item.icon}
+                    <h3 className="text-2xl">{item.title}</h3>
+                  </a>
+                </Link>
+              </li>
+            </>
+          ))}
+          <li>
+            <button onClick={() => setModalDisplay(true)}>
+              <LogOutIcon />
+              <span>Log out</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <Modal
+        display={modalDisplay}
+        title="Confirm logout"
+        close={() => setModalDisplay(false)}
+      >
+        <div className={styles["confirm-logout"]}>
+          <p>Are you sure you want to leave</p>
+          <div className={styles.buttons}>
+            <Button
+              onClick={() => {
+                dispatch(logOutMerchant());
+                toast.success("You are logged out!");
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={() => setModalDisplay(false)}>No</Button>
+          </div>
+        </div>
+      </Modal>
+    </>
+  );
 }

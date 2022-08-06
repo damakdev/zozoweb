@@ -17,7 +17,12 @@ export function convertUtc(utc) {
   // return localDate.toLocaleString("en-GB", { hour12: true });
 }
 
+export function toLocaleString(date) {
+  return new Date(date).toLocaleString();
+}
+
 export function formatNumber(number) {
+  // if (!number) return;
   return number.toLocaleString("en-US", {
     minimumIntegerDigits: 2,
   });
