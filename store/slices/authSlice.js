@@ -1,11 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { register, login } from "../../services/customer";
+import {
+  register as registerCustomer,
+  login as loginCustomer,
+} from "../../services/customer";
+import {
+  register as registerMerchant,
+  login as loginMerchant,
+} from "../../services/merchant";
+import { toast } from "react-toastify";
 
-export const registerCustomer = createAsyncThunk(
+export const _registerCustomer = createAsyncThunk(
   `customer/register`,
   async (body) => {
     try {
-      const response = await register(body);
+      const response = await registerCustomer(body);
       return response;
     } catch (error) {
       return error.response.data.message;
@@ -13,11 +21,35 @@ export const registerCustomer = createAsyncThunk(
   }
 );
 
-export const loginCustomer = createAsyncThunk(
+export const _loginCustomer = createAsyncThunk(
   `customer/login`,
   async (body) => {
     try {
-      const response = await login(body);
+      const response = await loginCustomer(body);
+      return response;
+    } catch (error) {
+      return error.response.data.message;
+    }
+  }
+);
+
+export const _registerMerchant = createAsyncThunk(
+  `merchant/register`,
+  async (body) => {
+    try {
+      const response = await registerMerchant(body);
+      return response;
+    } catch (error) {
+      return error.response.data.message;
+    }
+  }
+);
+
+export const _loginMerchant = createAsyncThunk(
+  `merchant/login`,
+  async (body) => {
+    try {
+      const response = await loginMerchant(body);
       return response;
     } catch (error) {
       return error.response.data.message;
@@ -45,12 +77,21 @@ export const authSlice = createSlice({
       state.customer.error = null;
       state.customer.loading = false;
     },
+    logOutMerchant: (state) => {
+      state.merchant.token = null;
+      state.merchant.user = null;
+      state.merchant.error = null;
+      state.merchant.loading = false;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(registerCustomer.pending, (state) => {
+    builder.addCase(_registerCustomer.pending, (state) => {
       state.customer.loading = true;
     });
-    builder.addCase(registerCustomer.fulfilled, (state, action) => {
+    builder.addCase(_registerCustomer.rejected, (state) => {
+      state.customer.loading = false;
+    });
+    builder.addCase(_registerCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
       if (action.payload.status == 400) {
         return;
@@ -58,20 +99,60 @@ export const authSlice = createSlice({
       state.customer.user = action.payload.data?.account;
       state.customer.token = action.payload.data?.account.token;
     });
-    builder.addCase(loginCustomer.pending, (state) => {
+    builder.addCase(_loginCustomer.pending, (state) => {
       state.customer.loading = true;
     });
-    builder.addCase(loginCustomer.fulfilled, (state, action) => {
+    builder.addCase(_loginCustomer.rejected, (state) => {
+      state.customer.loading = false;
+    });
+    builder.addCase(_loginCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
       if (action.payload.status == 400) {
-        // state.customer.loading = false;
         return;
       }
       state.customer.user = action.payload.data.user;
       state.customer.token = action.payload.data.token;
     });
+
+    builder.addCase(_registerMerchant.pending, (state) => {
+      state.merchant.loading = true;
+    });
+    builder.addCase(_registerMerchant.rejected, (state) => {
+      state.merchant.loading = false;
+    });
+    builder.addCase(_registerMerchant.fulfilled, (state, action) => {
+      state.merchant.loading = false;
+      if (action.payload.status == 400) {
+        return;
+      }
+      state.merchant.user = {
+        ...action.payload.data?.account,
+        ...action.payload.data?.merchant,
+      };
+      state.merchant.token = action.payload.data?.account.token;
+    });
+    builder.addCase(_loginMerchant.pending, (state) => {
+      state.merchant.loading = true;
+    });
+    builder.addCase(_loginMerchant.rejected, (state) => {
+      state.merchant.loading = false;
+    });
+    builder.addCase(_loginMerchant.fulfilled, (state, action) => {
+      state.merchant.loading = false;
+      if (action.payload.status == 400) {
+        return;
+      }
+      if (action.payload.data.user.account_type !== "merchant") {
+        toast.error(
+          "This account is not a merchant. Login with a merchant account"
+        );
+        return;
+      }
+      state.merchant.user = action.payload.data.user;
+      state.merchant.token = action.payload.data.token;
+    });
   },
 });
 
-export const { logOutCustomer } = authSlice.actions;
+export const { logOutCustomer, logOutMerchant } = authSlice.actions;
 export default authSlice.reducer;
