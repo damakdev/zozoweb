@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { loginCustomer } from "../store/slices/authSlice";
+import { _loginCustomer } from "../store/slices/authSlice";
 import { ClipLoader } from "react-spinners";
 import { EyeOn, EyeOff, GoogleIcon } from "../public/svg/icons";
 import { LoginBanner } from "../public/svg/images";
@@ -20,7 +20,7 @@ export default function Index() {
 
   async function loginHandler(e) {
     e.preventDefault();
-    dispatch(loginCustomer({ email, password }));
+    dispatch(_loginCustomer({ email, password }));
   }
   if (token) router.push("/");
   
