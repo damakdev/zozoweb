@@ -89,11 +89,11 @@ function Nav() {
               </li>
             </Link>
 
-            <Link href="/how-to-bid">
+            {/* <Link href="/how-to-bid">
               <li>
                 <a> How to Bid</a>
               </li>
-            </Link>
+            </Link> */}
 
             <Link href="/">
               <li>
