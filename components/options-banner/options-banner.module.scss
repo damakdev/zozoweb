@@ -4,4 +4,17 @@
   justify-content: space-between;
   align-items: center;
   margin: 3rem 0;
+  & > div {
+    display: flex;
+    align-items: center;
+    svg {
+      width: 17px;
+      height: 17px;
+      margin-right: 0.5rem;
+      path {
+        fill: #575757;
+        fill-opacity: 1;
+      }
+    }
+  }
 }
