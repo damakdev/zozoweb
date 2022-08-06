@@ -22,6 +22,7 @@ export function toLocaleString(date) {
 }
 
 export function formatNumber(number) {
+  // if (!number) return;
   return number.toLocaleString("en-US", {
     minimumIntegerDigits: 2,
   });

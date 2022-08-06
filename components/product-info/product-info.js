@@ -194,29 +194,6 @@ export default function ProductInfo({ data, user, biddingEventId }) {
                 <span>
                   &#8358;{formatNumber(+data.bidding_event?.product.price)}
                 </span>
-              </div>
-            </div>
-            <div className={styles["product-description"]}>
-              <h1>{data.bidding_event?.product.name}</h1>
-              <div className={styles.watchlist}>
-                <span>On Auction </span>
-                <span className="cursor-pointer">Add to watchlist</span>
-
-                <span className="cursor-pointer" onClick={addToCart}>
-                  Add to Cart
-                </span>
-              </div>
-              <h3>{data.bidding_event?.product.description}</h3>
-              <hr />
-              <p>
-                {" "}
-                With each bid, the price goes up ₦0.01 and the timer starts over
-                from 10 seconds
-              </p>
-              <div className={styles.price}>
-                <span>
-                  &#8358;{formatNumber(+data.bidding_event?.product.price)}
-                </span>
 
                 {!data.bidding_event.ended && (
                   <span>

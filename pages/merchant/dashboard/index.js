@@ -119,14 +119,13 @@ export default function Index() {
                   <div className={styles.escrow}>
                     <DebitCardIcon />
                     <h1>
-                      &#8358;{formatNumber(wallet.escrow_balance)}{" "}
-                      <span>Escrow Balance</span>
+                      &#8358;{wallet.escrow_balance} <span>Escrow Balance</span>
                     </h1>
                   </div>
                   <div className={styles.withdrawable}>
                     <CashIcon />
                     <h1>
-                      &#8358;{formatNumber(wallet.withdrawable)}{" "}
+                      &#8358;{wallet.withdrawable}
                       <span>Withdrawable Balance </span>
                     </h1>
                   </div>
