@@ -15,10 +15,9 @@
   --text-secondary: #5b667a;
   --text-tertiary: #a1a1a1;
   --background-hover: #eeeeee;
-  --border: 1.79591px solid #e8e8e8;
+  --border: 1.79591px solid #dedede;
   --box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.15);
-  --primary-font:'Poppins', sans-serif;
-
+  --primary-font: "Poppins", sans-serif;
 }
 
 *,
@@ -114,6 +113,25 @@ ul {
 
 .fw {
   width: 100%;
+}
+
+.uploadcare-button {
+  .uploadcare--widget__button_type_open {
+    background-color: var(--accent-color);
+    &:focus {
+      outline: 2px solid rgba(102, 21, 252, 0.5) !important;
+    }
+  }
+}
+
+.uploadcare--dialog {
+  .uploadcare--button_primary {
+    background-color: var(--accent-color);
+    border: 1px solid rgba(102, 21, 252, 0.5) !important;
+    cursor: pointer;
+    &:focus {
+    }
+  }
 }
 
 ::selection {

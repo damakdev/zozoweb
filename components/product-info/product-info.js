@@ -4,6 +4,7 @@ import { usePaystackPayment } from "react-paystack";
 import { motion } from "framer-motion";
 import { useCountdown } from "../../hooks/useCountdown";
 import { formatNumber } from "../../utils";
+import { GavelIcon, HeartIcon } from "../../public/svg/icons";
 import {
 	getBidEventAccess,
 	accessBidEvent,
@@ -173,11 +174,14 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 						<div className={styles["product-description"]}>
 							<h1>{data.bidding_event?.product.name}</h1>
 							<div className={styles.watchlist}>
-								<span>On Auction </span>
-								{/* <span className="cursor-pointer">Add to watchlist</span> */}
+								<span>
+									<GavelIcon />
+									On Auction{" "}
+								</span>
 
 								<span className="cursor-pointer" onClick={addToCart}>
-									Add to Watchlist
+									<HeartIcon style={{ cursor: "pointer" }} />
+									Add to watchlist
 								</span>
 							</div>
 							<h3>{data.bidding_event?.product.description}</h3>

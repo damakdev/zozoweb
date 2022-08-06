@@ -8,8 +8,8 @@ export function login(body) {
   return axios.post(`/login`, body);
 }
 
-export function addProduct() {
-  return axios.get(`/merchant/product/add`);
+export function addProduct(body) {
+  return axios.post(`/merchant/product/add`, body);
 }
 
 export function getProducts(merchant_id) {
