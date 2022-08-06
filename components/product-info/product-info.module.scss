@@ -55,12 +55,20 @@
       margin-bottom: 1rem;
     }
     .watchlist {
+      display: flex;
       margin-bottom: 1rem;
       font-size: 1.3rem;
       span {
+        display: flex;
+        align-items: center;
         color: #004ce8;
         &:not(:last-child) {
           margin-right: 3rem;
+        }
+        svg{
+          width: 17px;
+          height: 17px;
+          margin-right: .5rem;
         }
       }
     }
