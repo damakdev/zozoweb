@@ -7,7 +7,7 @@ export function CustomerAuthGuard({ children }) {
   const { user } = useSelector((state) => state.auth.customer);
 
   useEffect(() => {
-    if (!user) {
+    if (!user || user.account_type !== "customer") {
       router.push("/");
     }
   }, [user, router]);
@@ -23,7 +23,7 @@ export function MerchantAuthGuard({ children }) {
   const { user } = useSelector((state) => state.auth.merchant);
 
   useEffect(() => {
-    if (!user) {
+    if (!user || user.account_type !== "merchant") {
       router.push("/merchant");
     }
   }, [user, router]);
