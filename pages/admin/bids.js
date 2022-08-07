@@ -5,8 +5,10 @@ import Modal from "../../components/modal/modal";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { adminSingleEvent, getAllEventsList } from "../../services/admin";
-import { getAllEvents, getSingleEvent } from "../../store/slices/adminSlice/adminEventSlice";
-
+import {
+	getAllEvents,
+	getSingleEvent,
+} from "../../store/slices/adminSlice/adminEventSlice";
 
 function Bids() {
 	const [modalDisplay, setModalDisplay] = useState(false);
@@ -27,8 +29,6 @@ function Bids() {
 	useEffect(() => {
 		dispatch(getAllEvents());
 	}, [dispatch]);
-
-	
 
 	const thead = [
 		"No",
@@ -65,8 +65,10 @@ function Bids() {
 				{event && (
 					<div className={` overflow-y-auto`}>
 						<div className=" w-5/12  mx-auto items-center">
-						<img src={event.product.images.main} className="rounded-lg h-4/12 " />
-							
+							<img
+								src={event.product.images.main}
+								className="rounded-lg h-4/12 "
+							/>
 						</div>
 						<div
 							style={{ backgroundColor: "#F3F3F3" }}

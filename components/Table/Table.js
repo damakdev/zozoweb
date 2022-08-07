@@ -37,12 +37,10 @@ function Table({
 
 	const eventStatus = (status) => {
 		switch (status) {
-			case  true:
+			case true:
 				return <img src="/images/eventApproved.svg" alt="approved" />;
-			case  false:
+			case false:
 				return <img src="/images/eventDeclined.svg" alt="declined" />;
-			// case "closed":
-			// 	return <img src="/images/closed.svg" alt="closed" />;
 		}
 	};
 
@@ -235,7 +233,7 @@ function Table({
 										</td>
 										<td>{item.ended ? item.last_amount : "Undecided"}</td>
 										<td
-											onClick={()=>viewDetails(item.id)}
+											onClick={() => viewDetails(item.id)}
 											className="cursor-pointer tracking-widest"
 										>
 											<Dots />
@@ -251,7 +249,7 @@ function Table({
 										{/* <td>
 										<input type="checkbox" />
 									</td> */}
-											<td>{++index}</td>
+										<td>{++index}</td>
 										<td>{item.product.name.substr(0, 22)}</td>
 										<td>{new Date(item.start_time).toDateString()}</td>
 										<td>{new Date(item.end_time).toDateString()}</td>
@@ -259,7 +257,7 @@ function Table({
 										<td>{eventStatus(item.approved)}</td>
 										<td>{formatAmount(item.minimum_amount)}</td>
 										<td
-											onClick={()=>viewDetails(item.id)}
+											onClick={() => viewDetails(item.id)}
 											className="cursor-pointer tracking-widest"
 										>
 											<Dots />
@@ -385,6 +383,100 @@ function Table({
 											/>
 										</td>
 										{/* <td>{status(item.status)}</td> */}
+									</tr>
+								);
+							})}
+
+						{name == "adminWallet" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										<td className="flex items-center ">{item.id}</td>
+										<td>{item.name}</td>
+										<td>{item.bid}</td>
+										<td>{item.value}</td>
+										<td>{item.profit}</td>
+									</tr>
+								);
+							})}
+
+						{name == "pendingRequest" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										<td>{++index}</td>
+										<td className="flex items-center ">{item.name}</td>
+										<td>{item.amount}</td>
+										<td>{item.currentWallet}</td>
+										<td>{item.date}</td>
+										<td>
+											<Button
+												name="Grant Withdrawal"
+												paddingX="35px"
+												paddingY="7px"
+												className="mr-6"
+												border="none"
+												bgColor="#0CBC8B"
+											/>
+										</td>
+										{/* <td>{status(item.status)}</td> */}
+									</tr>
+								);
+							})}
+
+						{name == "grantedRequest" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										<td>{++index}</td>
+										<td className="flex items-center ">{item.name}</td>
+										<td>{item.amount}</td>
+										<td>{item.currentWallet}</td>
+										<td>{item.date}</td>
+										<td>{item.dateGranted}</td>
+										<td>
+											<span className="text-green-600 text-3xl">
+												{item.status}
+											</span>
+										</td>
+									</tr>
+								);
+							})}
+
+						{name == "deniedRequest" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										<td>{++index}</td>
+										<td className="flex items-center ">{item.name}</td>
+										<td>{item.amount}</td>
+										<td>{item.currentWallet}</td>
+										<td>{item.date}</td>
+										<td>{item.dateDenied}</td>
+										<td>
+											<span className="text-red-600 text-3xl">
+												{item.status}
+											</span>
+										</td>
+									</tr>
+								);
+							})}
+
+						{name == "canceledRequest" &&
+							data.map((item, index) => {
+								return (
+									<tr key={index}>
+										<td>{++index}</td>
+										<td className="flex items-center ">{item.name}</td>
+										<td>{item.amount}</td>
+										<td>{item.currentWallet}</td>
+										<td>{item.date}</td>
+										<td>{item.dateCanceled}</td>
+										<td>
+											<span className="text-violet-600 text-3xl">
+												{item.status}
+											</span>
+										</td>
 									</tr>
 								);
 							})}
