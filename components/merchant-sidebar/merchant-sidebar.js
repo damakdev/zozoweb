@@ -41,12 +41,12 @@ export default function MerchantSideBar() {
       active: <ReceiptIcon fill="#743B96" />,
       url: "/merchant/item-orders",
     },
-    // {
-    // 	title: "wallet",
-    // 	icon: <WalletIcon fill="#D5C4DF" />,
-    // 	active: <WalletIcon fill="#743B96" />,
-    // 	url: "/",
-    // },
+    {
+    	title: "wallet",
+    	icon: <WalletIcon fill="#D5C4DF" />,
+    	active: <WalletIcon fill="#743B96" />,
+    	url: "/merchant/wallet",
+    },
     {
       title: "Events",
       icon: <MenuBoardIcon fill="#D5C4DF" />,
