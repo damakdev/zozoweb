@@ -4,7 +4,8 @@ import styles from "../styles/admin/admin-layout.module.scss";
 
 function MerchantLayout({ children }) {
   return (
-    <div className="bg-white" style={{ backgroundColor: "#E5E5E5" }}>
+    // style={{ backgroundColor: "#E5E5E5" }}
+    <div className="bg-white" >
       <MerchantSideBar />
 
       <div className={styles.children}>{children}</div>

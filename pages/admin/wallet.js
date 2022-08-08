@@ -2,17 +2,54 @@ import React from "react";
 import AdminLayout from "../../components/Admin/AdminLayout";
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
+import {
+	WalletGreenIcon,
+	WalletRedIcon,
+	WalletYellowIcon,
+} from "../../public/svg/icons";
+import styles from "../../styles/admin/wallet.module.scss";
+import Table from "../../components/Table/Table";
+import Link from "next/link";
 
 function Wallet() {
+	const thead = ["#", "Name", "Bids", "Total Value", "Profit"];
+	const data = [
+		{
+			id: "1",
+			name: "Meny Bag",
+			bid: "7,000",
+			value: "12,400",
+			profit: "7,900",
+		},
+		{
+			id: "2",
+			name: "Meny Bag",
+			bid: "7,000",
+			value: "12,400",
+			profit: "7,900",
+		},
+		{
+			id: "3",
+			name: "Meny Bag",
+			bid: "7,000",
+			value: "12,400",
+			profit: "7,900",
+		},
+	];
 	return (
 		<AdminLayout>
 			<div
 				className="pt-10 w-11/12 mx-auto pb-20 mt-1"
 				style={{ backgroundColor: "#E5E5E5" }}
 			>
-				<h3 className="py-20 text-5xl font-semibold mt-1 text-semibold text-black">
-					Wallet
-				</h3>
+				<div className="grid grid-cols-4 justify-between gap-10 items-center w-full">
+					<h3 className=" py-20 col-span-3 text-5xl font-semibold mt-1 text-semibold text-black">
+						Wallet
+					</h3>
+					<p className="text-3xl text-violet-600">
+						<Link href="/admin/withdraw-request">View Withdrawal Request</Link>
+					</p>
+				</div>
 
 				<div className="grid grid-cols-4 gap-10 ">
 					<div className="bg-white col-span-3 rounded-lg shadow-lg">
@@ -189,68 +226,80 @@ function Wallet() {
 						</div>
 					</div>
 
-					<div className="bg-white rounded-lg shadow-lg py-10 pl-6">
-						<h4 className="text-3xl font-semibold text-black ">
+					<div className="bg-white rounded-lg shadow-lg py-10 text-black">
+						<h4 className="text-3xl font-semibold text-black ml-5">
 							Money allocation
 						</h4>
-						<div className="flex items-center ">
-							<svg
-								width="40"
-								height="40"
-								viewBox="0 0 32 33"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-								className="mt-10 "
+						<div className="w-11/12 mx-auto">
+							<div className="flex items-center mt-10  justify-between  ">
+								<div className=" flex items-center">
+									<WalletYellowIcon />
+
+									<h5 className=" font-bold text-2xl  ml-5 ">Bids</h5>
+								</div>
+
+								<h5 className=" font-bold text-2xl  ml-5 "> 23,3B</h5>
+							</div>
+							<div
+								className={`${styles.bidYellow} flex justify-between items-center mt-5`}
 							>
-								<rect
-									y="0.818359"
-									width="32"
-									height="32"
-									rx="16"
-									fill="#E1B20B"
-								/>
-								<g clipPath="url(#clip0_1811_15030)">
-									<path
-										d="M15.9974 4.81836L15.8364 5.36529V21.2345L15.9974 21.3951L23.3636 17.0409L15.9974 4.81836Z"
-										fill="#343434"
-									/>
-									<path
-										d="M15.9977 4.81836L8.63135 17.0409L15.9977 21.3951V13.6926V4.81836Z"
-										fill="#FDFDFD"
-									/>
-									<path
-										d="M15.9975 22.7894L15.9067 22.9001V28.5529L15.9975 28.8179L23.3681 18.4375L15.9975 22.7894Z"
-										fill="#3C3C3B"
-									/>
-									<path
-										d="M15.9977 28.8179V22.7894L8.63135 18.4375L15.9977 28.8179Z"
-										fill="#FDFDFD"
-									/>
-									<path
-										d="M15.9976 21.3958L23.3637 17.0416L15.9976 13.6934V21.3958Z"
-										fill="#141414"
-									/>
-									<path
-										d="M8.63135 17.0416L15.9977 21.3958V13.6934L8.63135 17.0416Z"
-										fill="#393939"
-									/>
-								</g>
-								<defs>
-									<clipPath id="clip0_1811_15030">
-										<rect
-											width="24"
-											height="24"
-											fill="white"
-											transform="translate(4 4.81836)"
-										/>
-									</clipPath>
-								</defs>
-							</svg>
+								<input type="range" value={90} />
+								<span className="text-2xl">71.68%</span>
+							</div>
+						</div>
 
+						{/* GREEN */}
+						<div className="w-11/12 mx-auto">
+							<div className="flex items-center mt-10  justify-between  ">
+								<div className=" flex items-center">
+									<WalletGreenIcon />
 
+									<h5 className=" font-bold text-2xl  ml-5 ">Bid Access fee</h5>
+								</div>
+
+								<h5 className=" font-bold text-2xl  ml-5 "> 23,3B</h5>
+							</div>
+							<div
+								className={`${styles.bidGreen} flex justify-between items-center mt-5`}
+							>
+								<input type="range" value={90} />
+								<span className="text-2xl">71.68%</span>
+							</div>
+						</div>
+
+						{/* RED  */}
+						<div className="w-11/12 mx-auto">
+							<div className="flex items-center mt-10  justify-between  ">
+								<div className=" flex items-center">
+									<WalletRedIcon />
+
+									<h5 className=" font-bold text-2xl  ml-5 ">
+										Merchant Withdraw
+									</h5>
+								</div>
+
+								<h5 className=" font-bold text-2xl  ml-5 "> 23,3B</h5>
+							</div>
+							<div
+								className={`${styles.bidRed} flex justify-between items-center mt-5`}
+							>
+								<input type="range" value={90} />
+								<span className="text-2xl">71.68%</span>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+			<div className="mt-20 pb-20">
+				<Table
+					name="adminWallet"
+					thead={thead}
+					data={data}
+					isSearch={true}
+					isFilter={true}
+					isExport={true}
+					//	viewDetails={viewDetails}
+				/>
 			</div>
 		</AdminLayout>
 	);
