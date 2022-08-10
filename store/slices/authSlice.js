@@ -104,7 +104,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(_registerCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
-      if (action.payload.status == 400) {
+      if (!action.payload.account) {
         return;
       }
       state.customer.user = action.payload.data?.account;
@@ -118,7 +118,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(_loginCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
-      if (action.payload.status == 400) {
+      if (!action.payload?.data) {
         return;
       }
       state.customer.user = action.payload.data.user;
@@ -150,10 +150,10 @@ export const authSlice = createSlice({
     });
     builder.addCase(_loginMerchant.fulfilled, (state, action) => {
       state.merchant.loading = false;
-      if (action.payload.status == 400) {
+      if (!action.payload.data) {
         return;
       }
-      if (action.payload.data.user.account_type !== "merchant") {
+      if (action.payload.data?.user.account_type !== "merchant") {
         toast.error(
           "This account is not a merchant. Login with a merchant account"
         );
