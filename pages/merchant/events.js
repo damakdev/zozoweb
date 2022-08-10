@@ -7,6 +7,7 @@ import {
   getBidEvents,
 } from "../../services/merchant";
 import { getAllCategories } from "../../services/customer";
+import { AnimatePresence } from "framer-motion";
 import { Plus } from "../../public/svg/icons";
 import { Widget } from "@uploadcare/react-widget";
 import { toLocaleString } from "../../utils";
@@ -160,7 +161,7 @@ function Events() {
   const categoryOptions = categories?.map((category) => {
     return { value: category.id, label: category.name };
   });
-
+  console.log(bidEvents);
   useEffect(() => {
     getProducts(user?.merchant.id).then((response) =>
       setProducts(response.data.products)
@@ -168,11 +169,8 @@ function Events() {
     getAllCategories().then((response) =>
       setCategories(response.data.category)
     );
-    getBidEvents(user?.merchant.id).then(
-      (response) => {
-        console.log(response);
-      }
-      // setBidEvents(response.data.products)
+    getBidEvents(user?.merchant.id).then((response) =>
+      setBidEvents(response.data.bidding_event)
     );
   }, []);
 
@@ -216,7 +214,17 @@ function Events() {
               </div>
             </div>
           </div>
-          {page === "recent" ? <RecentEvents /> : <EndedEvents />}
+          {page === "recent" ? (
+            <RecentEvents data={bidEvents} />
+          ) : (
+            <EndedEvents data={bidEvents} />
+          )}
+          {/* <AnimatePresence>
+            {page === "recent" && <RecentEvents data={bidEvents} />}
+          </AnimatePresence>
+          <AnimatePresence>
+            {page !== "recent" && <EndedEvents data={bidEvents} />}
+          </AnimatePresence> */}
         </div>
 
         <Modal
