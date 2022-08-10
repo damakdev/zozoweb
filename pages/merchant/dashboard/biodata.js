@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   TimerIcon,
@@ -13,6 +14,34 @@ import MerchantLayout from "../../../components/MerchantLayout";
 import MerchantNav from "../../../components/Merchant/Merchant_Nav";
 
 const BioData = () => {
+  const [userForm, setUserForm] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    gender: "",
+    nin: "",
+    phoneNumber: "",
+    street: "",
+    state: "",
+    city: "",
+    landmark: "",
+    bankName: "",
+    accountNumber: "",
+    landmark: "",
+  });
+
+  function handleUserForm(e) {
+    const { name, value } = e.target;
+    setUserForm({
+      ...userForm,
+      [name]: value,
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
+
   return (
     <MerchantLayout>
       <MerchantNav title="Bio data" />
@@ -83,7 +112,7 @@ const BioData = () => {
             </div>
 
             <div className="w-full">
-              <form action="" className="">
+              <form onSubmit={handleSubmit} className="">
                 <h3 className=" mt-20 mb-10 text-bolder text-4xl">
                   Personal Information
                 </h3>
@@ -92,29 +121,49 @@ const BioData = () => {
                     <label>
                       First Name <span>*</span>
                     </label>
-                    <input type="text" name="" id="" placeholder="" />
+                    <input
+                      type="text"
+                      name="firstName"
+                      id="firstName"
+                      value={userForm.firstName}
+                      onChange={handleUserForm}
+                    />
                   </div>
 
                   <div>
                     <label>
                       Last Name <span>*</span>
                     </label>
-                    <input type="text" name="" id="" placeholder="" />
+                    <input
+                      type="text"
+                      name="lastName"
+                      id="lastName"
+                      value={userForm.lastName}
+                      onChange={handleUserForm}
+                    />
                   </div>
 
                   <div>
                     <label>
                       Date of Birth <span>*</span>
                     </label>
-                    <input type="date" name="" id="" />
+                    <input
+                      type="date"
+                      name="dob"
+                      id="dob"
+                      value={userForm.dob}
+                      onChange={handleUserForm}
+                    />
                   </div>
 
                   <div>
                     <label>
                       Gender <span>*</span>
                     </label>
-                    <select>
-                      <option>Male</option>
+                    <select value={userForm.gender} onChange={handleUserForm}>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
                     </select>
                   </div>
 
@@ -122,14 +171,26 @@ const BioData = () => {
                     <label>
                       NIN <span>*</span>
                     </label>
-                    <input type="number" name="" id="" />
+                    <input
+                      type="number"
+                      name="nin"
+                      id="nin"
+                      value={userForm.nin}
+                      onChange={handleUserForm}
+                    />
                   </div>
 
                   <div>
                     <label>
                       Phone Number <span>*</span>
                     </label>
-                    <input type="number" name="" id="" />
+                    <input
+                      type="number"
+                      name="phoneNumber"
+                      id="phoneNumber"
+                      value={userForm.phoneNumber}
+                      onChange={handleUserForm}
+                    />
                   </div>
                 </div>
 
@@ -141,17 +202,23 @@ const BioData = () => {
                 <div className="w-full grid grid-cols-3 gap-4">
                   <div>
                     <label>
-                      Street Number <span>*</span>
+                      Street <span>*</span>
                     </label>
-                    <input type="text" name="" id="" placeholder="" />
+                    <input
+                      type="text"
+                      name="street"
+                      id="street"
+                      value={userForm.street}
+                      onChange={handleUserForm}
+                    />
                   </div>
 
                   <div>
                     <label>
                       State <span>*</span>
                     </label>
-                    <select>
-                      <option>Lagos</option>
+                    <select value={userForm.state} onChange={handleUserForm}>
+                      <option value="lagos">Lagos</option>
                     </select>
                   </div>
 
@@ -175,7 +242,7 @@ const BioData = () => {
                 </div>
 
                 {/* ACCOUNT DETAILS */}
-                <h3 className="mt-20 mb-10 text-bold text-4xl">
+                {/* <h3 className="mt-20 mb-10 text-bold text-4xl">
                   Account Details
                 </h3>
                 <div className="w-full grid grid-cols-3 gap-4 mb-20">
@@ -183,14 +250,14 @@ const BioData = () => {
                     <label>
                       Bank Name<span>*</span>
                     </label>
-                    <input type="text" name="" id="" placeholder="" />
+                    <input type="text" name="" id="" onChange={handleUserForm} />
                   </div>
 
                   <div>
                     <label>
                       Account Number <span>*</span>
                     </label>
-                    <input type="text" name="" id="" placeholder="" />
+                    <input type="text" name="" id="" onChange={handleUserForm} />
                   </div>
 
                   <div>
@@ -213,7 +280,7 @@ const BioData = () => {
                     </label>
                     <input type="number" name="" id="" />
                   </div>
-                </div>
+                </div> */}
               </form>
 
               <div className="mb-20">

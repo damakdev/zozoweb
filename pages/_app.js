@@ -27,18 +27,21 @@ function MyApp({ Component, pageProps }) {
 		}
 	);
 
-	axios.interceptors.response.use(
-		function (response) {
-			// console.log("response interceptor", response);
-			return response;
-		},
-		function (error) {
-			console.log("error interceptor", error);
-			setErrorMessage(error.response.data.message);
-			// setErrorMessage("error");
-			return Promise.reject(error);
-		}
-	);
+  axios.interceptors.response.use(
+    function (response) {
+      // console.log("response interceptor", response);
+      return response;
+    },
+    function (error) {
+      console.log("error interceptor", error);
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+        return;
+      }
+      setErrorMessage("An error occurred.");
+      return Promise.reject(error);
+    }
+  );
 
 	useEffect(() => {
 		if (errorMessage) {

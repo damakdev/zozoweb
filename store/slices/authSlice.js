@@ -75,52 +75,51 @@ const initialState = {
 };
 
 export const authSlice = createSlice({
-	name: "auth",
-	initialState,
-	reducers: {
-		logOutCustomer: (state) => {
-			state.customer.token = null;
-			state.customer.user = null;
-			state.customer.error = null;
-			state.customer.loading = false;
-		},
-		logOutMerchant: (state) => {
-			state.merchant.token = null;
-			state.merchant.user = null;
-			state.merchant.error = null;
-			state.merchant.loading = false;
-		},
-	},
-	extraReducers: (builder) => {
-		builder.addCase(_registerCustomer.pending, (state) => {
-			state.customer.loading = true;
-		});
-		builder.addCase(_registerCustomer.rejected, (state) => {
-			state.customer.loading = false;
-		});
-		builder.addCase(_registerCustomer.fulfilled, (state, action) => {
-			state.customer.loading = false;
-			if (action.payload.status == 400) {
-				return;
-			}
-			state.customer.user = action.payload.data?.account;
-			state.customer.token = action.payload.data?.account.token;
-		});
-		builder.addCase(_loginCustomer.pending, (state) => {
-			state.customer.loading = true;
-		});
-		builder.addCase(_loginCustomer.rejected, (state) => {
-			state.customer.loading = false;
-		});
-		builder.addCase(_loginCustomer.fulfilled, (state, action) => {
-			state.customer.loading = false;
-			if (action.payload.status == 400) {
-				console.log("not worked");
-				return;
-			}
-			state.customer.user = action.payload.data.user;
-			state.customer.token = action.payload.data.token;
-		});
+  name: "auth",
+  initialState,
+  reducers: {
+    logOutCustomer: (state) => {
+      state.customer.token = null;
+      state.customer.user = null;
+      state.customer.error = null;
+      state.customer.loading = false;
+    },
+    logOutMerchant: (state) => {
+      state.merchant.token = null;
+      state.merchant.user = null;
+      state.merchant.error = null;
+      state.merchant.loading = false;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(_registerCustomer.pending, (state) => {
+      state.customer.loading = true;
+    });
+    builder.addCase(_registerCustomer.rejected, (state) => {
+      state.customer.loading = false;
+    });
+    builder.addCase(_registerCustomer.fulfilled, (state, action) => {
+      state.customer.loading = false;
+      if (!action.payload.account) {
+        return;
+      }
+      state.customer.user = action.payload.data?.account;
+      state.customer.token = action.payload.data?.account.token;
+    });
+    builder.addCase(_loginCustomer.pending, (state) => {
+      state.customer.loading = true;
+    });
+    builder.addCase(_loginCustomer.rejected, (state) => {
+      state.customer.loading = false;
+    });
+    builder.addCase(_loginCustomer.fulfilled, (state, action) => {
+      state.customer.loading = false;
+      if (!action.payload?.data) {
+        return;
+      }
+      state.customer.user = action.payload.data.user;
+      state.customer.token = action.payload.data.token;
+    });
 
 		builder.addCase(_registerMerchant.pending, (state) => {
 			state.merchant.loading = true;

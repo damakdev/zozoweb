@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addCart } from "../store/slices/cartSlice";
+import { getWonBidEvents } from "../services/customer";
 import CustomerLayout from "../components/CustomerLayout";
 import Link from "next/link";
 import Button from "../components/ui/Button";
@@ -10,8 +13,6 @@ import arrow from "./../assets/arrow.svg";
 import Activity from "../components/cart/Activity";
 import OngoingBid from "../components/cart/OngoingBid";
 import BidHistory from "../components/cart/BidHistory";
-import { useSelector, useDispatch } from "react-redux";
-import { _getWonBidEvents } from "../store/slices/eventsSlice";
 
 const Cart = () => {
 	const [currentItem, setCurrentItem] = useState(1);

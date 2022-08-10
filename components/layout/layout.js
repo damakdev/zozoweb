@@ -12,7 +12,7 @@ export default function Layout({ children }) {
     dispatch(_getApprovedBiddingEvents());
     dispatch(_getBiddingEventByStatus());
     dispatch(_getAllCategories());
-    dispatch(_getCurrentUser());
+    // dispatch(_getCurrentUser());
   }, []);
   return <div className={styles.container}>{children}</div>;
 }

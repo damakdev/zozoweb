@@ -7,6 +7,7 @@ import {
 	getBidEvents,
 } from "../../services/merchant";
 import { getAllCategories } from "../../services/customer";
+import { AnimatePresence } from "framer-motion";
 import { Plus } from "../../public/svg/icons";
 import { Widget } from "@uploadcare/react-widget";
 import { toLocaleString } from "../../utils";
@@ -211,14 +212,24 @@ function Events() {
 								</select>
 							</div>
 
-							<div className={styles.createButton} onClick={viewDetails}>
-								<Plus />
-								<button className="mr-3">Create Event</button>
-							</div>
-						</div>
-					</div>
-					{page === "recent" ? <RecentEvents /> : <EndedEvents />}
-				</div>
+              <div className={styles.createButton} onClick={viewDetails}>
+                <Plus />
+                <button className="mr-3">Create Event</button>
+              </div>
+            </div>
+          </div>
+          {page === "recent" ? (
+            <RecentEvents data={bidEvents} />
+          ) : (
+            <EndedEvents data={bidEvents} />
+          )}
+          {/* <AnimatePresence>
+            {page === "recent" && <RecentEvents data={bidEvents} />}
+          </AnimatePresence>
+          <AnimatePresence>
+            {page !== "recent" && <EndedEvents data={bidEvents} />}
+          </AnimatePresence> */}
+        </div>
 
 				<Modal
 					title="Create Event"
