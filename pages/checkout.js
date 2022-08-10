@@ -21,12 +21,12 @@ const Checkout = () => {
 			<div className="checkout-wrapper bg-white p-20">
 				<div className="flex justify-between">
 					<div className="">
-						<h1>Payment Details</h1>
-						<p className="mb-10">
+						<h1 className="mb-5">Delivery Details</h1>
+						<p className="mb-20">
 							Enter your personal details to complete your profile
 						</p>
 						<div className="mb-10 ">
-							<span className="mr-10">email address</span>
+							<span className="mr-10">Email address</span>
 							<span className={`${styles.email_icon}`}>
 								<Image src={email} />
 							</span>
@@ -37,7 +37,7 @@ const Checkout = () => {
 								defaultValue={user.email}
 							/>
 						</div>
-						<div className="mb-10">
+						{/* <div className="mb-10">
 							<span className="mr-12">Card Number</span>
 							<span className={`${styles.email_icon}`}>
 								<Image src={card} />
@@ -58,8 +58,8 @@ const Checkout = () => {
 								type="text"
 								placeholder="cvc"
 							/>
-						</div>
-						<div className="mb-10">
+						</div> */}
+						{/* <div className="mb-10">
 							<span className="mr-4">Cardholder Name</span>
 							<span className={`${styles.email_icon}`}>
 								<Image src={profile} />
@@ -69,29 +69,55 @@ const Checkout = () => {
 								type="email"
 								// placeholder="Emmanuel Okorie"
 							/>
-						</div>
-						<div className="mb-20">
-							<span className="mr-11">Main Address</span>
-							<span className={`${styles.email_icon}`}>
+						</div> */}
+						<div className="mb-10">
+							<span className="mr-20">Country</span>
+							<span className={`${styles.email_icon}` }>
 								<Image src={flag} />
 							</span>
 							<input
 								className={`${styles.email}`}
+								style={{marginLeft:"2px"}}
 								type="text"
 								placeholder="Nigeria"
-								defaultValue={`${user.address.country}, ${user.address.state}, ${user.address.city}`}
+								defaultValue={`${user.address.country}`}
 							/>
-							{/* <input
-                className={`${styles.dm}`}
-                type="email"
-                datatype="DD MM"
-                placeholder="MM/YY"
-              />
-              <input
-                className={`${styles.cvc}`}
-                type="text"
-                placeholder="cvc"
-              /> */}
+						</div>
+
+						<div className="mb-10">
+							<span className="">State</span>
+							
+							<input
+								className={`${styles.email}`}
+								type="text"
+								style={{marginLeft:"100px"}}
+								placeholder="Nigeria"
+								defaultValue={` ${user.address.state}`}
+							/>
+						</div>
+
+						<div className="mb-10">
+							<span className="">City</span>
+							
+							<input
+								className={`${styles.email}`}
+								style={{marginLeft:"110px"}}
+								type="text"
+								placeholder="Nigeria"
+								defaultValue={` ${user.address.city}`}
+							/>
+						</div>
+
+						<div className="mb-20">
+							<span className="mr-10">Street</span>
+							
+							<input
+								className={`${styles.email}`}
+								style={{marginLeft:"70px"}}
+								type="text"
+								placeholder="Nigeria"
+								defaultValue={` ${user.address.street}`}
+							/>
 						</div>
 
 						<div className="w-2/3">

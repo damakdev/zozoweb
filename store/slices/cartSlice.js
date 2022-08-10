@@ -17,10 +17,13 @@ const cartSlice = createSlice({
 				id: action.payload.id,
 				name: action.payload.product.name,
 				price: action.payload.product.price,
-				timer: action.payload.end_time,
+				start: action.payload.start_time,
+				end: action.payload.end_time,
 				image: action.payload.product.images.main,
+				access_amount: action.payload.access_amount,
+				minimum_amount: action.payload.minimum_amount,
 			};
-
+console.log(action.payload)
 			if (state.cart.length <= 0) {
 				state.cart.push(newEvent);
 				state.subTotal = state.cart.reduce(

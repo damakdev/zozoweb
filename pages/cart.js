@@ -10,20 +10,115 @@ import arrow from "./../assets/arrow.svg";
 import Activity from "../components/cart/Activity";
 import OngoingBid from "../components/cart/OngoingBid";
 import BidHistory from "../components/cart/BidHistory";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { _getWonBidEvents } from "../store/slices/eventsSlice";
 
 const Cart = () => {
 	const [currentItem, setCurrentItem] = useState(1);
 
 	const { user } = useSelector((state) => state.auth.customer);
 	const { subTotal, cart } = useSelector((state) => state.cart);
+	const { biddingEvents } = useSelector((state) => state.events);
+	const dispatch = useDispatch();
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		dispatch(_getWonBidEvents(user.id));
+	}, [dispatch]);
 
 	return (
 		<CustomerLayout>
-			<h1>Your Cart</h1>
-			{cart.length > 0 && user ? (
+			<h1>Your BIDS</h1>
+			<div className="wrapper flex gap-20 mt-16">
+					<div className="bg-white px-10 pt-10 w-full">
+						<div className={`${styles.nav} flex gap-60 `}>
+							<div
+								className={`${
+									currentItem == 1
+										? " ml-7 px-5 pb-5 border-b-2 border-violet-700 "
+										: " "
+								}`}
+								onClick={() => setCurrentItem(1)}
+							>
+								{" "}
+								<a href="#">Won Bids</a>{" "}
+							</div>
+							<div
+								className={`${
+									currentItem == 2
+										? "  px-5 pb-5 border-b-2 border-violet-700 "
+										: " "
+								}`}
+								onClick={() => setCurrentItem(2)}
+							>
+								
+								<a href="#"> My Ongoing bid</a>{" "}
+							</div>
+							<div
+								className={`${
+									currentItem == 3
+										? "  px-5 pb-5 border-b-2 border-violet-700 "
+										: " "
+								}`}
+								onClick={() => setCurrentItem(3)}
+							>
+								{" "}
+								<a href="#">Bid History</a>{" "}
+							</div>
+						</div>
+						<hr className="mb-10" />
+
+						{currentItem === 1 ? (
+							<Activity />
+						) : currentItem === 2 ? (
+							<OngoingBid />
+						) : (
+							<BidHistory />
+						)}
+					</div>
+
+					{currentItem === 1 && (
+						<div className="bg-white w-1/4 p-10  ">
+							<h3>Bid Summary</h3>
+
+							<div className="flex justify-between mb-5 mt-16">
+								<div>SUBTOTAL</div>
+								<div>N{subTotal.toLocaleString()}</div>
+							</div>
+
+							<div className="flex justify-between">
+								<div>SHIPPING EST</div>
+								<div>N2,000</div>
+							</div>
+							<div className="flex justify-between mt-40">
+								{/* <div>Enter code</div>
+								<div>
+									<Image src={arrow} />
+								</div> */}
+							</div>
+							<hr />
+							<div className="flex justify-between mt-10">
+								<div>TOTAL PRICE</div>
+								<div>
+									N <span>{(subTotal + 2000).toLocaleString()}</span>
+								</div>
+							</div>
+							<div className="mt-6">
+								<Link href="/checkout">
+									<a>
+										<Button
+											name="PROCEED TO CHECKOUT"
+											paddingY="7px"
+											paddingX="30px"
+											fontSize="14px"
+											width="270px"
+										/>
+									</a>
+								</Link>
+							</div>
+						</div>
+					)}
+				</div>
+			{/* {cart.length > 0 && user ? (
 				<div className="wrapper flex gap-20 mt-16">
 					<div className="bg-white px-10 pt-10 w-full">
 						<div className={`${styles.nav} flex gap-60 `}>
@@ -184,7 +279,7 @@ const Cart = () => {
 						</p>
 					</div>
 				</div>
-			)}
+			)} */}
 		</CustomerLayout>
 	);
 };

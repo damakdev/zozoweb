@@ -6,6 +6,7 @@ import {
 	startBidEvent,
       stopBidEvent,
       cancelBidEvent,
+	createCategory,
 } from "../../../services/admin";
 
 const initialState = {
@@ -20,6 +21,9 @@ const initialState = {
 	},
 };
 
+export const _createCategory = createAsyncThunk("events/_createCategory", async (body)=>{
+	return await createCategory(body)
+})
 export const getAllEvents = createAsyncThunk(
 	"events/getAllEvents",
 	async () => {
@@ -104,6 +108,11 @@ const adminEventSlice = createSlice({
 				autoClose: 4000,
 			});
 		},
+		[_createCategory.fulfilled]:()=>{
+			toast.success("Category Created Successfully", {
+				autoClose: 4000,
+			})
+		}
 	},
 });
 
