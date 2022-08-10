@@ -34,8 +34,11 @@ function MyApp({ Component, pageProps }) {
     },
     function (error) {
       console.log("error interceptor", error);
-      setErrorMessage(error.response.data.message);
-      // setErrorMessage("error");
+      if (error.response) {
+        setErrorMessage(error.response.data.message);
+        return;
+      }
+      setErrorMessage("An error occurred.");
       return Promise.reject(error);
     }
   );

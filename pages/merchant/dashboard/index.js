@@ -102,8 +102,8 @@ export default function Index() {
                 alt=""
               />
               <h3>
-                Akinpelumi Akinlade
-                <span>@akinlade</span>
+                {`${user?.first_name} ${user?.last_name}`}
+                <span>@{user?.last_name}</span>
               </h3>
               {/* <button>Log out</button> */}
             </div>
@@ -119,7 +119,8 @@ export default function Index() {
                   <div className={styles.escrow}>
                     <DebitCardIcon />
                     <h1>
-                      &#8358;{wallet?.escrow_balance} <span>Escrow Balance</span>
+                      &#8358;{wallet?.escrow_balance}{" "}
+                      <span>Escrow Balance</span>
                     </h1>
                   </div>
                   <div className={styles.withdrawable}>
