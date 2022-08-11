@@ -129,9 +129,9 @@ export const authSlice = createSlice({
 		});
 		builder.addCase(_registerMerchant.fulfilled, (state, action) => {
 			state.merchant.loading = false;
-			if (action.payload.status == 400) {
+			if (!action.payload.data) {
 				return;
-			}
+			    }
 			state.merchant.user = {
 				...action.payload.data?.account,
 				...action.payload.data?.merchant,
