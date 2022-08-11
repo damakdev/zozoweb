@@ -48,23 +48,22 @@ function Nav() {
                 <div>
                   <Image src={cartImg} alt="Cart" width={20} />
 
-                  {user && cart?.length > 0 && (
-                    <span
-                      className="bg-red-600 px-3 text-white"
-                      style={{ borderRadius: "50%" }}
-                    >
-                      {cart.length}
-                    </span>
-                  )}
-                </div>
-              </Link>
-            </p>
-
-            <Link href="/profile">
-              <p className="px-5 pt-4 ">
-                <Image src={profile} alt="Profile" width={20} />
-              </p>
-            </Link>
+								{cart && (
+									<span
+										className="bg-red-600 px-3 text-white"
+										style={{ borderRadius: "50%" }}
+									>
+										{cart.length}
+									</span>
+                  	)}
+				
+                </div></Link></p><span className="mt-2">Won Bids</span>
+		 
+						<Link href="/profile">
+							<p className="px-5 pt-4 ">
+								<Image src={profile} alt="Profile" width={20} />
+							</p>
+						</Link>
 
             {!user && (
               <>

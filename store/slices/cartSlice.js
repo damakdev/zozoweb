@@ -18,55 +18,50 @@ const cartSlice = createSlice({
         .map((event) => event.winner.amount)
         .reduce((prev, next) => prev + next);
 
-      //   const newEvent = action.payload.map((event) => {
-      //     return {
-      //       id: event.id,
-      //       name: event.product.id,
-      //       image: event.product.images.main,
-      //     };
-      //   });
+			let newEvent = {
+				id: action.payload.id,
+				name: action.payload.product.name,
+				price: action.payload.product.price,
+				start: action.payload.start_time,
+				end: action.payload.end_time,
+				image: action.payload.product.images.main,
+				access_amount: action.payload.access_amount,
+				minimum_amount: action.payload.minimum_amount,
+			};
+console.log(action.payload)
+			if (state.cart.length <= 0) {
+				state.cart.push(newEvent);
+				state.subTotal = state.cart.reduce(
+					(prev, cur) => Number(prev) + Number(cur.price),
+					0
+				);
+				toast.success(`${newEvent.name} successfully added to cart`, {
+					autoClose: 4000,
+				});
+			} else {
+				let isExist = state.cart.find((event) => event.id == newEvent.id);
+				if (!isExist) {
+					state.cart.push(newEvent);
+					state.subTotal = state.cart.reduce(
+						(prev, cur) => Number(prev) + Number(cur.price),
+						0
+					);
 
-      //   let newEvent = {
-      //     id: action.payload.id,
-      //     name: action.payload.product.name,
-      //     price: action.payload.product.price,
-      //     timer: action.payload.end_time,
-      //     image: action.payload.product.images.main,
-      //   };
-
-      //   if (state.cart.length <= 0) {
-      //     state.cart.push(newEvent);
-      //     state.subTotal = state.cart.reduce(
-      //       (prev, cur) => Number(prev) + Number(cur.price),
-      //       0
-      //     );
-      //     toast.success(`${newEvent.name} successfully added to cart`, {
-      //       autoClose: 4000,
-      //     });
-      //   } else {
-      //     let isExist = state.cart.find((event) => event.id == newEvent.id);
-      //     if (!isExist) {
-      //       state.cart.push(newEvent);
-      //       state.subTotal = state.cart.reduce(
-      //         (prev, cur) => Number(prev) + Number(cur.price),
-      //         0
-      //       );
-
-      //       toast.success(`${newEvent.name} successfully added to cart`, {
-      //         autoClose: 4000,
-      //       });
-      //     } else {
-      //       toast.error(`${newEvent.name} already exist in cart`, {
-      //         autoClose: 4000,
-      //       });
-      //     }
-      //   }
-    },
-    removeCartItem: (state, action) => {
-      let isExist = state.cart.find((event) => event.id == action.payload.id);
-      console.log(action.payload);
-      if (isExist) {
-        state.cart = state.cart.filter((item) => item.id !== action.payload.id);
+					toast.success(`${newEvent.name} successfully added to cart`, {
+						autoClose: 4000,
+					});
+				} else {
+					toast.error(`${newEvent.name} already exist in cart`, {
+						autoClose: 4000,
+					});
+				}
+			}
+		},
+		removeCartItem: (state, action) => {
+			let isExist = state.cart.find((event) => event.id == action.payload.id);
+			console.log(action.payload);
+			if (isExist) {
+				state.cart = state.cart.filter((item) => item.id !== action.payload.id);
 
         state.subTotal = state.cart.reduce(
           (prev, cur) => Number(prev) + Number(cur.price),

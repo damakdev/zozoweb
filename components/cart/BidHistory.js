@@ -19,7 +19,7 @@ const BidHistory = () => {
 	}, [dispatch]);
 	return (
 		<div className={`${styles.bid_history} pb-60`}>
-			<div className="flex justify-between px-12 mb-12 ">
+			{/* <div className="flex justify-between px-12 mb-12 ">
 				<div>
 					<ul className="flex gap-20 ">
 						<li className={`${styles.grey}`}>Unsettled</li>
@@ -32,9 +32,9 @@ const BidHistory = () => {
 						<option value="">All dates</option>
 					</select>
 				</div>
-			</div>
+			</div> */}
 
-			<hr className="" />
+			{/* <hr className="" /> */}
 
 			{biddingEvents.length > 0 && (
 				<div>

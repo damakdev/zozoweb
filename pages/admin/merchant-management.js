@@ -107,7 +107,7 @@ console.log(isLoading)
 									{!user.account.verified && (
 										<Button
 											bgColor="#1A8917"
-											name="Unblock"
+											name="Verify"
 											paddingX="40px"
 											paddingY="8px"
 											isBoxShadow={true}

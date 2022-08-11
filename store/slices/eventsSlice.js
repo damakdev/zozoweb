@@ -1,77 +1,77 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  getApprovedBidEvents,
-  searchApprovedBidEvents,
-  getSingleBidEvent,
-  getWonBidEvents,
-  getBidEventsByCategoryNames,
-  getBidEventAccess,
-  resendBidEventAccess,
-  accessBidEvent,
-  bidOnEvent,
-  getBidEventByStatus,
-  getSingleCustomerEvent,
-  getAllCustomerEvents,
-  removeCustomerEvent,
+	getApprovedBidEvents,
+	searchApprovedBidEvents,
+	getSingleBidEvent,
+	getWonBidEvents,
+	getBidEventsByCategoryNames,
+	getBidEventAccess,
+	resendBidEventAccess,
+	accessBidEvent,
+	bidOnEvent,
+	getBidEventByStatus,
+	getSingleCustomerEvent,
+	getAllCustomerEvents,
+	removeCustomerEvent,
 } from "../../services/customer";
 
 export const _getApprovedBiddingEvents = createAsyncThunk(
-  `events/getApprovedBidEvents`,
-  async (body) => {
-    try {
-      const response = await getApprovedBidEvents(body);
-      return response;
-    } catch (error) {
-      // return error.response.data.message;
-    }
-  }
+	`events/getApprovedBidEvents`,
+	async (body) => {
+		try {
+			const response = await getApprovedBidEvents(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
 );
 
 export const _searchApprovedBidEvents = createAsyncThunk(
-  `events/searchApprovedBidEvents`,
-  async (body) => {
-    try {
-      const response = await searchApprovedBidEvents(body);
-      return response;
-    } catch (error) {
-      // return error.response.data.message;
-    }
-  }
+	`events/searchApprovedBidEvents`,
+	async (body) => {
+		try {
+			const response = await searchApprovedBidEvents(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
 );
 export const _getWonBidEvents = createAsyncThunk(
-  `events/getWonBidEvents`,
-  async (body) => {
-    try {
-      const response = await getWonBidEvents(body);
-      return response;
-    } catch (error) {
-      // return error.response.data.message;
-    }
-  }
+	`events/getWonBidEvents`,
+	async (body) => {
+		try {
+			const response = await getWonBidEvents(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
 );
 
 export const _getSingleBidEvent = createAsyncThunk(
-  `events/getSingleBidEvent`,
-  async (body) => {
-    try {
-      const response = await getSingleBidEvent(body);
-      return response;
-    } catch (error) {
-      // return error.response.data.message;
-    }
-  }
+	`events/getSingleBidEvent`,
+	async (body) => {
+		try {
+			const response = await getSingleBidEvent(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
 );
 
 export const _getBidEventsByCategoryNames = createAsyncThunk(
-  `events/getBidEventsByCategoryNames`,
-  async (body) => {
-    try {
-      const response = await getBidEventsByCategoryNames(body);
-      return response;
-    } catch (error) {
-      // return error.response.data.message;
-    }
-  }
+	`events/getBidEventsByCategoryNames`,
+	async (body) => {
+		try {
+			const response = await getBidEventsByCategoryNames(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
 );
 
 export const _getBidEventAccess = createAsyncThunk(
@@ -123,16 +123,16 @@ export const _bidOnEvent = createAsyncThunk(
 );
 
 export const _getBiddingEventByStatus = createAsyncThunk(
-  `events/getBiddingEventByStatus`,
-  async (body ) => {
-    try {
-      const response = await getBidEventByStatus(body);
-      return response;
-      console.log(response.data)
-    } catch (error) {
-      // return error.response.data.message;
-    }
-  }
+	`events/getBiddingEventByStatus`,
+	async (body) => {
+		try {
+			const response = await getBidEventByStatus(body);
+			return response;
+			console.log(response.data);
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
 );
 
 export const _getSingleCustomerEvent = createAsyncThunk(
@@ -159,7 +159,6 @@ export const _getAllCustomerEvents = createAsyncThunk(
 	}
 );
 
-
 export const _removeCustomerEvent = createAsyncThunk(
 	`events/removeCustomerEvent`,
 	async (body) => {
@@ -175,7 +174,6 @@ export const _removeCustomerEvent = createAsyncThunk(
 const initialState = {
 	biddingEvents: null,
 	status: "idle",
-
 };
 
 const eventsSlice = createSlice({
@@ -199,11 +197,11 @@ const eventsSlice = createSlice({
 				state.status = "error";
 			});
 
-			//WON BIDS
-			builder.addCase(_getWonBidEvents.pending, (state, action) => {
-				state.status = "loading";
-			});
-			builder
+		//WON BIDS
+		builder.addCase(_getWonBidEvents.pending, (state, action) => {
+			state.status = "loading";
+		});
+		builder
 			.addCase(_getWonBidEvents.fulfilled, (state, action) => {
 				if (action.payload) {
 					state.biddingEvents = action.payload.data.bidding_event;
@@ -216,24 +214,24 @@ const eventsSlice = createSlice({
 				state.status = "error";
 			});
 
-				//ONGOING BIDS
-				builder.addCase(_getBiddingEventByStatus.pending, (state, action) => {
-					state.status = "loading";
-				});
-				builder
-				.addCase(_getBiddingEventByStatus.fulfilled, (state, action) => {
-					if (action.payload) {
-						console.log(action.payload)
-						console.log("yh")
-						state.biddingEventsStatus = action.payload.data.bidding_event;
-						state.status = "success";
-						return;
-					}
-					state.status = "error";
-				})
-				.addCase(_getBiddingEventByStatus.rejected, (state, action) => {
-					state.status = "error";
-				});
+		//ONGOING BIDS
+		builder.addCase(_getBiddingEventByStatus.pending, (state, action) => {
+			state.status = "loading";
+		});
+		builder
+			.addCase(_getBiddingEventByStatus.fulfilled, (state, action) => {
+				if (action.payload) {
+					console.log(action.payload);
+					console.log("yh");
+					state.biddingEventsStatus = action.payload.data.bidding_event;
+					state.status = "success";
+					return;
+				}
+				state.status = "error";
+			})
+			.addCase(_getBiddingEventByStatus.rejected, (state, action) => {
+				state.status = "error";
+			});
 
 		// builder
 		//   .addCase(searchApprovedBiddingEvents.pending, (state, action) => {

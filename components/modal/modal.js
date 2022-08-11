@@ -38,7 +38,7 @@ export default function Modal({
             animate={{ scale: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             className={styles.modal}
-            style={{ width: width }}
+            style={{ width: width, height:height}}
           >
             <div className={styles.head}>
               <h1>{title}</h1>

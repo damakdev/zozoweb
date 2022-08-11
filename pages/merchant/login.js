@@ -77,7 +77,7 @@ export default function Index() {
           </div>
         </div>
 
-        <Button>
+        <Button >
           {loading ? <ClipLoader color="#ffffff" size={15} /> : "Log In"}
         </Button>
 

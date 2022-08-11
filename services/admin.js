@@ -4,6 +4,10 @@ export function getCustomers(){
       return axios.get('/admin/customer')
 }
 
+export function logAdmin(body) {
+      return axios.post(`/login`, body);
+    }
+
 export function getSingleCustomer(id){
       return axios.get(`/admin/customer/${id}`)
 }
@@ -38,3 +42,13 @@ export function stopBidEvent(id){
 export function cancelBidEvent(id){
       return axios.get(`/admin/bidding/cancel/${id}`)
 }
+export function adminAddProduct(body) {
+      return axios.post(`/merchant/product/add`, body);
+    }
+
+    export function createBidEvent(body) {
+      return axios.post(`merchant/bidding`, body);
+    }
+    export function createCategory(body){
+return axios.post('/admin/category/create', body)
+    }

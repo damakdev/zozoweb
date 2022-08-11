@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  register as registerCustomer,
-  login as loginCustomer,
+	register as registerCustomer,
+	login as loginCustomer,
 } from "../../services/customer";
 import {
-  register as registerMerchant,
-  login as loginMerchant,
+	register as registerMerchant,
+	login as loginMerchant,
 } from "../../services/merchant";
 import { toast } from "react-toastify";
+import { logAdmin } from "../../services/admin";
 
 export const _registerCustomer = createAsyncThunk(
   `customer/register`,
@@ -24,16 +25,16 @@ export const _registerCustomer = createAsyncThunk(
 );
 
 export const _loginCustomer = createAsyncThunk(
-  `customer/login`,
-  async (body) => {
-    try {
-      const response = await loginCustomer(body);
+	`customer/login`,
+	async (body) => {
+		try {
+			const response = await loginCustomer(body);
       console.log(response);
-      return response;
-    } catch (error) {
-      return error.response.data.message;
-    }
-  }
+			return response;
+		} catch (error) {
+			return error.response.data.message;
+		}
+	}
 );
 
 export const _registerMerchant = createAsyncThunk(
@@ -50,36 +51,31 @@ export const _registerMerchant = createAsyncThunk(
 );
 
 export const _loginMerchant = createAsyncThunk(
-  `merchant/login`,
-  async (body) => {
-    try {
-      const response = await loginMerchant(body);
-      return response;
-    } catch (error) {
-      return error.response.data.message;
-    }
-  }
+	`merchant/login`,
+	async (body) => {
+		try {
+			const response = await loginMerchant(body);
+			return response;
+		} catch (error) {
+			return error.response.data.message;
+		}
+	}
 );
 
 //ADMIN LOGIN
 export const loginAdmin = createAsyncThunk(`admin/login`, async (body) => {
-  try {
-    const response = await login(body);
-    return response;
-  } catch (error) {
-    return error.response.data.message;
-  }
+	return await logAdmin(body);
 });
 
 const initialState = {
-  customer: {
-    token: null,
-    user: null,
-    error: null,
-    loading: false,
-  },
-  merchant: { token: null, user: null, error: null, loading: false },
-  admin: { token: null, user: null, error: null, loading: false },
+	customer: {
+		token: null,
+		user: null,
+		error: null,
+		loading: false,
+	},
+	merchant: { token: null, user: null, error: null, loading: false },
+	admin: { token: null, user: null, error: null, loading: false },
 };
 
 export const authSlice = createSlice({
@@ -140,8 +136,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(_registerMerchant.fulfilled, (state, action) => {
       state.merchant.loading = false;
-      console.log(action);
-      if (action.payload.status == 400) {
+      if (!action.payload) {
         return;
       }
       state.merchant.user = {
