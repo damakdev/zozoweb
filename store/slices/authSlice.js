@@ -14,9 +14,11 @@ export const _registerCustomer = createAsyncThunk(
   async (body) => {
     try {
       const response = await registerCustomer(body);
+      console.log(response);
       return response;
     } catch (error) {
-      return error.response.data.message;
+      console.log(error);
+      // return error.response.data.message;
     }
   }
 );
@@ -26,6 +28,7 @@ export const _loginCustomer = createAsyncThunk(
   async (body) => {
     try {
       const response = await loginCustomer(body);
+      console.log(response);
       return response;
     } catch (error) {
       return error.response.data.message;
@@ -38,6 +41,7 @@ export const _registerMerchant = createAsyncThunk(
   async (body) => {
     try {
       const response = await registerMerchant(body);
+      console.log(response);
       return response;
     } catch (error) {
       return error.response.data.message;
@@ -104,7 +108,8 @@ export const authSlice = createSlice({
     });
     builder.addCase(_registerCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
-      if (!action.payload.account) {
+      console.log(action);
+      if (!action.payload) {
         return;
       }
       state.customer.user = action.payload.data?.account;
@@ -118,7 +123,9 @@ export const authSlice = createSlice({
     });
     builder.addCase(_loginCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
-      if (!action.payload?.data) {
+      console.log(action);
+      if (!action.payload) {
+        console.log("no data");
         return;
       }
       state.customer.user = action.payload.data.user;
@@ -133,6 +140,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(_registerMerchant.fulfilled, (state, action) => {
       state.merchant.loading = false;
+      console.log(action);
       if (action.payload.status == 400) {
         return;
       }
