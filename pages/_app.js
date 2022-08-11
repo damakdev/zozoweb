@@ -36,9 +36,9 @@ function MyApp({ Component, pageProps }) {
       console.log("error interceptor", error);
       if (error.response) {
         setErrorMessage(error.response.data.message);
-        return;
+      } else {
+        setErrorMessage("An error occurred.");
       }
-      setErrorMessage("An error occurred.");
       return Promise.reject(error);
     }
   );
