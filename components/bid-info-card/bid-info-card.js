@@ -11,10 +11,10 @@ export default function BidInfoCard({ data, title }) {
           <li key={index}>
             <Link href="/">
               <a>
-                <img src={item.image.src} alt="" />
+                <img src={item.product.images.main} alt="" />
                 <div>
-                  <h4>{truncateString(item.productName, 13)}</h4>
-                  <p>&#8358;{formatNumber(item.price)}</p>
+                  <h4>{item.product.name}</h4>
+                  <p>&#8358;{formatNumber(item.product.price)}</p>
                   <span>00:00:36:37</span>
                 </div>
               </a>

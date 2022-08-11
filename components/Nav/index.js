@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOutCustomer } from "../../store/slices/authSlice";
 import logo from "../../public/images/logo-colored.png";
 import searchIcon from "../../assets/search.svg";
-import cart from "../../assets/cart.svg";
+import cartImg from "../../assets/cart.svg";
 import wishlist from "../../assets/wishlist.svg";
 import profile from "../../assets/profile.svg";
 import Link from "next/link";
@@ -14,16 +14,16 @@ import styles from "../../styles/Nav.module.scss";
 function Nav() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth.customer);
-
+  const { cart } = useSelector((state) => state.cart);
   return (
     <>
-      <header className={`${styles.header}   `}>
+      <header className={`${styles.header}`}>
         <div className={styles.content}>
           <div>
             <Link href="/">
-              <a>
+              <p>
                 <Image src={logo} alt="Zozo Logo" />
-              </a>
+              </p>
             </Link>
           </div>
           <div className=" flex justify-around">
@@ -39,36 +39,47 @@ function Nav() {
               </span>
             </div>
             <Link href="/wishlist">
-              <a className="px-5 pt-4 ">
+              <p className="px-5 pt-4 ">
                 <Image src={wishlist} alt="Wishlist" width={20} />
-              </a>
+              </p>
             </Link>
-            <Link href="/cart">
-              <a className="px-5 pt-4 ">
-                <Image src={cart} alt="Cart" width={20} />
-              </a>
-            </Link>
-            <Link href="/profile">
-              <a className="px-5 pt-4 ">
-                <Image src={profile} alt="Profile" width={20} />
-              </a>
-            </Link>
+            <p className="px-5 pt-4 ">
+              <Link href="/cart">
+                <div>
+                  <Image src={cartImg} alt="Cart" width={20} />
+
+								{cart && (
+									<span
+										className="bg-red-600 px-3 text-white"
+										style={{ borderRadius: "50%" }}
+									>
+										{cart.length}
+									</span>
+                  	)}
+				
+                </div></Link></p><span className="mt-2">Won Bids</span>
+		 
+						<Link href="/profile">
+							<p className="px-5 pt-4 ">
+								<Image src={profile} alt="Profile" width={20} />
+							</p>
+						</Link>
 
             {!user && (
               <>
                 <Link href="/login">
-                  <a className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</a>
+                  <p className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</p>
                 </Link>
 
                 <Link href="/signup">
-                  <a>
+                  <p>
                     <Button
                       name="SIGN UP"
                       paddingY="7px"
                       paddingX="30px"
                       fontSize="14px"
                     />
-                  </a>
+                  </p>
                 </Link>
               </>
             )}
@@ -91,31 +102,31 @@ function Nav() {
 
             <Link href="/how-to-bid">
               <li>
-                <a> How to Bid</a>
+                <p> How to Bid</p>
               </li>
             </Link>
 
             <Link href="/">
               <li>
-                <a> Start Bidding</a>
+                <p> Start Bidding</p>
               </li>
             </Link>
 
             <Link href="/about">
               <li>
-                <a> About</a>
+                <p> About</p>
               </li>
             </Link>
 
             <Link href="/contact">
               <li>
-                <a> Contact</a>
+                <p> Contact</p>
               </li>
             </Link>
 
             <Link href="/">
               <li>
-                <a> Help</a>
+                <p> Help</p>
               </li>
             </Link>
           </ul>

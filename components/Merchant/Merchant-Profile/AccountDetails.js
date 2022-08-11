@@ -6,7 +6,7 @@ import Button from "../../ui/Button";
 function AccountDetails({ canEdit, isEdit }) {
 	return (
 		<div className={`${styles.profile_form} w-11/12 mx-auto`}>
-			<div className="flex items-center justify-between w-1/5">
+			<div className="flex items-center justify-between w-4/12">
 				<h4> Account Information</h4>
 				<span
 					className="flex items-center mt-8 cursor-pointer"

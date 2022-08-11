@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getBalance } from "../../../services/merchant";
+import { formatNumber } from "../../../utils";
 import {
   LeftArrow,
   RightArrow,
@@ -20,6 +23,8 @@ import Button from "../../../components/ui/button/";
 import styles from "../../../styles/merchant/dashboard.module.scss";
 
 export default function Index() {
+  const { user } = useSelector((state) => state.auth.merchant);
+  const [wallet, setWallet] = useState(null);
   const cards = [null, null, null, null, null, null, null];
   const [chartData, setchartData] = useState({
     labels: lineChartData.map((item) => item.month),
@@ -42,6 +47,14 @@ export default function Index() {
       },
     ],
   });
+
+  
+  useEffect(() => {
+    getBalance(user.id).then((response) =>
+      setWallet(response.data.wallet)
+    );
+  }, []);
+
   return (
     <section className={styles.container}>
       <MerchantSideBar />
@@ -86,13 +99,14 @@ export default function Index() {
             <NotificationBellIcon />
             <div>
               <motion.img
-                src="https://s3-alpha-sig.figma.com/img/e3f4/cd54/1e2dd8e0e7156a94e9ba564bddfff442?Expires=1658707200&Signature=hJi8OrjZc1iKoVfLfLizMSAqq1BtY~oYRjErGNoZeslB9FXOj2E1U0ydj0P~ndYtOHatpa9Dp3OkyEKh8G2MrZfsT1QSXAXR-Ywo9Alu1ZkhrpZIZXxOM8ndDYgL~Wog2TOp5GpCD8VYTvRSa8cIZosgtpDtlmQjz~HyamPHBi9LRNlJPYY1ufFYGe5W~L1UDYEIGZJfevYsEnTXT-wRddXRehcL4HWLRXaS0CuFogbqA-DukCvnZRRVP66KZ8oPPnAfVD~k74q4OwiTnUzr4v2Rb18~QzDCu9CXSQNowBIcix2L0qY5NaQZ0mpCMp-lYaCwvoanZTDMkUOcrdNApg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+                src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
                 alt=""
               />
               <h3>
-                Akinpelumi Akinlade
-                <span>@akinlade</span>
+                {`${user?.first_name} ${user?.last_name}`}
+                <span>@{user?.last_name}</span>
               </h3>
+              {/* <button>Log out</button> */}
             </div>
           </div>
         </div>
@@ -106,13 +120,15 @@ export default function Index() {
                   <div className={styles.escrow}>
                     <DebitCardIcon />
                     <h1>
-                      &#8358;5,000 <span>Escrow Balance</span>
+                      &#8358;{wallet?.escrow_balance}{" "}
+                      <span>Escrow Balance</span>
                     </h1>
                   </div>
                   <div className={styles.withdrawable}>
                     <CashIcon />
                     <h1>
-                      &#8358;7,000 <span>Withdrawable Balance </span>
+                      &#8358;{wallet?.withdrawable}
+                      <span>Withdrawable Balance </span>
                     </h1>
                   </div>
                 </div>
@@ -323,3 +339,5 @@ export default function Index() {
     </section>
   );
 }
+
+Index.requireMerchantAuth = true;

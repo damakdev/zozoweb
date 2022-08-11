@@ -1,21 +1,33 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { _loginMerchant } from "../../store/slices/authSlice";
 import { EyeOn, EyeOff, GoogleIcon } from "../../public/svg/icons";
+import { ClipLoader } from "react-spinners";
 import Link from "next/link";
 import Logo from "../../components/logo";
 import Button from "../../components/ui/button/button";
 import styles from "../../styles/merchant/signup.module.scss";
 
 export default function Index() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth.merchant);
+  const { token } = useSelector((state) => state.auth.merchant);
   const [checked, setChecked] = useState(false);
   const [inputType1, setInputType1] = useState("password");
-  const [inputType2, setInputType2] = useState("password");
 
   function loginHandler(e) {
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const body = Object.fromEntries(formData); // convert the FormData object to a JSON object
+
+    console.log(body);
+    dispatch(_loginMerchant(body));
   }
-  const handleChange = () => {
-    setChecked(!checked);
-  };
+
+  if (token) router.push("/merchant/dashboard");
+
   return (
     <section className={styles.container}>
       <Logo variant="purple" />
@@ -55,9 +67,9 @@ export default function Index() {
               <input
                 type="checkbox"
                 checked={checked}
-                onChange={handleChange}
+                onChange={() => setChecked((prevState) => !prevState)}
               />
-             <span className="ml-1 text-base  ">  Remember me {checked}</span>
+              <span className="ml-1 text-base  "> Remember me {checked}</span>
             </label>
           </div>
           <div>
@@ -65,7 +77,9 @@ export default function Index() {
           </div>
         </div>
 
-        <Button>Log in</Button>
+        <Button >
+          {loading ? <ClipLoader color="#ffffff" size={15} /> : "Log In"}
+        </Button>
 
         <p>
           Don't have an account?

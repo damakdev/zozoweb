@@ -1,0 +1,33 @@
+.table {
+	width: 100%;
+	text-align: center;
+	background-color: #f3f3f3;
+	border-radius: 10px;
+	thead {
+		color: #7d7d7d;
+
+		th {
+			font-weight: lighter !important;
+			font-size: 170px;
+		}
+	}
+	color: black;
+	td,
+	th {
+		padding: 15px 10px;
+	}
+
+	tr {
+		background-color: white;
+	
+	}
+
+	tr:hover {
+		background-color: #f3f3f3;
+	
+	}
+
+	tr:first-child {
+		background-color: #f3f3f3;
+	}
+}

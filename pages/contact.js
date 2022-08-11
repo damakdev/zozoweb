@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../assets/white-logo.png";
+import Logo from "../assets/white-logo.png";
 import styles from "../styles/contact.module.scss";
 import Link from "next/link";
 import CustomerLayout from "./../components/CustomerLayout";
@@ -22,7 +22,7 @@ function Contact() {
 					<div className="w-9/12 mx-auto">
 						<Link href="/">
 							<a>
-								<Image src={logo} alt="Zozo Logo" />
+								<Image src={Logo} alt="Zozo Logo" />
 							</a>
 						</Link>
 

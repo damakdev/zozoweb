@@ -3,7 +3,7 @@ import LogoWhite from "../../public/images/logo-white.png";
 import LogoColored from "../../public/images/logo-colored.png";
 import styles from "./logo.module.scss";
 
-export default function logo({ variant }) {
+export default function Logo({ variant }) {
   if (variant === "purple")
     return (
       <Link href="/">

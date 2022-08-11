@@ -15,11 +15,11 @@ import Image from "next/image";
 import Button from "../../components/ui/Button";
 
 function ItemOrders() {
-	const [modalDisplay, setModalDisplay] = useState(false);
+		const [modalDisplay, setModalDisplay] = useState(false);
 
-	const viewDetails = () => {
-		setModalDisplay((modalDisplay) => !modalDisplay);
-	};
+		const viewDetails = () => {
+			setModalDisplay((modalDisplay) => !modalDisplay);
+		};
 	const thead = [
 		"Item name",
 		"Item code",

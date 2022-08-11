@@ -1,7 +1,7 @@
 import React from "react";
 import AdminSidebar from "./Sidebar";
 
-import styles from "../../styles/merchant-profile.module.scss";
+import styles from "../../styles/admin/admin-layout.module.scss";
 import Navbar from "./Navbar";
 
 function AdminLayout({ children }) {

@@ -1,0 +1,45 @@
+.bidYellow, .bidGreen, .bidRed {
+	input[type="range"] {
+		overflow: hidden;
+		width: 70%;
+		-webkit-appearance: none;
+		background-color: #353535;
+		border-radius: 10px;
+            height: 10px;
+            
+	}
+
+	input[type="range"]::-webkit-slider-runnable-track {
+		height: 10px;
+		-webkit-appearance: none;
+		color: #434343;
+		margin-top: -1px;
+	}
+	input[type="range"]::-webkit-slider-thumb {
+		width: 10px;
+		-webkit-appearance: none;
+		height: 10px;
+		cursor: ew-resize;
+	}
+}
+
+.bidYellow {
+	input[type="range"]::-webkit-slider-thumb {
+		background: #e1b20b;
+		box-shadow: -80px 0 0 80px #e1b20b;
+	}
+}
+
+.bidGreen {
+	input[type="range"]::-webkit-slider-thumb {
+	 background: linear-gradient(180deg, #0CBC8B 0%, #0CBC8B 100%);
+
+		box-shadow: -80px 0 0 80px #0CBC8B;
+	}
+}
+.bidRed{
+	input[type="range"]::-webkit-slider-thumb {
+		background: #EB5757;
+		box-shadow: -80px 0 0 80px #EB5757;
+	}
+}
