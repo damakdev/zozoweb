@@ -48,7 +48,7 @@ function Nav() {
                 <div>
                   <Image src={cartImg} alt="Cart" width={20} />
 
-								{cart.length > 0 && (
+								{cart && (
 									<span
 										className="bg-red-600 px-3 text-white"
 										style={{ borderRadius: "50%" }}

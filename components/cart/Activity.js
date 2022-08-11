@@ -17,7 +17,7 @@ const Activity = () => {
 
 	return (
 		<div className="activity_form w-11/12 mx-auto mt-20">
-			{cart.length < 1 && (
+			{!cart && (
 				<div className="mt-40">
 					{" "}
 					<h3 className="text-center mt-20"> No Won Bids</h3>{" "}
@@ -32,7 +32,7 @@ const Activity = () => {
 					</Link>
 				</div>
 			)}
-			{cart.length > 0 && (
+			{cart && (
 				<>
 					<div className="flex justify-between py-20">
 						<div>

@@ -13,6 +13,7 @@ import arrow from "./../assets/arrow.svg";
 import Activity from "../components/cart/Activity";
 import OngoingBid from "../components/cart/OngoingBid";
 import BidHistory from "../components/cart/BidHistory";
+import { _getWonBidEvents } from "../store/slices/eventsSlice";
 
 const Cart = () => {
 	const [currentItem, setCurrentItem] = useState(1);

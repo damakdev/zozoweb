@@ -100,9 +100,10 @@ export const authSlice = createSlice({
     });
     builder.addCase(_registerCustomer.fulfilled, (state, action) => {
       state.customer.loading = false;
-      if (!action.payload.account) {
-        return;
-      }
+	console.log(action.payload)
+      // if (!action.payload.data.account) {
+      //   return;
+      // }
       state.customer.user = action.payload.data?.account;
       state.customer.token = action.payload.data?.account.token;
     });
