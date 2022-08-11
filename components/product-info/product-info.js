@@ -88,7 +88,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
     console.log(reference);
     const body = {
       bidding_event_id: biddingEventId,
-      customer_id: user.id.toString(),
+      customer_id: user.customer.id.toString(),
       payment_reference: reference.reference,
     };
     try {
