@@ -1,8 +1,15 @@
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import Link from "next/link";
 import MerchantNav from "../../components/merchant-nav";
 import styles from "../../styles/merchant/homepage.module.scss";
 
 export default function Index() {
+  const router = useRouter();
+  const { token } = useSelector((state) => state.auth.merchant);
+
+  if (token) router.push("/merchant/dashboard");
+
   return (
     <section className={styles.container}>
       <MerchantNav />

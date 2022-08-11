@@ -107,6 +107,12 @@ export const authSlice = createSlice({
         console.log("no data");
         return;
       }
+      if (action.payload.data?.user.account_type !== "customer") {
+        toast.error(
+          "This account is not a customer. Login with a customer account"
+        );
+        return;
+      }
       state.customer.user = action.payload.data.user;
       state.customer.token = action.payload.data.token;
     });
@@ -148,14 +154,19 @@ export const authSlice = createSlice({
       state.merchant.user = action.payload.data.user;
       state.merchant.token = action.payload.data.token;
     });
-    // ADMIN LOGIN
+    
     builder.addCase(loginAdmin.pending, (state) => {
       state.admin.loading = true;
     });
     builder.addCase(loginAdmin.fulfilled, (state, action) => {
       state.admin.loading = false;
-      if (action.payload.status == 400) {
-        // state.customer.loading = false;
+      if (!action.payload.data) {
+        return;
+      }
+      if (action.payload.data?.user.account_type !== "admin") {
+        toast.error(
+          "This account is not an admin. Login with an admin account"
+        );
         return;
       }
       state.admin.user = action.payload.data.user;
