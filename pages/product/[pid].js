@@ -51,7 +51,7 @@ export default function Product() {
 
   useEffect(() => {
     if (biddingEventId && user) {
-      getSingleBidEvent(user.id, biddingEventId).then((response) =>
+      getSingleBidEvent(user.customer.id, biddingEventId).then((response) =>
         setBiddingEvent(response.data)
       );
     }
@@ -60,7 +60,6 @@ export default function Product() {
   if (!user) {
     router.push("/");
   }
-
 
   return (
     <CustomerLayout>
