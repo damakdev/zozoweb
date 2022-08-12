@@ -55,7 +55,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
       setLoading(true);
       const body = {
         bidding_event_id: biddingEventId,
-        customer_id: user.id.toString(),
+        customer_id: user.customer.id.toString(),
         stake: +amount,
       };
       console.log(body);
@@ -114,7 +114,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
     setLoading(true);
     const body = {
       bidding_event_id: biddingEventId,
-      customer_id: user.id.toString(),
+      customer_id: user.customer.id.toString(),
       access_code: accessCode,
     };
     try {

@@ -15,7 +15,7 @@ const BidHistory = () => {
 
 	console.log(user);
 	useEffect(() => {
-		dispatch(_getWonBidEvents(user.id));
+		dispatch(_getWonBidEvents(user.customer.id));
 	}, [dispatch]);
 	return (
 		<div className={`${styles.bid_history} pb-60`}>
