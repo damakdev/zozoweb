@@ -166,13 +166,13 @@ function Events() {
 
   useEffect(() => {
     console.log(user);
-    getProducts(user?.id).then((response) =>
+    getProducts(user.merchant.id).then((response) =>
       setProducts(response.data.products)
     );
     getAllCategories().then((response) =>
       setCategories(response.data.category)
     );
-    getBidEvents(user?.id).then(
+    getBidEvents(user.merchant.id).then(
       (response) => {
         console.log(response);
       }
