@@ -48,6 +48,8 @@
   }
   .product-description,
   .loading-product-description {
+    display: flex;
+    flex-direction: column;
     width: 50rem;
     h1 {
       font-size: 2.5rem;
@@ -102,6 +104,7 @@
     }
     form {
       display: flex;
+      margin-top: auto;
       input {
         border: 2px solid #d9d9d9;
         border-radius: 0.5rem;
