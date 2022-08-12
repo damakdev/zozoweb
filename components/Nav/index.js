@@ -116,9 +116,9 @@ function Nav() {
               </li>
             </Link>
 
-            <Link href="/">
+            <Link href="/merchant">
               <li>
-                <p> Start Bidding</p>
+                <p> Start Selling</p>
               </li>
             </Link>
 
