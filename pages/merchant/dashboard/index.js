@@ -48,7 +48,6 @@ export default function Index() {
     ],
   });
 
-  
   useEffect(() => {
     getBalance(user.merchant.id).then((response) =>
       setWallet(response.data.wallet)

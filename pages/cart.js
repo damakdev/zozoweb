@@ -24,7 +24,7 @@ const Cart = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(_getWonBidEvents(user.id));
+		dispatch(_getWonBidEvents(user.customer.id));
 	}, [dispatch]);
 
 	return (
