@@ -108,7 +108,7 @@ function Events() {
 			images: {
 				main: eventForm.image,
 			},
-			merchant_id: user.id.toString(),
+			merchant_id: user.merchant.id.toString(),
 		};
 		console.log(body);
 		addProduct(body).then((response) => {

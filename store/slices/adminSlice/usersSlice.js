@@ -108,7 +108,7 @@ export const usersSlice = createSlice({
 
 		[verifyUser.fulfilled]: (state)=>{
 			state.verifyUser.isLoading = false
-			toast("User verified Successfully", {
+			toast.success("User verified Successfully", {
 				autoClose: 4000
 			})
 		}

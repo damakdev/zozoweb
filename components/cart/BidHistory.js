@@ -4,18 +4,17 @@ import greenswitch from "../../assets/greenswitch.svg";
 import shoes from "../../assets/shoes.svg";
 import star from "../../assets/star.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { _getWonBidEvents } from "../../store/slices/eventsSlice";
+import { _getAllCustomerEvents } from "../../store/slices/eventsSlice";
 import { useEffect } from "react";
 
 const BidHistory = () => {
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.auth.customer);
-	const { biddingEvents } = useSelector((state) => state.events);
-	console.log(biddingEvents);
+	const { events } = useSelector((state) => state.events.allCustomerBids);
 
 	console.log(user);
 	useEffect(() => {
-		dispatch(_getWonBidEvents(user.id));
+		dispatch(_getAllCustomerEvents(user.customer.id));
 	}, [dispatch]);
 	return (
 		<div className={`${styles.bid_history} pb-60`}>
@@ -36,7 +35,7 @@ const BidHistory = () => {
 
 			{/* <hr className="" /> */}
 
-			{biddingEvents.length > 0 && (
+			{events && events.length > 0 && (
 				<div>
 					<div className="flex gap-6 justify-end  p-10">
 						<p>Show only my winning bids</p>
@@ -55,35 +54,75 @@ const BidHistory = () => {
 					</div>
 					<div>
 						<table className="w-2/3 ml-96 mt-10">
-							<tr>
-								<td>Items</td>
-								<td>Bid price</td>
-								<td>Final price</td>
-								<td>Timer</td>
-								<td>Remove</td>
-							</tr>
+							<thead>
+								<tr>
+									<th className="">Items</th>
+									<th className="">Access amount</th>
+									<th className="">Minimum amount</th>
+									<th className="">Final Price</th>
+									<th className="">Started</th>
+									<th className="">Ended</th>
+								</tr>
+							</thead>
 
-							<tr>
-								<td>
-									<Image src={shoes} />
-								</td>
-								<td>
-									# <span>5,000</span>
-								</td>
-								<td>
-									# <span>7,000</span>
-								</td>
-								<td>00:00:00:00</td>
-								<td>x</td>
-							</tr>
+							{events &&
+								events.map((item, index) => {
+									console.log(item);
+									return (
+										<tr key={index} className="text-2xl">
+											<td className="flex items-center">
+												<img
+													src={item.bidding_event.product.images.main}
+													width="100px"
+													height="100px"
+												/>
+												<span className="ml-5">
+													{item.bidding_event.product.name}
+												</span>
+											</td>
+											<td>
+												#{" "}
+												<span>
+													{Number(
+														item.bidding_event.access_amount
+													).toLocaleString()}
+												</span>
+											</td>
+											<td>
+												#{" "}
+												<span>
+													{Number(
+														item.bidding_event.minimum_amount
+													).toLocaleString()}
+												</span>
+											</td>
+											<td>
+												#{" "}
+												<span>
+													{Number(
+														item.bidding_event.last_amount
+													).toLocaleString()}
+												</span>
+											</td>
+											<td>
+												{" "}
+												{new Date(item.bidding_event.start_time).toDateString()}
+											</td>
+											<td>
+												{" "}
+												{new Date(item.bidding_event.end_time).toDateString()}
+											</td>
+										</tr>
+									);
+								})}
 						</table>
 					</div>
 				</div>
 			)}
 
-			{biddingEvents.length == 0 && (
-				<p className="justify-center text-center mt-20 text-3xl">
-					You currently have no ongoing Bids
+			{events && events.length < 1 && (
+				<p className="justify-center text-center mt-20 ">
+					You haven't participated in any Bidding events
 				</p>
 			)}
 		</div>

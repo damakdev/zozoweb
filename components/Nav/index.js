@@ -43,9 +43,9 @@ function Nav() {
 								<Image src={wishlist} alt="Wishlist" width={20} />
 							</p>
 						</Link>
-						<p className="px-5 pt-4 ">
+						<div className="px-5 pt-4 flex items-center ">
 							<Link href="/cart">
-								<div>
+								<p>
 									<Image src={cartImg} alt="Cart" width={20} />
 
 									{cart && (
@@ -56,11 +56,11 @@ function Nav() {
 											{cart.length}
 										</span>
 									)}
-								</div>
+								</p>
+						
 							</Link>
-						</p>
+						</div>
 						<span className="mt-2">Won Bids</span>
-
 						<Link href="/profile">
 							<p className="px-5 pt-4 ">
 								<Image src={profile} alt="Profile" width={20} />

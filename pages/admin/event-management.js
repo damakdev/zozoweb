@@ -21,6 +21,7 @@ import {
 	stopBid,
 	cancelBid,
 	_createCategory,
+	_approveBid,
 } from "../../store/slices/adminSlice/adminEventSlice";
 import { formatNumber } from "../../utils";
 import styles from "../../styles/merchant-events.module.scss";
@@ -325,7 +326,7 @@ function Bids() {
 										<h3 className="text-green-600 mb-10">Ongoing</h3>
 									)}
 
-								{!event.started && (
+								{!event.started && event.approved && (
 									<h3 className="text-red-600 mb-10">Not started</h3>
 								)}
 
@@ -357,7 +358,7 @@ function Bids() {
 										/>
 									)}
 
-								{!event.started && (
+								{!event.started && event.approved && (
 									<Button
 										paddingX="2.2rem"
 										paddingY="1.2rem"
@@ -389,7 +390,7 @@ function Bids() {
 									<Button
 										paddingX="2.2rem"
 										paddingY="1.2rem"
-										name="UNAPPROVED"
+										name="UNAPPROVE"
 										bgColor="#EB5757"
 										border="none"
 										fontSize="12px"
@@ -401,11 +402,12 @@ function Bids() {
 									<Button
 										paddingX="2.2rem"
 										paddingY="1.2rem"
-										name="APPROVED"
+										name="APPROVE"
 										bgColor="#1A8917"
 										border="none"
 										fontSize="12px"
 										isBoxShadow={true}
+										onClick= {()=>dispatch(_approveBid(event.id))}
 									/>
 								)}
 							</div>

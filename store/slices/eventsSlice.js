@@ -128,7 +128,6 @@ export const _getBiddingEventByStatus = createAsyncThunk(
 		try {
 			const response = await getBidEventByStatus(body);
 			return response;
-			console.log(response.data);
 		} catch (error) {
 			// return error.response.data.message;
 		}
@@ -174,6 +173,18 @@ export const _removeCustomerEvent = createAsyncThunk(
 const initialState = {
 	biddingEvents: null,
 	status: "idle",
+	wonBids: {
+		events: [],
+		isLoading: false,
+	},
+	allCustomerBids: {
+		events: [],
+		isLoading: false,
+	},
+	ongoingBids: {
+		events: [],
+		isLoading: false,
+	},
 };
 
 const eventsSlice = createSlice({
@@ -199,37 +210,51 @@ const eventsSlice = createSlice({
 
 		//WON BIDS
 		builder.addCase(_getWonBidEvents.pending, (state, action) => {
-			state.status = "loading";
+			state.wonBids.isLoading = true;
 		});
 		builder
 			.addCase(_getWonBidEvents.fulfilled, (state, action) => {
 				if (action.payload) {
-					state.biddingEvents = action.payload.data.bidding_event;
-					state.status = "success";
+					state.wonBids.events = action.payload.data.bidding_event;
+					state.wonBids.isLoading = false;
 					return;
 				}
-				state.status = "error";
 			})
 			.addCase(_getWonBidEvents.rejected, (state, action) => {
-				state.status = "error";
+				state.wonBids.status = "error";
 			});
 
 		//ONGOING BIDS
 		builder.addCase(_getBiddingEventByStatus.pending, (state, action) => {
-			state.status = "loading";
+			state.ongoingBids.isLoading = true;
 		});
 		builder
 			.addCase(_getBiddingEventByStatus.fulfilled, (state, action) => {
 				if (action.payload) {
-					console.log(action.payload);
-					console.log("yh");
-					state.biddingEventsStatus = action.payload.data.bidding_event;
-					state.status = "success";
+					state.ongoingBids.events = action.payload.data.bidding_event;
+					state.ongoingBids.isLoading = false;
 					return;
 				}
 				state.status = "error";
 			})
 			.addCase(_getBiddingEventByStatus.rejected, (state, action) => {
+				state.status = "error";
+			});
+
+		//GET ALL CUSTOMER EVENTS
+		builder.addCase(_getAllCustomerEvents.pending, (state, action) => {
+			state.ongoingBids.isLoading = false;
+		});
+		builder
+			.addCase(_getAllCustomerEvents.fulfilled, (state, action) => {
+				if (action.payload) {
+					state.allCustomerBids.events = action.payload.data.event;
+					state.allCustomerBids.isLoading = false;
+					return;
+				}
+				// state.status = "error";
+			})
+			.addCase(_getAllCustomerEvents.rejected, (state, action) => {
 				state.status = "error";
 			});
 

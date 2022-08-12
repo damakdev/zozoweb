@@ -4,9 +4,10 @@ import {
 	getAllEventsList,
 	adminSingleEvent,
 	startBidEvent,
-      stopBidEvent,
-      cancelBidEvent,
+	stopBidEvent,
+	cancelBidEvent,
 	createCategory,
+	approveBid,
 } from "../../../services/admin";
 
 const initialState = {
@@ -19,11 +20,18 @@ const initialState = {
 		singleEventLoading: true,
 		event: null,
 	},
+
+	approveBid:{
+		isLoading:false
+	}
 };
 
-export const _createCategory = createAsyncThunk("events/_createCategory", async (body)=>{
-	return await createCategory(body)
-})
+export const _createCategory = createAsyncThunk(
+	"events/_createCategory",
+	async (body) => {
+		return await createCategory(body);
+	}
+);
 export const getAllEvents = createAsyncThunk(
 	"events/getAllEvents",
 	async () => {
@@ -42,15 +50,17 @@ export const startBid = createAsyncThunk("events/startBid", async (id) => {
 	return startBidEvent(id);
 });
 
+export const stopBid = createAsyncThunk("events/stopBidEvent", async (id) => {
+	return await stopBidEvent(id);
+});
 
-export const stopBid = createAsyncThunk("events/stopBidEvent", async(id)=>{
-      return await stopBidEvent(id)
-})
+export const cancelBid = createAsyncThunk("events/stopBidEvent", async (id) => {
+	return await cancelBidEvent(id);
+});
 
-
-export const cancelBid = createAsyncThunk("events/stopBidEvent", async(id)=>{
-      return await cancelBidEvent(id)
-})
+export const _approveBid = createAsyncThunk("events/approveBid", async (id) => {
+	return await approveBid(id);
+});
 
 const adminEventSlice = createSlice({
 	name: "events",
@@ -85,7 +95,7 @@ const adminEventSlice = createSlice({
 			});
 		},
 
-            [stopBid.fulfilled]: () => {
+		[stopBid.fulfilled]: () => {
 			toast.success("Bid stopped successfully", {
 				autoClose: 4000,
 			});
@@ -97,7 +107,7 @@ const adminEventSlice = createSlice({
 			});
 		},
 
-            [cancelBid.fulfilled]: () => {
+		[cancelBid.fulfilled]: () => {
 			toast.success("Bid cancelled successfully", {
 				autoClose: 4000,
 			});
@@ -108,11 +118,28 @@ const adminEventSlice = createSlice({
 				autoClose: 4000,
 			});
 		},
-		[_createCategory.fulfilled]:()=>{
+		[_createCategory.fulfilled]: () => {
 			toast.success("Category Created Successfully", {
 				autoClose: 4000,
-			})
-		}
+			});
+		},
+
+		[_approveBid.pending]: (state) => {
+			state.approveBid.isLoading = true;
+		},
+
+		[_approveBid.fulfilled]: (state) => {
+			state.approveBid.isLoading = false;
+			toast.success("Bid approved Successfully", {
+				autoClose: 4000,
+			});
+		},
+
+		[_approveBid.rejected]: () => {
+			toast.error("Unable to approve bid", {
+				autoClose: 4000,
+			});
+		},
 	},
 });
 
