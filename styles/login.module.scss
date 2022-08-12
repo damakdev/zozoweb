@@ -75,6 +75,12 @@
           width: 2rem;
           cursor: pointer;
         }
+        span{
+          position: absolute;
+          right: 0;
+          font-size: 1.3rem;
+          color: #cd3737;
+        }
       }
       input[type="checkbox"] {
         height: 2.4rem;

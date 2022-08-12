@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
+import { object, string } from "yup";
 import { _loginCustomer } from "../store/slices/authSlice";
 import { ClipLoader } from "react-spinners";
 import { EyeOn, EyeOff, GoogleIcon } from "../public/svg/icons";
@@ -11,16 +13,45 @@ import styles from "../styles/login.module.scss";
 
 export default function Index() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { loading } = useSelector((state) => state.auth.customer);
   const { token } = useSelector((state) => state.auth.customer);
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [inputType, setInputType] = useState("password");
+  const [errors, setErrors] = useState({
+    email: false,
+    password: false,
+  });
+
+  const schema = object().shape({
+    email: string().email().required(),
+    password: string().min(8).required(),
+  });
 
   async function loginHandler(e) {
     e.preventDefault();
-    dispatch(_loginCustomer({ email, password }));
+    schema
+      .isValid({ email, password }, { abortEarly: false })
+      .then((response) => {
+        if (response) {
+          dispatch(_loginCustomer({ email, password }));
+          return;
+        }
+        schema
+          .validate({ email, password }, { abortEarly: false })
+          .catch((error) => {
+            const errors = error.inner.reduce((acc, error) => {
+              return {
+                ...acc,
+                [error.path]: true,
+              };
+            }, {});
+            setErrors(errors);
+          });
+      });
+
+    return;
   }
   if (token) router.push("/");
 
@@ -39,31 +70,67 @@ export default function Index() {
             </a>
           </Link>
           <span>OR</span>
-          <div className={styles["form-group"]}>
+          <fieldset className={styles["form-group"]}>
             <label htmlFor="email">Email Address</label>
             <input
               type="email"
               id="email"
               name="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setErrors({
+                  ...errors,
+                  email: false,
+                });
+                setEmail(e.target.value);
+              }}
+              required
             />
-          </div>
-          <div className={styles["form-group"]}>
+            <AnimatePresence>
+              {errors.email && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  Email must be a valid email
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </fieldset>
+          <fieldset className={styles["form-group"]}>
             <label htmlFor="password">Password</label>
             <input
               type={inputType}
               id="password"
               name="password"
               value={[password]}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setErrors({
+                  ...errors,
+                  password: false,
+                });
+                setPassword(e.target.value);
+              }}
+              required
             />
             {inputType === "text" ? (
               <EyeOff onClick={() => setInputType("password")} />
             ) : (
               <EyeOn onClick={() => setInputType("text")} />
             )}
-          </div>
+            <AnimatePresence>
+              {errors.password && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  Password must be at least 8 characters
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </fieldset>
           <div className="df aic asst fw">
             <div className="df aic">
               <input type="checkbox" id="checkbox" name="checkbox" />

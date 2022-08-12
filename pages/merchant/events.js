@@ -175,8 +175,8 @@ function Events() {
     getBidEvents(user.merchant.id).then(
       (response) => {
         console.log(response);
+        setBidEvents(response.data.bidding_event);
       }
-      // setBidEvents(response.data.products)
     );
   }, []);
 
