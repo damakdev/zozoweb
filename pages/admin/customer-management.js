@@ -33,13 +33,13 @@ function CustomerMgt() {
 
 	const viewDetails = (id) => {
 		dispatch(singleCustomer(id));
-
+console.log(user)
 		setModalDisplay((modalDisplay) => !modalDisplay);
 	};
 
 	useEffect(() => {
 		dispatch(customerList());
-	}, [dispatch, user, users]);
+	}, [dispatch]);
 
 	return (
 		<AdminLayout>
@@ -105,7 +105,7 @@ function CustomerMgt() {
 									{!user.account.verified && (
 										<Button
 											bgColor="#1A8917"
-											name="Unblock"
+											name="Verify	"
 											paddingX="40px"
 											paddingY="8px"
 											isBoxShadow={true}
