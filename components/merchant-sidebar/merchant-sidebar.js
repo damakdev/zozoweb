@@ -42,10 +42,10 @@ export default function MerchantSideBar() {
       url: "/merchant/item-orders",
     },
     {
-    	title: "wallet",
-    	icon: <WalletIcon fill="#D5C4DF" />,
-    	active: <WalletIcon fill="#743B96" />,
-    	url: "/merchant/wallet",
+      title: "wallet",
+      icon: <WalletIcon fill="#D5C4DF" />,
+      active: <WalletIcon fill="#743B96" />,
+      url: "/merchant/wallet",
     },
     {
       title: "Events",
@@ -93,6 +93,8 @@ export default function MerchantSideBar() {
         </ul>
       </div>
       <Modal
+      width="25rem"
+      // height="20rem"
         display={modalDisplay}
         title="Confirm logout"
         close={() => setModalDisplay(false)}
@@ -104,6 +106,7 @@ export default function MerchantSideBar() {
               onClick={() => {
                 dispatch(logOutMerchant());
                 toast.success("You are logged out!");
+                router.push("/merchant");
               }}
             >
               Yes
