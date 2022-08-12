@@ -41,14 +41,7 @@ function Nav() {
 						<Link href="/wishlist">
 							<p className="px-5 pt-4 ">
 								<Image src={wishlist} alt="Wishlist" width={20} />
-							</p>
-						</Link>
-						<div className="px-5 pt-4 flex items-center ">
-							<Link href="/cart">
-								<p>
-									<Image src={cartImg} alt="Cart" width={20} />
-
-									{cart && (
+								{cart.length > 0 && (
 										<span
 											className="bg-red-600 px-3 text-white"
 											style={{ borderRadius: "50%" }}
@@ -56,6 +49,14 @@ function Nav() {
 											{cart.length}
 										</span>
 									)}
+							</p>
+						</Link>
+						<div className="px-5 pt-4 flex items-center ">
+							<Link href="/cart">
+								<p>
+									<Image src={cartImg} alt="Cart" width={20} />
+
+								
 								</p>
 						
 							</Link>

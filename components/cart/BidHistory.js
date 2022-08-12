@@ -12,7 +12,7 @@ const BidHistory = () => {
 	const { user } = useSelector((state) => state.auth.customer);
 	const { events } = useSelector((state) => state.events.allCustomerBids);
 
-	console.log(user);
+	
 	useEffect(() => {
 		dispatch(_getAllCustomerEvents(user.customer.id));
 	}, [dispatch]);
@@ -67,7 +67,7 @@ const BidHistory = () => {
 
 							{events &&
 								events.map((item, index) => {
-									console.log(item);
+									
 									return (
 										<tr key={index} className="text-2xl">
 											<td className="flex items-center">
