@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
 import { motion } from "framer-motion";
@@ -6,9 +7,11 @@ import { useCountdown } from "../../hooks/useCountdown";
 import { formatNumber } from "../../utils";
 import { GavelIcon, HeartIcon } from "../../public/svg/icons";
 import {
+  getSingleBidEvent,
   getBidEventAccess,
   accessBidEvent,
   bidOnEvent,
+  updateStake,
 } from "../../services/customer";
 import { ClipLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
@@ -19,20 +22,21 @@ import Modal from "../modal/modal";
 import Button from "../ui/button/";
 import styles from "./product-info.module.scss";
 
-export default function ProductInfo({ data, user, biddingEventId }) {
+export default function ProductInfo() {
   const router = useRouter();
+  const biddingEventId = router.query.pid;
   const dispatch = useDispatch();
+  const [data, setData] = useState(null);
   const [days, hours, minutes, seconds] = useCountdown(
     data?.bidding_event.start_time,
-    // "2022-05-08T22:38:00.000Z",
-    // '2022-08-08T22:39:00.000Z'
     data?.bidding_event.end_time
+    // "2022-08-12T15:03:40.000Z"
   );
   // const [index, setIndex] = useState(0);
+  const { user } = useSelector((state) => state.auth.customer);
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
-  const [countdown, setCountdown] = useState(false);
-  const [reload, setReload] = useState(false);
+  const [countdown, setCountdown] = useState(true);
   const [accessCode, setAccessCode] = useState(null);
   const [modalDisplay, setModalDisplay] = useState(false);
 
@@ -63,10 +67,14 @@ export default function ProductInfo({ data, user, biddingEventId }) {
       try {
         const response = await bidOnEvent(body);
         setLoading(false);
+        setAmount("");
         toast.success(response.data.message, {
           autoClose: 7000,
         });
-        setReload(true);
+        setData(null);
+        getSingleBidEvent(user.customer.id, biddingEventId).then((response) =>
+          setData(response.data)
+        );
       } catch (error) {
         setLoading(false);
       }
@@ -80,6 +88,30 @@ export default function ProductInfo({ data, user, biddingEventId }) {
 
     if (data.access_status === "none") {
       initializePayment(onSuccess, onClose);
+    }
+  }
+
+  async function updateBidHandler() {
+    setLoading(true);
+    const body = {
+      bidding_event_id: biddingEventId,
+      customer_id: user.customer.id.toString(),
+      stake: +amount,
+    };
+    try {
+      const response = await updateStake(body);
+      toast.success(response.data.message, {
+        autoClose: 7000,
+      });
+      console.log(response);
+      setLoading(false);
+      setAmount("");
+      setData(null);
+      getSingleBidEvent(user.customer.id, biddingEventId).then((response) =>
+        setData(response.data)
+      );
+    } catch (error) {
+      setLoading(false);
     }
   }
 
@@ -125,30 +157,35 @@ export default function ProductInfo({ data, user, biddingEventId }) {
       console.log(response);
       setLoading(false);
       setModalDisplay(false);
-      setReload(true);
+      setData(null);
+      getSingleBidEvent(user.customer.id, biddingEventId).then((response) =>
+        setData(response.data)
+      );
     } catch (error) {
+      console.log(error);
       setLoading(false);
-      setModalDisplay(false);
-      toast.success(response.data.message, {
-        autoClose: 7000,
-      });
     }
   }
 
   useEffect(() => {
-    if (days + hours + minutes + seconds !== 0) setCountdown(true);
-  }, [data?.bidding_event]);
+    if (biddingEventId && user) {
+      getSingleBidEvent(user.customer.id, biddingEventId).then((response) =>
+        setData(response.data)
+      );
+    }
+  });
 
   useEffect(() => {
-    if (reload) {
-      const timeOut = setTimeout(() => {
-        router.reload();
-      }, 5000);
-      return () => {
-        clearTimeout(timeOut);
-      };
+    console.log(countdown);
+
+    if (data && days + hours + minutes + seconds > 0) {
+      setCountdown(true);
+      console.log(days + hours + minutes + seconds);
+    } else {
+      setCountdown(false);
     }
-  }, [reload, router]);
+    console.log(days, hours, minutes, seconds);
+  }, []);
 
   return (
     <>
@@ -196,17 +233,28 @@ export default function ProductInfo({ data, user, biddingEventId }) {
                   &#8358;{formatNumber(+data.bidding_event?.product.price)}
                 </span>
 
-                {!data.bidding_event.ended && (
+                {(!data.bidding_event.ended || countdown) && (
                   <span>
                     {formatNumber(days)}:{formatNumber(hours)}:
                     {formatNumber(minutes)}:{formatNumber(seconds)}
                   </span>
                 )}
-                {data.bidding_event.ended && (
+                {/* {data.bidding_event.ended && (
                   <span style={{ color: "#cd3737" }}>Ended</span>
-                )}
+                )} */}
               </div>
               <form onSubmit={bidHandler}>
+                {data.bidding_event.ended && (
+                  <Button
+                    type="button"
+                    style={{
+                      backgroundColor: "#cd3737",
+                      cursor: "not-allowed",
+                    }}
+                  >
+                    Ended
+                  </Button>
+                )}
                 {data.access_status === "approved" && (
                   <input
                     type="number"
@@ -215,8 +263,17 @@ export default function ProductInfo({ data, user, biddingEventId }) {
                     onChange={(e) => setAmount(e.target.value)}
                   />
                 )}
-                {data.isMember && <Button type="button">Update Bid</Button>}
-                {!data.isMember && (
+
+                {data.isMember && !data.bidding_event.ended && (
+                  <Button type="button" onClick={updateBidHandler}>
+                    {loading ? (
+                      <ClipLoader color="#ffffff" size={15} />
+                    ) : (
+                      "Update Bid"
+                    )}
+                  </Button>
+                )}
+                {!data.isMember && !data.bidding_event.ended && (
                   <>
                     {data.access_status === "approved" && (
                       <Button>
@@ -265,7 +322,6 @@ export default function ProductInfo({ data, user, biddingEventId }) {
                           {event.customer.account.last_name}
                         </h4>
                         <h5>&#8358;{formatNumber(event.stake)}</h5>
-                        {/* <p>00:00:36:37</p> */}
                         {data.bidding_event?.winner &&
                           event.customer.id ===
                             data.bidding_event?.winner.customer.id && (
@@ -291,7 +347,6 @@ export default function ProductInfo({ data, user, biddingEventId }) {
               <h1 />
               <div className={styles.watchlist} />
               <h3 />
-              {/* <p /> */}
               <div className={styles.price} />
               <form />
             </div>
@@ -301,6 +356,7 @@ export default function ProductInfo({ data, user, biddingEventId }) {
       </div>
 
       <Modal
+        width="45rem"
         display={modalDisplay}
         title="Enter access code"
         close={() => {
