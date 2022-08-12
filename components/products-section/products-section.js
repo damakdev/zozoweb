@@ -86,10 +86,10 @@ export default function ProductsSection({ title, products }) {
   );
 }
 
-function Card({ product, openModal }) {
+function Card({ product }) {
   const [days, hours, minutes, seconds] = useCountdown(
-    // product.start_time,
-    "2022-05-08T22:38:00.000Z",
+    product.start_time,
+    // "2022-05-08T22:38:00.000Z",
     // '2022-05-08T22:39:00.000Z'
     product.end_time
   );
