@@ -86,10 +86,10 @@ export default function ProductsSection({ title, products }) {
   );
 }
 
-function Card({ product, openModal }) {
+function Card({ product }) {
   const [days, hours, minutes, seconds] = useCountdown(
-    // product.start_time,
-    "2022-05-08T22:38:00.000Z",
+    product.start_time,
+    // "2022-05-08T22:38:00.000Z",
     // '2022-05-08T22:39:00.000Z'
     product.end_time
   );
@@ -112,7 +112,7 @@ function Card({ product, openModal }) {
       href={user ? `/product/${product.id}` : "javascript:void(0)"}
       key={product.id}
     >
-      <a onClick={(product) => eventHandler(product)} className={styles.card}>
+      <a onClick={eventHandler} className={styles.card}>
         <img src={product.product.images.main} alt="" />
         <h3>{truncateString(product.product.name, 18)}</h3>
         {!product.ended && (
