@@ -93,8 +93,8 @@ export default function MerchantSideBar() {
         </ul>
       </div>
       <Modal
-      width="25rem"
-      // height="20rem"
+        width="25rem"
+        // height="20rem"
         display={modalDisplay}
         title="Confirm logout"
         close={() => setModalDisplay(false)}
@@ -104,6 +104,7 @@ export default function MerchantSideBar() {
           <div className={styles.buttons}>
             <Button
               onClick={() => {
+                setModalDisplay(false);
                 dispatch(logOutMerchant());
                 toast.success("You are logged out!");
                 router.push("/merchant");
