@@ -15,6 +15,42 @@ import {
 	removeCustomerEvent,
 } from "../../services/customer";
 
+export const _getAllCompletedEvents = createAsyncThunk(
+	`events/_getAllCompletedEvents`,
+	async (body) => {
+		try {
+			const response = await getBidEventByStatus(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
+);
+
+export const _getAllOngoingEvents = createAsyncThunk(
+	`events/getAllOngoingEvents`,
+	async (body) => {
+		try {
+			const response = await getBidEventByStatus(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
+);
+
+export const _getAllUpcomingEvents = createAsyncThunk(
+	`events/getAllUpcomingEvents`,
+	async (body) => {
+		try {
+			const response = await getBidEventByStatus(body);
+			return response;
+		} catch (error) {
+			// return error.response.data.message;
+		}
+	}
+);
+
 export const _getApprovedBiddingEvents = createAsyncThunk(
 	`events/getApprovedBidEvents`,
 	async (body) => {
@@ -185,6 +221,18 @@ const initialState = {
 		events: [],
 		isLoading: false,
 	},
+	allOngoingBids: {
+		events: [],
+		isLoading: false,
+	},
+	allUpcomingBids: {
+		events: [],
+		isLoading: false,
+	},
+	allCompletedBids: {
+		events: [],
+		isLoading: false,
+	},
 };
 
 const eventsSlice = createSlice({
@@ -206,6 +254,57 @@ const eventsSlice = createSlice({
 			})
 			.addCase(_getApprovedBiddingEvents.rejected, (state, action) => {
 				state.status = "error";
+			});
+
+		//ALL COMPLETED BIDS
+		builder.addCase(_getAllCompletedEvents.pending, (state, action) => {
+			state.allCompletedBids.isLoading = true;
+		});
+		builder
+			.addCase(_getAllCompletedEvents.fulfilled, (state, action) => {
+				if (action.payload) {
+					state.allCompletedBids.events = action.payload.data.bidding_event;
+					state.allCompletedBids.isLoading = false;
+					return;
+				}
+				state.allCompletedBids.status = "error";
+			})
+			.addCase(_getAllCompletedEvents.rejected, (state, action) => {
+				state.allCompletedBids.status = "error";
+			});
+
+		//ALL ONGOING BIDS
+		builder.addCase(_getAllOngoingEvents.pending, (state, action) => {
+			state.allOngoingBids.isLoading = true;
+		});
+		builder
+			.addCase(_getAllOngoingEvents.fulfilled, (state, action) => {
+				if (action.payload) {
+					state.allOngoingBids.events = action.payload.data.bidding_event;
+					state.allOngoingBids.isLoading = false;
+					return;
+				}
+				state.allOngoingBids.status = "error";
+			})
+			.addCase(_getAllOngoingEvents.rejected, (state, action) => {
+				state.status = "error";
+			});
+
+		//ALL UPCOMING BIDS
+		builder.addCase(_getAllUpcomingEvents.pending, (state, action) => {
+			state.allUpcomingBids.isLoading = true;
+		});
+		builder
+			.addCase(_getAllUpcomingEvents.fulfilled, (state, action) => {
+				if (action.payload) {
+					state.allUpcomingBids.events = action.payload.data.bidding_event;
+					state.allUpcomingBids.isLoading = false;
+					return;
+				}
+				state.allUpcomingBids.status = "error";
+			})
+			.addCase(_getAllUpcomingEvents.rejected, (state, action) => {
+				state.allUpcomingBids.status = "error";
 			});
 
 		//WON BIDS

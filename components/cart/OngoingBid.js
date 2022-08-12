@@ -36,7 +36,7 @@ const OngoingBid = () => {
 												height="100px"
 											/>
 											<span className="ml-5">
-												{item.product.name.substr(0, 20)}
+												{truncateString(item.product.name, 20)}
 											</span>
 										</td>
 										<td>
