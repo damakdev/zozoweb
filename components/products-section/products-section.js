@@ -112,7 +112,7 @@ function Card({ product, openModal }) {
       href={user ? `/product/${product.id}` : "javascript:void(0)"}
       key={product.id}
     >
-      <a onClick={(product) => eventHandler(product)} className={styles.card}>
+      <a onClick={eventHandler} className={styles.card}>
         <img src={product.product.images.main} alt="" />
         <h3>{truncateString(product.product.name, 18)}</h3>
         {!product.ended && (
