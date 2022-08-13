@@ -128,7 +128,7 @@ seek win.`,
 							products={biddingEvents}
 							title="wishlist products"
 						/> */}
-						<AdsSlider data={ads} />
+						{/* <AdsSlider data={ads} /> */}
 						<WhyZozo data={whyZozo} />
 					</div>
 				</section>
