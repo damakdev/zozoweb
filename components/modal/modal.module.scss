@@ -14,7 +14,7 @@
   min-width: 40rem;
   width: 100%;
   max-width: 80rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   background-color: var(--bg-white);
   z-index: 10;
   .head {
@@ -39,7 +39,8 @@
     min-height: 20rem;
     // height: 30vh;
     // max-height: 45rem;
-    padding: 2rem;
+    margin: 2rem 0;
+    padding-inline: 2rem;
     overflow-y: auto;
   }
 }

@@ -128,7 +128,7 @@ function Table({
                     <td>{convertUtc(item.end_time)}</td>
                     <td>&#8358;{formatAmount(item.minimum_amount)}</td>
                     <td>{item.customers.length}</td>
-                    <td>{item.ended ? "Ended" : "In progress"}</td>
+                    <td>{item.ended ? "Ended" : !item.approved ? "Pending Approval" : "In progress"}</td>
                   </tr>
                 );
               })}

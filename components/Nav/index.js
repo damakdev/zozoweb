@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { logOutCustomer } from "../../store/slices/authSlice";
 import logo from "../../public/images/logo-colored.png";
@@ -13,6 +14,7 @@ import styles from "../../styles/Nav.module.scss";
 
 function Nav() {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const { user } = useSelector((state) => state.auth.customer);
 	const { cart } = useSelector((state) => state.cart);
 	return (
@@ -86,75 +88,82 @@ function Nav() {
 							</p>
 						</Link>
 
-						{!user && (
-							<>
-								<Link href="/login">
-									<p className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</p>
-								</Link>
+            {!user && (
+              <>
+                <Link href="/login">
+                  <p className=" mr-9 px-8 pt-3 font-medium text-2xl">Log in</p>
+                </Link>
 
-								<Link href="/signup">
-									<p>
-										<Button
-											name="SIGN UP"
-											paddingY="7px"
-											paddingX="30px"
-											fontSize="14px"
-										/>
-									</p>
-								</Link>
-							</>
-						)}
+                <Link href="/signup">
+                  <p>
+                    <Button
+                      name="SIGN UP"
+                      paddingY="7px"
+                      paddingX="30px"
+                      fontSize="14px"
+                    />
+                  </p>
+                </Link>
+              </>
+            )}
 
-						{user && (
-							<button onClick={() => dispatch(logOutCustomer())}>Logout</button>
-						)}
-					</div>
-				</div>
-			</header>
+            {user && (
+              <button
+                onClick={() => {
+                  router.push("/");
+                  dispatch(logOutCustomer());
+                }}
+              >
+                Logout
+              </button>
+            )}
+          </div>
+        </div>
+      </header>
 
-			<div className={styles.nav}>
-				<div className={styles.content}>
-					<ul className=" flex py-5 ml-5 align-center">
-						<Link href="/">
-							<li className="pt-2">
-								<Image src={breadcrumb} alt="Menu" />
-							</li>
-						</Link>
+      <div className={styles.nav}>
+        <div className={styles.content}>
+          <ul className=" flex py-5 ml-5 align-center">
+            <Link href="/">
+              <li className="pt-2">
+                <Image src={breadcrumb} alt="Menu" />
+              </li>
+            </Link>
 
-						<Link href="/how-to-bid">
-							<li>
-								<p> How to Bid</p>
-							</li>
-						</Link>
+            <Link href="/how-to-bid">
+              <li>
+                <p> How to Bid</p>
+              </li>
+            </Link>
 
-						<Link href="/">
-							<li>
-								<p> Start Bidding</p>
-							</li>
-						</Link>
+            <Link href="/merchant">
+              <li>
+                <p> Start Selling</p>
+              </li>
+            </Link>
 
-						<Link href="/about">
-							<li>
-								<p> About</p>
-							</li>
-						</Link>
+            <Link href="/about">
+              <li>
+                <p> About</p>
+              </li>
+            </Link>
 
-						<Link href="/contact">
-							<li>
-								<p> Contact</p>
-							</li>
-						</Link>
+            <Link href="/contact">
+              <li>
+                <p> Contact</p>
+              </li>
+            </Link>
 
-						<Link href="/">
-							<li>
-								<p> Help</p>
-							</li>
-						</Link>
-					</ul>
-				</div>
-			</div>
-		</>
-	);
+            <Link href="/">
+              <li>
+                <p> Help</p>
+              </li>
+            </Link>
+          </ul>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Nav;

@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import Select from "react-select";
 import Modal from "../../components/modal/modal";
-import Button from "../../components/ui/Button";
+import Button from "../../components/ui/button/";
 import EndedEvents from "../../components/Merchant/Event/EndedEvents";
 import RecentEvents from "../../components/Merchant/Event/RecentEvents";
 import MerchantNav from "../../components/Merchant/Merchant_Nav";
@@ -85,6 +85,10 @@ function Events() {
         toast.success("Event created");
         setLoading(false);
         setModalDisplay(false);
+        setBidEvents(null);
+        getBidEvents(user.merchant.id).then((response) => {
+          setBidEvents(response.data.bidding_event);
+        });
       })
       .catch(() => {
         setLoading(false);
@@ -172,12 +176,9 @@ function Events() {
     getAllCategories().then((response) =>
       setCategories(response.data.category)
     );
-    getBidEvents(user.merchant.id).then(
-      (response) => {
-        console.log(response);
-      }
-      // setBidEvents(response.data.products)
-    );
+    getBidEvents(user.merchant.id).then((response) => {
+      setBidEvents(response.data.bidding_event);
+    });
   }, []);
 
   return (
@@ -237,10 +238,14 @@ function Events() {
           title="Create Event"
           display={modalDisplay}
           close={() => setModalDisplay(false)}
-          height="80rem"
-          width="100rem"
+          // height="60rem"
+          width="60rem"
         >
-          <form onSubmit={eventHandler} className="w-10/12 mx-auto">
+          <form
+            onSubmit={eventHandler}
+            style={{ height: addNewProduct ? "80vh" : "60vh" }}
+            // className="flex flex-col"
+          >
             <div className={styles["form-group"]}>
               {!addNewProduct && (
                 <label htmlFor="products">
@@ -482,18 +487,9 @@ function Events() {
               </div>
             </div>
 
-            <div className="mt-10">
-              <Button
-                bgColor="#743B96"
-                name={
-                  loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"
-                }
-                paddingX="20px"
-                paddingY="8px"
-                isBoxShadow={true}
-                width="100%"
-              />
-            </div>
+            <Button>
+              {loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"}
+            </Button>
           </form>
         </Modal>
       </div>
