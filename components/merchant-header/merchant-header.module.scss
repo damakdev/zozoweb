@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem;
+  box-shadow: 0 5px 11px rgb(0 0 0 / 7%);
+  background-color: var(--bg-white);
+  margin-left: 25rem;
+  width: calc(100% - 25rem);
+  height: 12rem;
+  border-bottom: var(--border);
+  .title {
+    h1 {
+      font-size: 2rem;
+    }
+    span {
+      display: flex;
+      align-items: center;
+      svg {
+        margin-right: 1rem;
+      }
+    }
+  }
+  .profile-info {
+    display: flex;
+    position: relative;
+    &::before {
+      position: absolute;
+      top: 0;
+      left: -4rem;
+      height: 4rem;
+      width: 0.2rem;
+      border-radius: 3rem;
+      background-color: var(--bg-primary);
+      content: "";
+    }
+    svg {
+      margin-right: 3rem;
+    }
+    & > div {
+      display: flex;
+      img {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 1.5rem;
+      }
+      h3 {
+        color: var(--bg-black);
+        font-size: 2rem;
+        a {
+          font-size: 1.4rem;
+          display: block;
+          color: var(--text-primary);
+          text-transform: lowercase;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
