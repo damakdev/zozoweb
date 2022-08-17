@@ -1,6 +1,5 @@
 .container {
-  // height: 40rem;
-  p {
+  & > p {
     color: var(--text-white);
     padding: 0.9rem 1.2rem;
     background-color: var(--accent-color);
@@ -18,7 +17,6 @@
     &::-webkit-scrollbar-thumb {
       background-color: #626d58;
     }
-
     li {
       padding: 0.9rem 1.2rem;
       text-transform: capitalize;
