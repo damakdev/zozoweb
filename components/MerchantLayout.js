@@ -1,15 +1,15 @@
 import React from "react";
 import MerchantSideBar from "./merchant-sidebar/merchant-sidebar";
-import styles from "../styles/admin/admin-layout.module.scss";
+import MerchantHeader from "./merchant-header/merchant-header";
+import styles from "../styles/merchant/merchant-layout.module.scss";
 
-function MerchantLayout({ children }) {
+function MerchantLayout({ title, children }) {
   return (
-    // style={{ backgroundColor: "#E5E5E5" }}
-    <div className="bg-white" >
+    <>
       <MerchantSideBar />
-
+      <MerchantHeader title={title} />
       <div className={styles.children}>{children}</div>
-    </div>
+    </>
   );
 }
 

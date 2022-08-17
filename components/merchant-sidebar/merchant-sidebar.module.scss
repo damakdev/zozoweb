@@ -7,24 +7,33 @@
   // padding-inline: 1rem;
   background-color: var(--accent-color);
   height: 100vh;
-  width: 15%;
+  width: 25rem;
   z-index: 6;
   & > a {
     margin: 5rem 0;
     align-self: center;
   }
   ul {
+    // position: absolute;
+    // top: 50%;
+    // transform: translateY(-50%);
+    // width: 100%;
     li {
-      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: center;
       &:not(:last-child) {
         margin-bottom: 2rem;
       }
       a {
+        padding: 1.4rem 2rem;
         display: flex;
         align-items: center;
-        // justify-content: center;
         width: 100%;
+        transition: all 0.3s;
         cursor: pointer;
+        &:hover {
+          // background-color: #743b9678;
+        }
         h3 {
           margin-left: 1rem;
           color: var(--text-white);
@@ -35,6 +44,7 @@
         align-items: center;
         width: 100%;
         color: var(--text-white);
+        padding: 1.4rem 2rem;
         svg {
           width: 24px;
           height: 24px;
