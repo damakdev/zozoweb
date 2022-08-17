@@ -18,13 +18,12 @@ import Modal from "../../components/modal/modal";
 import Button from "../../components/ui/button/";
 import EndedEvents from "../../components/Merchant/Event/EndedEvents";
 import RecentEvents from "../../components/Merchant/Event/RecentEvents";
-import MerchantNav from "../../components/Merchant/Merchant_Nav";
 import MerchantLayout from "../../components/MerchantLayout";
 import styles from "../../styles/merchant-events.module.scss";
 
 function Events() {
   const { user } = useSelector((state) => state.auth.merchant);
-  const [addNewProduct, setAddNewProduct] = useState(false);
+  const [addNewProduct, setAddNewProduct] = useState(true);
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
   const [bidEvents, setBidEvents] = useState(null);
@@ -154,6 +153,10 @@ function Events() {
       ...provided,
       textTransform: "capitalize",
     }),
+    input: (provided) => ({
+      ...provided,
+      backgroundColor: "transparent",
+    }),
     singleValue: (provided) => ({
       ...provided,
       textTransform: "capitalize",
@@ -182,8 +185,7 @@ function Events() {
   }, []);
 
   return (
-    <MerchantLayout>
-      <MerchantNav title="Event" />
+    <MerchantLayout title="Events">
       <div className={`${styles.container} pb-20`}>
         <ul className={`${styles.sub_nav} flex`}>
           <li
@@ -238,15 +240,13 @@ function Events() {
           title="Create Event"
           display={modalDisplay}
           close={() => setModalDisplay(false)}
-          // height="60rem"
           width="60rem"
         >
           <form
             onSubmit={eventHandler}
             style={{ height: addNewProduct ? "80vh" : "60vh" }}
-            // className="flex flex-col"
           >
-            <div className={styles["form-group"]}>
+            {/* <div className={styles["form-group"]}>
               {!addNewProduct && (
                 <label htmlFor="products">
                   Select Product <span>*</span>
@@ -279,7 +279,7 @@ function Events() {
                   isLoading={products ? false : true}
                 />
               )}
-            </div>
+            </div> */}
 
             {addNewProduct && (
               <>
