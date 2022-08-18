@@ -5,21 +5,25 @@ import {
   getProducts,
   createBidEvent,
   getBidEvents,
+  getBidEventsByStatus,
 } from "../../services/merchant";
 import { getAllCategories } from "../../services/customer";
-import { AnimatePresence } from "framer-motion";
-import { Plus } from "../../public/svg/icons";
 import { Widget } from "@uploadcare/react-widget";
-import { toLocaleString } from "../../utils";
+import {
+  convertUtc,
+  toLocaleString,
+  truncateString,
+  formatNumber,
+} from "../../utils";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import MerchantLayout from "../../components/MerchantLayout";
+import Loader from "../../components/loader";
 import Select from "react-select";
 import Modal from "../../components/modal/modal";
 import Button from "../../components/ui/button/";
-import EndedEvents from "../../components/Merchant/Event/EndedEvents";
-import RecentEvents from "../../components/Merchant/Event/RecentEvents";
-import MerchantLayout from "../../components/MerchantLayout";
 import styles from "../../styles/merchant-events.module.scss";
+import ErrorMessage from "../../components/error-message/error-message";
 
 function Events() {
   const { user } = useSelector((state) => state.auth.merchant);
@@ -27,8 +31,8 @@ function Events() {
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
   const [bidEvents, setBidEvents] = useState(null);
-  const [page, setPage] = useState("recent");
   const [modalDisplay, setModalDisplay] = useState(false);
+  const [status, setStatus] = useState("all");
   const [loading, setLoading] = useState(false);
   const [eventForm, setEventForm] = useState({
     productName: "",
@@ -49,10 +53,6 @@ function Events() {
     accessFee: "",
     minimumBid: "",
   });
-
-  const viewDetails = () => {
-    setModalDisplay((modalDisplay) => !modalDisplay);
-  };
 
   function updateEventForm(e) {
     const { name, value } = e.target;
@@ -81,10 +81,11 @@ function Events() {
     console.log(body);
     createBidEvent(body)
       .then(() => {
-        toast.success("Event created");
+        toast.success("Event created, pending approval");
         setLoading(false);
         setModalDisplay(false);
         setBidEvents(null);
+        setStatus("all");
         getBidEvents(user.merchant.id).then((response) => {
           setBidEvents(response.data.bidding_event);
         });
@@ -142,12 +143,13 @@ function Events() {
       ...provided,
       width: "100%",
       position: "relative",
-      backgroundColor: "rgba(202, 201, 201, 0.4)",
-      // marginBottom: "1rem",
     }),
     control: (provided) => ({
       ...provided,
       width: "100%",
+      height: 45,
+      border: "none",
+      backgroundColor: "#cac9c966",
     }),
     menuList: (provided) => ({
       ...provided,
@@ -172,22 +174,39 @@ function Events() {
   });
 
   useEffect(() => {
-    console.log(user);
     getProducts(user.merchant.id).then((response) =>
       setProducts(response.data.products)
     );
     getAllCategories().then((response) =>
       setCategories(response.data.category)
     );
-    getBidEvents(user.merchant.id).then((response) => {
-      setBidEvents(response.data.bidding_event);
-    });
   }, []);
 
+  useEffect(() => {
+    if (status === "all") {
+      setBidEvents(null);
+      getBidEvents(user.merchant.id).then((response) => {
+        setBidEvents(response.data.bidding_event);
+      });
+    }
+    if (status !== "all") {
+      setBidEvents(null);
+      getBidEventsByStatus({
+        status,
+        merchant_id: user.merchant.id,
+      }).then((response) => {
+        setBidEvents(response.data.bidding_event);
+      });
+    }
+  }, [status]);
+
   return (
-    <MerchantLayout title="Events">
-      <div className={`${styles.container} pb-20`}>
-        <ul className={`${styles.sub_nav} flex`}>
+    <>
+      <MerchantLayout title="Events">
+        {!bidEvents && <Loader />}
+        {bidEvents && (
+          <section className={styles.container}>
+            {/* <ul className={`${styles.sub_nav} flex`}>
           <li
             className={` py-2 ml-10 px-10  mr-20 ${
               page === "recent" ? styles.active_tab : ""
@@ -204,49 +223,91 @@ function Events() {
           >
             Ended Events
           </li>
-        </ul>
-
-        <div>
-          <div className="flex justify-between w-11/12 mx-auto mt-20 mb-5">
-            <h3 className="opacity-0">recent </h3>
-            <div className="flex">
-              <div className={styles.Dropdown}>
-                <span>Status:</span>
-                <select>
-                  <option>All</option>
+        </ul> */}
+            <div className={styles.header}>
+              <div>
+                <label htmlFor="status">Status:</label>
+                <select
+                  name="status"
+                  id="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="all">all</option>
+                  <option value="ongoing">ongoing</option>
+                  <option value="completed">completed</option>
+                  <option value="upcoming">upcoming</option>
+                  <option value="canceled">canceled</option>
                 </select>
               </div>
-
-              <div className={styles.createButton} onClick={viewDetails}>
-                <Plus />
-                <button className="mr-3">Create Event</button>
-              </div>
+              <Button onClick={() => setModalDisplay(true)}>
+                <span>+</span> Create Event
+              </Button>
             </div>
-          </div>
-          {page === "recent" ? (
-            <RecentEvents data={bidEvents} />
-          ) : (
-            <EndedEvents data={bidEvents} />
-          )}
-          {/* <AnimatePresence>
-            {page === "recent" && <RecentEvents data={bidEvents} />}
-          </AnimatePresence>
-          <AnimatePresence>
-            {page !== "recent" && <EndedEvents data={bidEvents} />}
-          </AnimatePresence> */}
-        </div>
+            {bidEvents?.length === 0 && (
+              <ErrorMessage
+                message={
+                  status === "all"
+                    ? "You have no bid events"
+                    : `There are no ${status} events`
+                }
+              />
+            )}
+            {bidEvents.length > 0 && (
+              <div
+                className="p-6 rounded-lg"
+                style={{ backgroundColor: "var(--bg-primary)" }}
+              >
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="text-left">Name</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Bid price</th>
+                      <th>No of visits</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bidEvents?.map((event) => (
+                      <tr key={event.id}>
+                        <td>{truncateString(event.product.name, 54)}</td>
+                        <td>{convertUtc(event.start_time)}</td>
+                        <td>{convertUtc(event.end_time)}</td>
+                        <td>&#8358;{formatNumber(event.minimum_amount)}</td>
+                        <td>{event.customers?.length}</td>
+                        <td>
+                          {event.ended
+                            ? "Completed"
+                            : !event.approved
+                            ? "Pending Approval"
+                            : !event.started
+                            ? "Upcoming"
+                            : "Ongoing"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        )}
+      </MerchantLayout>
 
-        <Modal
-          title="Create Event"
-          display={modalDisplay}
-          close={() => setModalDisplay(false)}
-          width="60rem"
+      <Modal
+        title="Create Event"
+        display={modalDisplay}
+        close={() => setModalDisplay(false)}
+        width="60rem"
+      >
+        <form
+          className={styles["create-event"]}
+          onSubmit={eventHandler}
+          style={{ height: addNewProduct ? "80vh" : "60vh" }}
         >
-          <form
-            onSubmit={eventHandler}
-            style={{ height: addNewProduct ? "80vh" : "60vh" }}
-          >
-            {/* <div className={styles["form-group"]}>
+          {/* <div className={styles["form-group"]}>
               {!addNewProduct && (
                 <label htmlFor="products">
                   Select Product <span>*</span>
@@ -281,219 +342,218 @@ function Events() {
               )}
             </div> */}
 
-            {addNewProduct && (
-              <>
-                <div className="mb-12">
-                  <label>
-                    Product Name <span>*</span>
+          {addNewProduct && (
+            <>
+              <fieldset>
+                <label>
+                  Product Name <span>*</span>
+                </label>
+                <input
+                  name="productName"
+                  className="w-full rounded-lg"
+                  onChange={updateEventForm}
+                  required
+                />
+              </fieldset>
+
+              <fieldset>
+                <label>
+                  Description <span>*</span>
+                </label>
+                <textarea
+                  rows={3}
+                  name="description"
+                  onChange={updateEventForm}
+                  required
+                ></textarea>
+              </fieldset>
+
+              <fieldset>
+                <label htmlFor="category">
+                  Select Product Category <span>*</span>
+                </label>
+                <Select
+                  styles={customStyles}
+                  options={categoryOptions}
+                  placeholder=""
+                  isClearable
+                  onChange={(e) =>
+                    setEventForm({
+                      ...eventForm,
+                      category: [e?.value.toString()],
+                    })
+                  }
+                  name="category"
+                  id="category"
+                  isLoading={categories ? false : true}
+                />
+              </fieldset>
+
+              <div className="grid grid-cols-2 gap-8">
+                <fieldset>
+                  <label htmlFor="price">
+                    Price (&#8358;) <span>*</span>
                   </label>
                   <input
-                    name="productName"
+                    type="number"
+                    name="price"
                     className="w-full rounded-lg"
                     onChange={updateEventForm}
                     required
                   />
-                </div>
-
-                <div className="mb-12">
-                  <label>
-                    Description <span>*</span>
-                  </label>
-                  <textarea
-                    className="w-full"
-                    name="description"
+                </fieldset>
+                <fieldset>
+                  <label>Model Number </label>
+                  <input
+                    type="number"
+                    name="modelNo"
+                    className="w-full rounded-lg"
                     onChange={updateEventForm}
-                    required
-                  ></textarea>
-                </div>
+                  />
+                </fieldset>
+              </div>
 
-                <div className={styles["form-group"]}>
-                  <label htmlFor="category">
-                    Select Product Category<span>*</span>
-                  </label>
-                  <Select
-                    styles={customStyles}
-                    options={categoryOptions}
-                    // placeholder="Select Product"
-                    isClearable
-                    onChange={(e) =>
-                      setEventForm({
-                        ...eventForm,
-                        category: [e.value.toString()],
-                      })
-                    }
-                    name="category"
-                    id="category"
-                    isLoading={categories ? false : true}
+              <div className="grid grid-cols-2 gap-8">
+                <fieldset>
+                  <label htmlFor="width">Width (Specify the unit)</label>
+                  <input
+                    type="number"
+                    name="width"
+                    className="w-full rounded-lg"
+                    onChange={updateEventForm}
+                  />
+                </fieldset>
+                <fieldset>
+                  <label>Height (Specify the unit)</label>
+                  <input
+                    type="number"
+                    name="height"
+                    className="w-full rounded-lg"
+                    onChange={updateEventForm}
+                  />
+                </fieldset>
+              </div>
+
+              <div className="grid grid-cols-2 gap-8">
+                <fieldset>
+                  <label htmlFor="weight">Weight (Specify the unit)</label>
+                  <input
+                    type="number"
+                    name="weight"
+                    className="w-full rounded-lg"
+                    onChange={updateEventForm}
+                  />
+                </fieldset>
+                <fieldset>
+                  <label>Color</label>
+                  <input
+                    type="text"
+                    name="color"
+                    className="w-full rounded-lg"
+                    onChange={updateEventForm}
+                  />
+                </fieldset>
+              </div>
+
+              <fieldset>
+                <label>
+                  Upload Images <span>*</span>
+                </label>
+                <div className="uploadcare-button">
+                  <Widget
+                    crop="1:1"
+                    onChange={uploadImage}
+                    publicKey="db374fee85cbc01904a3"
                   />
                 </div>
+              </fieldset>
+            </>
+          )}
 
-                <div className="mb-12 grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="price">
-                      Price (&#8358;) <span>*</span>
-                    </label>
-                    <input
-                      type="number"
-                      name="price"
-                      className="w-full rounded-lg"
-                      onChange={updateEventForm}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label>Model Number </label>
-                    <input
-                      type="number"
-                      name="modelNo"
-                      className="w-full rounded-lg"
-                      onChange={updateEventForm}
-                    />
-                  </div>
-                </div>
+          <div className="grid grid-cols-2 gap-8">
+            <fieldset>
+              <label htmlFor="minimumBid">
+                Minimum Bid <span>*</span>{" "}
+              </label>
+              <input
+                name="minimumBid"
+                id="minimumBid"
+                className="w-full rounded-lg"
+                onChange={updateEventForm}
+              />
+            </fieldset>
 
-                <div className="mb-12 grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="width">Width (Specify the unit)</label>
-                    <input
-                      type="number"
-                      name="width"
-                      className="w-full rounded-lg"
-                      onChange={updateEventForm}
-                    />
-                  </div>
-                  <div>
-                    <label>Height (Specify the unit)</label>
-                    <input
-                      type="number"
-                      name="height"
-                      className="w-full rounded-lg"
-                      onChange={updateEventForm}
-                    />
-                  </div>
-                </div>
+            <fieldset>
+              <label htmlFor="accessFee">
+                Access Fee <span>*</span>{" "}
+              </label>
+              <input
+                name="accessFee"
+                id="accessFee"
+                className="w-full rounded-lg"
+                onChange={updateEventForm}
+              />
+            </fieldset>
+          </div>
 
-                <div className="mb-12 grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="weight">Weight (Specify the unit)</label>
-                    <input
-                      type="number"
-                      name="weight"
-                      className="w-full rounded-lg"
-                      onChange={updateEventForm}
-                    />
-                  </div>
-                  <div>
-                    <label>Color</label>
-                    <input
-                      type="text"
-                      name="color"
-                      className="w-full rounded-lg"
-                      onChange={updateEventForm}
-                    />
-                  </div>
-                </div>
+          <div className="grid grid-cols-2 gap-8">
+            <fieldset>
+              <label>
+                Start Date <span>*</span>
+              </label>
+              <input
+                name="startDate"
+                type="date"
+                className="w-full rounded-lg"
+                onChange={updateEventForm}
+              />
+            </fieldset>
 
-                <div className="mb-12">
-                  <label>
-                    Upload Images <span>*</span>
-                  </label>
-                  <div className="uploadcare-button">
-                    <Widget
-                      crop="1:1"
-                      onChange={uploadImage}
-                      publicKey="db374fee85cbc01904a3"
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+            <fieldset>
+              <label>
+                Start Time <span>*</span>
+              </label>
+              <input
+                name="startTime"
+                type="time"
+                className="w-full rounded-lg"
+                onChange={updateEventForm}
+              />
+            </fieldset>
+          </div>
 
-            <div className="mb-12 grid grid-cols-2 gap-4">
-              <div className="">
-                <label htmlFor="minimumBid">
-                  Minimum Bid <span>*</span>{" "}
-                </label>
-                <input
-                  name="minimumBid"
-                  id="minimumBid"
-                  className="w-full rounded-lg"
-                  onChange={updateEventForm}
-                />
-              </div>
+          <div className="grid grid-cols-2 gap-8">
+            <fieldset>
+              <label>
+                End Date <span>*</span>
+              </label>
+              <input
+                name="endDate"
+                type="date"
+                className="w-full rounded-lg"
+                onChange={updateEventForm}
+              />
+            </fieldset>
 
-              <div className="">
-                <label htmlFor="accessFee">
-                  Access Fee <span>*</span>{" "}
-                </label>
-                <input
-                  name="accessFee"
-                  id="accessFee"
-                  className="w-full rounded-lg"
-                  onChange={updateEventForm}
-                />
-              </div>
-            </div>
+            <fieldset>
+              <label>
+                End Time <span>*</span>
+              </label>
+              <input
+                name="endTime"
+                type="time"
+                className="w-full rounded-lg"
+                onChange={updateEventForm}
+              />
+            </fieldset>
+          </div>
 
-            <div className="mb-12 grid grid-cols-2 gap-4">
-              <div className="">
-                <label>
-                  Start Date <span>*</span>
-                </label>
-                <input
-                  name="startDate"
-                  type="date"
-                  className="w-full rounded-lg"
-                  onChange={updateEventForm}
-                />
-              </div>
-
-              <div className="">
-                <label>
-                  Start Time <span>*</span>
-                </label>
-                <input
-                  name="startTime"
-                  type="time"
-                  className="w-full rounded-lg"
-                  onChange={updateEventForm}
-                />
-              </div>
-            </div>
-
-            <div className="mb-12 grid grid-cols-2 gap-4">
-              <div className="">
-                <label>
-                  End Date <span>*</span>
-                </label>
-                <input
-                  name="endDate"
-                  type="date"
-                  className="w-full rounded-lg"
-                  onChange={updateEventForm}
-                />
-              </div>
-
-              <div className="">
-                <label>
-                  End Time <span>*</span>
-                </label>
-                <input
-                  name="endTime"
-                  type="time"
-                  className="w-full rounded-lg"
-                  onChange={updateEventForm}
-                />
-              </div>
-            </div>
-
-            <Button>
-              {loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"}
-            </Button>
-          </form>
-        </Modal>
-      </div>
-    </MerchantLayout>
+          <Button>
+            {loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"}
+          </Button>
+        </form>
+      </Modal>
+    </>
   );
 }
 

@@ -11,10 +11,10 @@ export default function MerchantHeader({ title }) {
     <header className={styles.container}>
       <div className={styles.title}>
         <h1>{title}</h1>
-        <span>
+        {/* <span>
           <TimerIcon />
           Updated on 6. 7 . 2022
-        </span>
+        </span> */}
       </div>
       <div className={styles["profile-info"]}>
         <NotificationBellIcon />

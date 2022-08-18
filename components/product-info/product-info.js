@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
@@ -30,40 +30,39 @@ export default function ProductInfo() {
   const [days, hours, minutes, seconds] = useCountdown(
     data?.bidding_event.start_time,
     data?.bidding_event.end_time
-    // "2022-08-12T15:03:40.000Z"
   );
+  console.log(days, hours, minutes, seconds);
   // const [index, setIndex] = useState(0);
   const { user } = useSelector((state) => state.auth.customer);
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
-  const [countdown, setCountdown] = useState(true);
+  const [countdown, setCountdown] = useState(false);
   const [accessCode, setAccessCode] = useState(null);
   const [modalDisplay, setModalDisplay] = useState(false);
 
-	const config = {
-		reference: new Date().getTime().toString(),
-		email: "user@example.com",
-		amount: 750000,
-		publicKey: "pk_test_69632545288d812cae292185bebcfb87ca0feded",
-	};
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: "user@example.com",
+    amount: 750000,
+    publicKey: "pk_test_69632545288d812cae292185bebcfb87ca0feded",
+  };
 
-	const initializePayment = usePaystackPayment(config);
-  
-	const addToCart = () => {
-	
-		dispatch(addCart(data.bidding_event));
-	};
+  const initializePayment = usePaystackPayment(config);
 
-	async function bidHandler(e) {
-		e.preventDefault();
-		if (data.access_status === "approved") {
-			setLoading(true);
-			const body = {
-				bidding_event_id: biddingEventId,
-				customer_id: user.customer.id.toString(),
-				stake: +amount,
-			};
-			console.log(body);
+  const addToCart = () => {
+    dispatch(addCart(data.bidding_event));
+  };
+
+  async function bidHandler(e) {
+    e.preventDefault();
+    if (data.access_status === "approved") {
+      setLoading(true);
+      const body = {
+        bidding_event_id: biddingEventId,
+        customer_id: user.customer.id.toString(),
+        stake: +amount,
+      };
+      console.log(body);
 
       try {
         const response = await bidOnEvent(body);
@@ -80,17 +79,17 @@ export default function ProductInfo() {
         setLoading(false);
       }
 
-			return;
-		}
+      return;
+    }
 
-		if (data.access_status === "requested") {
-			setModalDisplay(true);
-		}
+    if (data.access_status === "requested") {
+      setModalDisplay(true);
+    }
 
-		if (data.access_status === "none") {
-			initializePayment(onSuccess, onClose);
-		}
-	}
+    if (data.access_status === "none") {
+      initializePayment(onSuccess, onClose);
+    }
+  }
 
   async function updateBidHandler() {
     setLoading(true);
@@ -139,9 +138,9 @@ export default function ProductInfo() {
     }
   }
 
-	function onClose() {
-		console.log("closed");
-	}
+  function onClose() {
+    console.log("closed");
+  }
 
   async function accessEvent() {
     setLoading(true);
@@ -168,38 +167,41 @@ export default function ProductInfo() {
     }
   }
 
+  const loadBidEvent = useCallback(async () => {
+    const response = await getSingleBidEvent(user.customer.id, biddingEventId);
+    return await response.data;
+  }, [biddingEventId]);
+
   useEffect(() => {
     if (biddingEventId && user) {
-      getSingleBidEvent(user.customer.id, biddingEventId).then((response) =>
-        setData(response.data)
-      );
+      loadBidEvent().then((response) => setData(response));
     }
-  });
+  }, [user, biddingEventId]);
 
-  useEffect(() => {
-    console.log(countdown);
+  // useEffect(() => {
+  //   console.log(countdown);
 
-    if (data && days + hours + minutes + seconds > 0) {
-      setCountdown(true);
-      console.log(days + hours + minutes + seconds);
-    } else {
-      setCountdown(false);
-    }
-    console.log(days, hours, minutes, seconds);
-  }, []);
+  //   if (data && days + hours + minutes + seconds > 0) {
+  //     setCountdown(true);
+  //     console.log(days + hours + minutes + seconds);
+  //   } else {
+  //     setCountdown(false);
+  //   }
+  //   console.log(days, hours, minutes, seconds);
+  // }, []);
 
-	return (
-		<>
-			<div className={styles.container}>
-				{data ? (
-					<>
-						<div className={styles["image-preview"]}>
-							<motion.img
-								src={data.bidding_event?.product.images.main}
-								alt="product image"
-							/>
-							<div>
-								{/* {data.bidding_event?.images.map((image, i) => (
+  return (
+    <>
+      <div className={styles.container}>
+        {data ? (
+          <>
+            <div className={styles["image-preview"]}>
+              <motion.img
+                src={data.bidding_event?.product.images.main}
+                alt="product image"
+              />
+              <div>
+                {/* {data.bidding_event?.images.map((image, i) => (
             <img
               key={i}
               src={image.src}
@@ -207,34 +209,34 @@ export default function ProductInfo() {
               className={index === i ? styles.selected : null}
             />
           ))} */}
-							</div>
-						</div>
-						<div className={styles["product-description"]}>
-							<h1>{data.bidding_event?.product.name}</h1>
-							{!data.bidding_event.ended && (
-								<div className={styles.watchlist}>
-									<span>
-										<GavelIcon />
-										On Auction{" "}
-									</span>
+              </div>
+            </div>
+            <div className={styles["product-description"]}>
+              <h1>{data.bidding_event?.product.name}</h1>
+              {!data.bidding_event.ended && (
+                <div className={styles.watchlist}>
+                  <span>
+                    <GavelIcon />
+                    On Auction{" "}
+                  </span>
 
-									<span className="cursor-pointer" onClick={addToCart}>
-										<HeartIcon style={{ cursor: "pointer" }} />
-										Add to watchlist
-									</span>
-								</div>
-							)}
-							<h3>{data.bidding_event?.product.description}</h3>
-							<hr />
-							<p>
-								{" "}
-								With each bid, the price goes up ₦0.01 and the timer starts over
-								from 10 seconds
-							</p>
-							<div className={styles.price}>
-								<span>
-									&#8358;{formatNumber(+data.bidding_event?.product.price)}
-								</span>
+                  <span className="cursor-pointer" onClick={addToCart}>
+                    <HeartIcon style={{ cursor: "pointer" }} />
+                    Add to watchlist
+                  </span>
+                </div>
+              )}
+              <h3>{data.bidding_event?.product.description}</h3>
+              <hr />
+              <p>
+                {" "}
+                With each bid, the price goes up ₦0.01 and the timer starts over
+                from 10 seconds
+              </p>
+              <div className={styles.price}>
+                <span>
+                  &#8358;{formatNumber(+data.bidding_event?.product.price)}
+                </span>
 
                 {(!data.bidding_event.ended || countdown) && (
                   <span>

@@ -93,7 +93,7 @@ export default function Index() {
           ))}
         </div>
       </div> */}
-          <div className={styles.body}>
+          <div className={styles.main}>
             {/* <h3>Overview</h3> */}
             <div className={styles.left}>
               <div className={styles.balance}>
@@ -230,7 +230,8 @@ export default function Index() {
                 <div className={styles.header}>
                   <h1>Recent events</h1>
                   <div>
-                    <span>Pending</span>
+                    <span>Pending Approval</span>
+                    <span>Upcoming</span>
                     <span>Ongoing</span>
                     <span>Closed</span>
                   </div>
@@ -334,6 +335,8 @@ function TableRow({ event }) {
               ? styles.pending
               : event.ended
               ? styles.closed
+              : !event.started
+              ? styles.upcoming
               : styles.ongoing
           }
         />
