@@ -117,7 +117,7 @@
   //     }
   //   }
   // }
-  .body {
+  .main {
     display: grid;
     grid-template-columns: 5fr 2fr;
     gap: 0 2rem;
@@ -323,10 +323,15 @@
               }
               &:nth-child(2) {
                 &::before {
-                  background-color: #0cbc8b;
+                  background-color: #0c55bc;
                 }
               }
               &:nth-child(3) {
+                &::before {
+                  background-color: #0cbc8b;
+                }
+              }
+              &:nth-child(4) {
                 &::before {
                   background-color: #fd5d76;
                 }
@@ -376,6 +381,9 @@
                 }
                 .pending {
                   background-color: #e1b20b;
+                }
+                .upcoming {
+                  background-color: #0c55bc;
                 }
                 .ongoing {
                   background-color: #0cbc8b;
