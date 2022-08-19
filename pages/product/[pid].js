@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { _getApprovedBiddingEvents } from "../../store/slices/eventsSlice";
+import { _getApprovedEvents } from "../../store/slices/eventsSlice";
 import CustomerLayout from "../../components/CustomerLayout";
 import BreadCrumb from "../../components/bread-crumb";
 import ProductInfo from "../../components/product-info";
@@ -12,7 +12,9 @@ import Slide1 from "../../public/images/slider-image-1.jpg";
 export default function Product() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { biddingEvents } = useSelector((state) => state.events);
+  const { events: ongoingEvents } = useSelector(
+    (state) => state.events.ongoing
+  );
   const { user } = useSelector((state) => state.auth.customer);
 
   const breadCrumb = [
@@ -49,7 +51,7 @@ export default function Product() {
   });
 
   useEffect(() => {
-    dispatch(_getApprovedBiddingEvents());
+    dispatch(_getApprovedEvents());
   }, []);
 
   if (!user) {
@@ -67,7 +69,7 @@ export default function Product() {
         />
       </section>
       <section className="mb-6">
-        <ProductsSection products={biddingEvents} title="similar products" />
+        <ProductsSection products={ongoingEvents} title="similar products" />
       </section>
       <section>
         <AdsSlider data={ads} />
