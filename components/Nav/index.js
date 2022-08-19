@@ -10,7 +10,7 @@ import {
 } from "../../public/svg/icons";
 import Logo from "../logo";
 import Link from "next/link";
-import styles from "../../styles/nav.module.scss";
+import styles from "../../styles/Nav.module.scss";
 
 export default function Nav() {
   const dispatch = useDispatch();
