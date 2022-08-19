@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { _getBiddingEventByStatus } from "../../store/slices/eventsSlice";
+import { _getOngoingEvents } from "../../store/slices/eventsSlice";
 import { truncateString } from "../../utils";
 import { motion } from "framer-motion";
 import styles from "../../styles/cart.module.scss";
@@ -8,10 +8,10 @@ import styles from "../../styles/cart.module.scss";
 const OngoingBid = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth.customer);
-  const { events } = useSelector((state) => state.events.ongoingBids);
+  const { events } = useSelector((state) => state.events.ongoing);
 
   useEffect(() => {
-    dispatch(_getBiddingEventByStatus({ status: "ongoing" }));
+    dispatch(_getOngoingEvents());
   }, [dispatch]);
 
   return (
