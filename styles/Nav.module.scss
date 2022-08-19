@@ -7,19 +7,79 @@
 .header {
   position: fixed;
   margin-top: 2.6rem;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-white);
   width: 100%;
   top: 0;
   left: 0;
   z-index: 5;
-  p{
-    cursor: pointer;
-  }
   .content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 8rem;
+    .search {
+      display: flex;
+      align-items: center;
+      border: 1px solid #d9d9d9;
+      input {
+        width: 100%;
+        outline: none;
+        padding: 0.5rem 1rem;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+      svg {
+        margin-inline: 1rem;
+        cursor: pointer;
+      }
+    }
+    .links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      a {
+        display: inline-block;
+        &:not(:last-child) {
+          margin-right: 2rem;
+        }
+      }
+      .cart {
+        position: relative;
+
+        &:before {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          height: 1.5rem;
+          width: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: var(--accent-color);
+          color: #ffffff;
+          font-size: 10px;
+          font-weight: 500;
+          border-radius: 50%;
+          z-index: 1;
+          content: attr(data-cart);
+        }
+      }
+      .login,
+      .logout,
+      .signup {
+        padding: 0.4rem 3rem;
+        border-radius: 0.5rem;
+      }
+      .login,
+      .logout {
+        border: 1px solid #dedede;
+      }
+      .signup {
+        color: var(--text-white);
+        border: 1px solid var(--accent-color);
+        background-color: var(--accent-color);
+      }
+    }
   }
 }
 
@@ -32,38 +92,15 @@
   top: 0;
   left: 0;
   z-index: 5;
- 
+
   .content {
-    ul {
-      li {
-        &:not(:last-child) {
-          margin-right: 40px;
-        }
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    a {
+      &:not(:last-child) {
+        margin-right: 40px;
       }
     }
   }
-}
-
-
-.search {
-  input {
-    border: none;
-    border: 1px solid #d9d9d9;
-    outline: none;
-    padding: 7px 20px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
-}
-
-.search input[type="text"]::placeholder {
-  padding: 10px 0px;
-}
-
-.search span {
-  border: 1px solid #d9d9d9;
-  border-left: none;
-  padding: 6.3px 15px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
 }

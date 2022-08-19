@@ -4,21 +4,24 @@ import { toast } from "react-toastify";
 import { useCountdown } from "../../hooks/useCountdown";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Loader from "../loader";
+import ErrorMessage from "../error-message";
 import styles from "./bid-info-card.module.scss";
 
 export default function BidInfoCard({ data, title }) {
   return (
     <div className={styles.container}>
       <h3>{title}</h3>
-
       <ul>
-        {data < 1 ? (
-          <p className="text-center mt-40 text-black text-2xl w-10/12 mx-auto">
-            No Events at the moment
-          </p>
-        ) : (
-          data?.map((item, index) => <Item key={index} item={item} />)
+        {!data && <Loader />}
+        {data?.length === 0 && (
+          <ErrorMessage
+            message={`No ${title} at the moment`}
+            fontSize="1.4rem"
+            width="15rem"
+          />
         )}
+        {data && data.map((item, index) => <Item key={index} item={item} />)}
       </ul>
     </div>
   );
@@ -43,7 +46,7 @@ function Item({ item }) {
         <a onClick={eventHandler}>
           <motion.img src={item.product.images.main} alt="" />
           <div>
-            <h4>{truncateString(item.product.name, 14)}</h4>
+            <h4>{truncateString(item.product.name, 15)}</h4>
             <p>&#8358;{formatNumber(item.product.price)}</p>
             {!item.ended && (
               <span>
