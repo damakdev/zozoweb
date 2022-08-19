@@ -1,5 +1,5 @@
 import AdBanner from "./ad-banner";
-import Nav from "./nav/nav";
+import Nav from "./nav";
 import Footer from "./Footer";
 
 function CustomerLayout({ children }) {
