@@ -12,7 +12,7 @@ import Logo from "../logo";
 import Link from "next/link";
 import styles from "../../styles/nav.module.scss";
 
-function Nav() {
+export default function Nav() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user } = useSelector((state) => state.auth.customer);
@@ -93,5 +93,3 @@ function Nav() {
     </>
   );
 }
-
-export default Nav;
