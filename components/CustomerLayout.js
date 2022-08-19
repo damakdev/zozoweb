@@ -1,5 +1,5 @@
-import AdBanner from "./ad-banner"
-import Nav from "./Nav";
+import AdBanner from "./ad-banner";
+import Nav from "./nav";
 import Footer from "./Footer";
 
 function CustomerLayout({ children }) {
@@ -9,11 +9,11 @@ function CustomerLayout({ children }) {
       <Nav />
       <main
         style={{
-          marginTop: "16rem",
+          marginTop: "14.5rem",
           marginLeft: "auto",
           marginRight: "auto",
           maxWidth: "1400px",
-          padding: "5rem"
+          padding: "5rem",
         }}
       >
         {children}
