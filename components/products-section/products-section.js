@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useCountdown } from "../../hooks/useCountdown";
 import { toast } from "react-toastify";
 import { LeftArrow, RightArrow } from "../../public/svg/icons";
 import { formatNumber, truncateString } from "../../utils";
+import { motion } from "framer-motion";
 import Modal from "../modal/modal";
 import Link from "next/link";
 import styles from "./products-section.module.scss";
@@ -12,7 +12,8 @@ import styles from "./products-section.module.scss";
 export default function ProductsSection({ title, products }) {
   const [sort, setSort] = useState("popularity");
   const [modalDisplay, setModalDisplay] = useState(false);
-  const router = useRouter();
+
+  if (products?.length === 0) return null;
 
   return (
     <>
@@ -89,8 +90,6 @@ export default function ProductsSection({ title, products }) {
 function Card({ product }) {
   const [days, hours, minutes, seconds] = useCountdown(
     product.start_time,
-    // "2022-05-08T22:38:00.000Z",
-    // '2022-05-08T22:39:00.000Z'
     product.end_time
   );
 
@@ -99,13 +98,8 @@ function Card({ product }) {
     if (user) {
       return;
     }
-    // openModal();
     toast.warning("Login to continue!");
   }
-
-  useEffect(() => {
-    console.log("cards");
-  }, []);
 
   return (
     <Link
@@ -113,7 +107,7 @@ function Card({ product }) {
       key={product.id}
     >
       <a onClick={eventHandler} className={styles.card}>
-        <img src={product.product.images.main} alt="" />
+        <motion.img src={product.product.images.main} alt="" />
         <h3>{truncateString(product.product.name, 18)}</h3>
         {!product.ended && (
           <p>
