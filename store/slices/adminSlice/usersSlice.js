@@ -80,7 +80,7 @@ export const usersSlice = createSlice({
 			state.customerDetails.customerDetailsLoading = true;
 		},
 		[singleCustomer.fulfilled]: (state, action) => {
-			state.customerDetailsLoading = false;
+			state.customerDetails.customerDetailsLoading= false;
 			state.customerDetails.user = action.payload.data.customer;
 		},
 
@@ -97,7 +97,7 @@ export const usersSlice = createSlice({
 			state.merchantDetails.merchantDetailsLoading = true;
 		},
 		[singleMerchant.fulfilled]: (state, action) => {
-			state.merchantDetailsLoading = false;
+			state.merchantDetails.merchantDetailsLoading= false;
 			state.merchantDetails.user = action.payload.data.merchant;
 		},
 

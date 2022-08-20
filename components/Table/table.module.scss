@@ -1,22 +1,23 @@
 .table {
-	width: 95%;
 	text-align: left;
 	background-color: #f3f3f3;
-	border-radius: 20px;
+width: 90%;
 	.header {
 		background-color: #f3f3f3 !important;
 	}
 
 	.inner {
-		width: 100%;
+		width: 97%;
+		margin: auto;
 		border-collapse: separate;
 		border-spacing: 0 0.5em;
+
 		td {
+			padding: 15px 7px;
 			color: black;
 		}
-		td,
-		th {
-			padding: 15px 10px;
+		tr {
+			padding-left: 300px;
 		}
 
 		tr:nth-child(odd) {
@@ -24,58 +25,58 @@
 		}
 		thead {
 			color: #7d7d7d;
-			font-size: 17px;
 
 			th {
-				font-weight: lighter !important;
+				color: var(--accent-color);
+				padding: 15px 0;
 			}
 		}
 	}
 }
 
-.filterButton, .exportButton{
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-     padding: 8px 20px ;
-      border-radius: 5px;
-      button{
-            margin-left:10px
-      }
+.filterButton,
+.exportButton {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: 8px 20px;
+	border-radius: 5px;
+	button {
+		margin-left: 10px;
+	}
 }
 
-.filterButton{
-      background-color: #F3F3F3;
-      margin-right: 20px;
+.filterButton {
+	background-color: #f3f3f3;
+	margin-right: 20px;
 }
-.exportButton{
-      background-color: var(--accent-color);
-      color: white;
+.exportButton {
+	background-color: var(--accent-color);
+	color: white;
 }
 
 .search {
 	input {
-	  border: none;
-	  border: 1px solid #d9d9d9;
-	  outline: none;
-	  padding: 7px 10px;
-	  border-top-left-radius: 5px;
-	  border-bottom-left-radius: 5px;
+		border: none;
+		border: 1px solid #d9d9d9;
+		outline: none;
+		padding: 7px 10px;
+		border-top-left-radius: 5px;
+		border-bottom-left-radius: 5px;
 	}
-    }
-    
-    .search input[type="text"]::placeholder {
+}
+
+.search input[type="text"]::placeholder {
 	padding: 10px 0px;
-    }
-    
-    .search span {
+}
+
+.search span {
 	border: 1px solid #d9d9d9;
 	border-left: none;
 	padding: 6.3px 15px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-    }
-    
+}
 
 // .bidderID{
 //       display: flex;
@@ -84,7 +85,7 @@
 //       width: 100px;
 //       padding: 10px;
 //       border-radius: 10px;
- 
+
 // }
 
 // .bidderID:nth-child(even){
