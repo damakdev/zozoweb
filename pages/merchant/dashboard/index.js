@@ -51,7 +51,7 @@ export default function Index() {
       },
     ],
   });
-  console.log(bidEvents);
+  
   useEffect(() => {
     getBalance(user.merchant.id).then((response) =>
       setWallet(response.data.wallet)
