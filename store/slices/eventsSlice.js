@@ -4,6 +4,7 @@ import {
   getWonBidEvents,
   getBidEventByStatus,
   getAllCustomerEvents,
+  wonBidPayment,
 } from "../../services/customer";
 
 export const _getCompletedEvents = createAsyncThunk(
@@ -17,6 +18,20 @@ export const _getCompletedEvents = createAsyncThunk(
     }
   }
 );
+
+export const _wonBidPayment = createAsyncThunk(
+  `events/wonBidPayment`,
+  async (body) => {
+    try {
+      console.log("yh")
+      const response = await wonBidPayment(body);
+      return response;
+    } catch (error) {
+      // return error.response.data.message;
+    }
+  }
+);
+
 
 export const _getOngoingEvents = createAsyncThunk(
   `events/getAllOngoingEvents`,
@@ -86,6 +101,7 @@ const initialState = {
   },
   won: {
     events: null,
+    subTotal:0,
     loading: false,
     error: false,
   },
@@ -191,12 +207,41 @@ const eventsSlice = createSlice({
         state.won.loading = false;
         if (action.payload) {
           state.won.events = action.payload.data.bidding_event;
+          state.won.subTotal = action.payload.data.bidding_event?.reduce((prev, cur) => {
+            return prev + cur.winner.amount;
+          }, 0);
           return;
         }
       })
       .addCase(_getWonBidEvents.rejected, (state) => {
         state.won.error = true;
       });
+
+
+
+      //WON BIDS PAYMENT
+    builder
+    .addCase(_wonBidPayment.pending, (state) => {
+      // state.won.loading = true;
+      console.log("loading...")
+    })
+    .addCase(_wonBidPayment.fulfilled, (state, action) => {
+      console.log(action)
+      state.won.loading = false;
+      // if (action.payload) {
+      //   state.won.events = action.payload.data.bidding_event;
+      //   state.won.subTotal = action.payload.data.bidding_event?.reduce((prev, cur) => {
+      //     return prev + cur.winner.amount;
+      //   }, 0);
+      //   return;
+      // }
+    })
+    .addCase(_wonBidPayment.rejected, (state) => {
+      // state.won.error = true;
+        console.log("error...")
+    });
+
+
 
     //GET ALL CUSTOMER EVENTS
     builder
