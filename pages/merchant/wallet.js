@@ -57,12 +57,12 @@ function Wallet() {
       withdrawalRequest(body)
         .then((response) => {
           console.log(response);
-        //   setWithdrawalForm({
-        //     amount: "",
-        //     bankName: "",
-        //     accountNumber: "",
-        //     bankCode: "",
-        //   });
+          //   setWithdrawalForm({
+          //     amount: "",
+          //     bankName: "",
+          //     accountNumber: "",
+          //     bankCode: "",
+          //   });
         })
         .catch((error) => {
           console.log(error);
@@ -85,10 +85,10 @@ function Wallet() {
   }, []);
 
   return (
-    <MerchantLayout>
+    <MerchantLayout title="My Wallet">
       <div className="grid grid-cols-4 ">
         <div className="col-span-3 bg-white">
-          <div className="w-11/12 mx-auto">
+          {/* <div className="w-11/12 mx-auto">
             <nav className="mt-20">
               <h2 className="text-black"> My Wallet </h2>
               <span className="flex items-center mt-6">
@@ -104,7 +104,7 @@ function Wallet() {
             <li className="  px-10 ">1M</li>
             <li className="  px-10 ">1W</li>
             <li className="  px-10 ">1H</li>
-          </ul>
+          </ul> */}
 
           <div className="w-10/12 mx-auto my-20">
             <Line

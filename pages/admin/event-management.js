@@ -8,12 +8,19 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { ClipLoader } from "react-spinners";
 import { Widget } from "@uploadcare/react-widget";
+// import Button from "../../components/ui/button/";
 import {
-	adminAddProduct,
-	adminSingleEvent,
-	getAllEventsList,
+	addProduct,
+	getProducts,
 	createBidEvent,
-} from "../../services/admin";
+	
+} from "../../services/merchant";
+// import {
+// 	adminAddProduct,
+// 	adminSingleEvent,
+// 	getAllEventsList,
+// 	// createBidEvent,
+// } from "../../services/admin";
 import {
 	getAllEvents,
 	getSingleEvent,
@@ -21,12 +28,16 @@ import {
 	stopBid,
 	cancelBid,
 	_createCategory,
+	_approveBid,
 } from "../../store/slices/adminSlice/adminEventSlice";
 import { formatNumber } from "../../utils";
 import styles from "../../styles/merchant-events.module.scss";
 import { DeleteIcon, Plus } from "../../public/svg/icons";
 import { getAllCategories } from "../../services/customer";
 import { toast } from "react-toastify";
+import Pagination from "../../components/Pagination";
+import { paginate } from "../../utils";
+import Loader from "../../components/loader";
 
 function Bids() {
 	const dispatch = useDispatch();
@@ -62,6 +73,11 @@ function Bids() {
 	const [loading, setLoading] = useState(false);
 	const categoryName = useRef("");
 	const description = useRef("");
+	const [currentPage, setCurrentPage] = useState(1);
+	const pageSize = 10;
+	const handlePageChange = (page) => {
+		setCurrentPage(page);
+	};
 	const customStyles = {
 		container: (provided) => ({
 			...provided,
@@ -157,6 +173,7 @@ function Bids() {
 	}
 
 	function createProductAndEvent() {
+		console.log("yh")
 		setLoading(true);
 		const body = {
 			name: eventForm.productName,
@@ -174,19 +191,21 @@ function Bids() {
 				main: eventForm.image,
 			},
 			merchant_id: "1",
-			// merchant_id: user.id.toString(),
+			// merchant_id: user.merchant.id.toString(),
 		};
-
-		adminAddProduct(body).then((response) => {
-			setLoading(false);
-
-			const { product } = response.data.product;
-			setEventForm({
-				...eventForm,
-				productId: product.id,
-			});
-			createEvent(product.id.toString());
-		});
+		console.log(body);
+		addProduct(body)
+			.then((response) => {
+				setLoading(false);
+				console.log(response);
+				const { product } = response.data.product;
+				setEventForm({
+					...eventForm,
+					productId: product.id,
+				});
+				createEvent(product.id.toString());
+			})
+			.catch((error) => setLoading(false));
 	}
 	useEffect(() => {
 		dispatch(getAllEvents());
@@ -197,10 +216,12 @@ function Bids() {
 
 	function eventHandler(e) {
 		e.preventDefault();
-		if (addNewProduct) {
-			createProductAndEvent();
-			return;
-		}
+
+		// if (addNewProduct) {
+		// 	createProductAndEvent();
+		// 	return;
+		// }
+		createProductAndEvent();
 		createEvent();
 	}
 
@@ -217,7 +238,7 @@ function Bids() {
 	const openCategory = () => {
 		setCategoryModal(!categoryModal);
 	};
-
+	const paginatedData = paginate(allEvent, currentPage, pageSize);
 	return (
 		<AdminLayout>
 			<div className="pt-10 pb-20 mt-1" style={{ backgroundColor: "#E5E5E5" }}>
@@ -242,21 +263,34 @@ function Bids() {
 					</div>
 				</div>
 
-				{!isLoading && (
-					<Table
-						name="eventMgt"
-						thead={thead}
-						data={allEvent}
-						isSearch={true}
-						isFilter={true}
-						isExport={true}
-						viewDetails={viewBidModal}
-					/>
+				{!allEvent ? (
+					<div className="h-screen" style={{ marginTop: "-160px" }}>
+						<Loader />
+					</div>
+				) : (
+					<>
+						<Table
+							name="eventMgt"
+							thead={thead}
+							data={paginatedData}
+							isSearch={true}
+							isFilter={true}
+							isExport={true}
+							viewDetails={viewBidModal}
+						/>
+
+						<Pagination
+							items={allEvent.length}
+							currentPage={currentPage}
+							onPageChange={handlePageChange}
+							pageSize={pageSize}
+						/>
+					</>
 				)}
 			</div>
 
-			<Modal title="Category" display={categoryModal} close={openCategory}>
-				<div className={`overflow-y-auto w-10/12 mx-auto pb-20 text-black`}>
+			<Modal title="Category" display={categoryModal} close={openCategory} height="500px" width="900px">
+				<div className={`overflow-y-auto w-11/12 px-5 mx-auto pb-20 text-black`}>
 					<div className=" my-20">
 						<label className="block text-3xl font-bold mb-5 ">
 							Category Name
@@ -304,417 +338,427 @@ function Bids() {
 					</ul>
 				</div>
 			</Modal>
-			<Modal title="Bid Information" display={viewBid} close={viewBidModal}>
-				{event && (
-					<div className={` overflow-y-auto`}>
-						<div className=" grid grid-cols-2 w-11/12  mx-auto items-center">
-							<img
-								src={event.product.images.main}
-								className="rounded-lg h-4/12  "
-							/>
-
-							<div className="ml-10">
-								<h3 className="text-4xl mb-10 text-black">
-									{event.product.name}
-								</h3>
-
-								{event.approved &&
-									event.started &&
-									!event.canceled &&
-									!event.ended && (
-										<h3 className="text-green-600 mb-10">Ongoing</h3>
-									)}
-
-								{!event.started && (
-									<h3 className="text-red-600 mb-10">Not started</h3>
-								)}
-
-								{!event.approved && (
-									<h3 className="text-red-600 mb-10">Unapproved</h3>
-								)}
-
-								{event.canceled && (
-									<h3 className="text-red-600 mb-10">Canceled</h3>
-								)}
-
-								{event.started && event.ended && (
-									<h3 className="text-violet-600 mb-10">Concluded</h3>
-								)}
-
-								{event.approved &&
-									!event.canceled &&
-									event.started &&
-									!event.ended && (
-										<Button
-											paddingX="2.2rem"
-											paddingY="1.2rem"
-											name="CANCEL BID"
-											bgColor="#EB5757"
-											border="none"
-											fontSize="12px"
-											isBoxShadow={true}
-											onClick={() => cancelBidEvent(event.id)}
-										/>
-									)}
-
-								{!event.started && (
-									<Button
-										paddingX="2.2rem"
-										paddingY="1.2rem"
-										name="START BID EVENT"
-										bgColor="#1A8917"
-										border="none"
-										fontSize="12px"
-										isBoxShadow={true}
-										className="mr-10"
-										onClick={() => beginBidEvent(event.id)}
-									/>
-								)}
-
-								{event.started && !event.canceled && !event.ended && (
-									<Button
-										paddingX="2.2rem"
-										paddingY="1.2rem"
-										name="STOP BID EVENT"
-										bgColor="#743B96"
-										border="none"
-										fontSize="12px"
-										isBoxShadow={true}
-										onClick={() => stopBidEvent(event.id)}
-										className="ml-10"
-									/>
-								)}
-
-								{event.approved && !event.started && (
-									<Button
-										paddingX="2.2rem"
-										paddingY="1.2rem"
-										name="UNAPPROVED"
-										bgColor="#EB5757"
-										border="none"
-										fontSize="12px"
-										isBoxShadow={true}
-									/>
-								)}
-
-								{!event.approved && (
-									<Button
-										paddingX="2.2rem"
-										paddingY="1.2rem"
-										name="APPROVED"
-										bgColor="#1A8917"
-										border="none"
-										fontSize="12px"
-										isBoxShadow={true}
-									/>
-								)}
-							</div>
+			<Modal
+				title="Bid Information"
+				display={viewBid}
+				close={viewBidModal}
+				height="500px"
+			>
+				<div className={` overflow-y-auto`}>
+					{!event ? (
+						<div className="" style={{ marginTop: "25%" }}>
+							<Loader />
 						</div>
-						<div
-							style={{ backgroundColor: "#F3F3F3" }}
-							className=" rounded-3xl w-11/12 mx-auto my-10 text-black"
-						>
-							<div className="w-full border-b border-gray-400 ">
-								<h3 className="pt-10 pl-10 pb-7 text-3xl text-black">
-									Basic Information
-								</h3>
-							</div>
-							<div className="px-20 py-10 flex">
-								<div>
-									<p className="text-3xl my-10">Merchant name: :</p>
-									<p className="text-3xl mb-10">Product :</p>
-									<p className="text-3xl mb-10">Start date :</p>
-									<p className="text-3xl mb-10">End date: :</p>
-									<p className="text-3xl mb-10">Amount :</p>
-									<p className="text-3xl mb-10">Winner :</p>
-								</div>
-								<div className="ml-20 ">
-									<p className="text-2xl my-10 pt-1">Akinpelumi Lade </p>
-									<p className="text-2xl mb-10">{event.product.name} </p>
-									<p className="text-2xl mb-10">
-										{new Date(event.start_time).toDateString()}{" "}
-									</p>
-									<p className="text-2xl mb-10">
-										{new Date(event.end_time).toDateString()}
-									</p>
-									<p className="text-2xl mb-10">
-										{formatNumber(event.access_amount)}{" "}
-									</p>
-									<p className="text-2xl  mb-10">
-										{" "}
-										{event.winner ? event.winner : "Undecided"}
-									</p>
+					) : (
+						<>
+							<div className=" grid grid-cols-2 w-11/12  mx-auto items-center">
+								<img
+									src={event.product.images.main}
+									className="rounded-lg h-4/12  "
+								/>
+
+								<div className="ml-10">
+									<h3 className="text-4xl mb-10 text-black">
+										{event.product.name}
+									</h3>
+
+									<>
+										{event.approved &&
+											event.started &&
+											!event.canceled &&
+											!event.ended && (
+												<h3 className="text-green-600 mb-10">Ongoing</h3>
+											)}
+
+										{!event.started && event.approved && (
+											<h3 className="text-red-600 mb-10">Not started</h3>
+										)}
+
+										{!event.approved && (
+											<h3 className="text-red-600 mb-10">Unapproved</h3>
+										)}
+
+										{event.canceled && (
+											<h3 className="text-red-600 mb-10">Canceled</h3>
+										)}
+
+										{event.started && event.ended && (
+											<h3 className="text-violet-600 mb-10">Concluded</h3>
+										)}
+
+										{event.approved &&
+											!event.canceled &&
+											event.started &&
+											!event.ended && (
+												<Button
+													paddingX="2.2rem"
+													paddingY="1.2rem"
+													name="CANCEL BID"
+													bgColor="#EB5757"
+													border="none"
+													fontSize="12px"
+													isBoxShadow={true}
+													onClick={() => cancelBidEvent(event.id)}
+												/>
+											)}
+
+										{!event.started && event.approved && (
+											<Button
+												paddingX="2.2rem"
+												paddingY="1.2rem"
+												name="START BID EVENT"
+												bgColor="#1A8917"
+												border="none"
+												fontSize="12px"
+												isBoxShadow={true}
+												className="mr-10"
+												onClick={() => beginBidEvent(event.id)}
+											/>
+										)}
+
+										{event.started && !event.canceled && !event.ended && (
+											<Button
+												paddingX="2.2rem"
+												paddingY="1.2rem"
+												name="STOP BID EVENT"
+												bgColor="#743B96"
+												border="none"
+												fontSize="12px"
+												isBoxShadow={true}
+												onClick={() => stopBidEvent(event.id)}
+												className="ml-10"
+											/>
+										)}
+
+										{event.approved && !event.started && (
+											<Button
+												paddingX="2.2rem"
+												paddingY="1.2rem"
+												name="UNAPPROVE"
+												bgColor="#EB5757"
+												border="none"
+												fontSize="12px"
+												isBoxShadow={true}
+											/>
+										)}
+
+										{!event.approved && (
+											<Button
+												paddingX="2.2rem"
+												paddingY="1.2rem"
+												name="APPROVE"
+												bgColor="#1A8917"
+												border="none"
+												fontSize="12px"
+												isBoxShadow={true}
+												onClick={() => dispatch(_approveBid(event.id))}
+											/>
+										)}
+									</>
 								</div>
 							</div>
-						</div>
-					</div>
-				)}
+							<div
+								style={{ backgroundColor: "#F3F3F3" }}
+								className=" rounded-3xl w-11/12 mx-auto my-10 text-black"
+							>
+								<div className="w-full border-b border-gray-400 ">
+									<h3 className="pt-10 pl-10 pb-7 text-3xl text-black">
+										Basic Information
+									</h3>
+								</div>
+								<div className="px-20 py-10 flex">
+									<div>
+										<p className="text-3xl my-10">Merchant name: :</p>
+										<p className="text-3xl mb-10">Product :</p>
+										<p className="text-3xl mb-10">Start date :</p>
+										<p className="text-3xl mb-10">End date: :</p>
+										<p className="text-3xl mb-10">Amount :</p>
+										<p className="text-3xl mb-10">Winner :</p>
+									</div>
+									<div className="ml-20 ">
+										<p className="text-2xl my-10 pt-1">Akinpelumi Lade </p>
+										<p className="text-2xl mb-10">{event.product.name} </p>
+										<p className="text-2xl mb-10">
+											{new Date(event.start_time).toDateString()}{" "}
+										</p>
+										<p className="text-2xl mb-10">
+											{new Date(event.end_time).toDateString()}
+										</p>
+										<p className="text-2xl mb-10">
+											{formatNumber(event.access_amount)}{" "}
+										</p>
+										<p className="text-2xl  mb-10">
+											{" "}
+											{event.winner ? event.winner : "Undecided"}
+										</p>
+									</div>
+								</div>
+							</div>
+						</>
+					)}
+				</div>
 			</Modal>
 
 			<Modal
 				title="Create Event"
 				display={createEventModal}
 				close={openCreateEventModal}
-				height="60rem"
-				width="200rem"
+				width="60rem"
 			>
-				<div className={`${styles.container} pb-20`}>
-					<form onSubmit={eventHandler} className="w-10/12 mx-auto">
-						<div className={styles["form-group"]}>
-							{!addNewProduct && (
-								<label htmlFor="products">
-									Select Product <span>*</span>
-								</label>
-							)}
-							<div className="mb-2">
-								<input
-									type="checkbox"
-									name="addNewProduct"
-									id="addNewProduct"
-									checked={addNewProduct}
-									onChange={() => setAddNewProduct((prevState) => !prevState)}
-								/>
-								<label htmlFor="addNewProduct">Add new product</label>
-							</div>
-							{!addNewProduct && (
-								<Select
-									styles={customStyles}
-									options={productOptions}
-									placeholder="Select Product"
-									isClearable
-									name="products"
-									id="products"
-									onChange={(e) =>
-										setEventForm({
-											...eventForm,
-											productId: e?.value.toString(),
-										})
-									}
-									isLoading={products ? false : true}
-								/>
-							)}
-						</div>
+				<form
+					className={styles["create-event"]}
+					onSubmit={eventHandler}
+					style={{ height: addNewProduct ? "80vh" : "60vh" }}
+				>
+					{/* <div className={styles["form-group"]}>
+              {!addNewProduct && (
+                <label htmlFor="products">
+                  Select Product <span>*</span>
+                </label>
+              )}
+              <div className="mb-2">
+                <input
+                  type="checkbox"
+                  name="addNewProduct"
+                  id="addNewProduct"
+                  checked={addNewProduct}
+                  onChange={() => setAddNewProduct((prevState) => !prevState)}
+                />
+                <label htmlFor="addNewProduct">Add new product</label>
+              </div>
+              {!addNewProduct && (
+                <Select
+                  styles={customStyles}
+                  options={productOptions}
+                  placeholder="Select Product"
+                  isClearable
+                  name="products"
+                  id="products"
+                  onChange={(e) =>
+                    setEventForm({
+                      ...eventForm,
+                      productId: e?.value.toString(),
+                    })
+                  }
+                  isLoading={products ? false : true}
+                />
+              )}
+            </div> */}
 
-						{addNewProduct && (
-							<>
-								<div className="mb-12">
-									<label>
-										Product Name <span>*</span>
-									</label>
-									<input
-										name="productName"
-										className="w-full rounded-lg"
-										onChange={updateEventForm}
-										required
-									/>
-								</div>
-
-								<div className="mb-12">
-									<label>
-										Description <span>*</span>
-									</label>
-									<textarea
-										className="w-full"
-										name="description"
-										onChange={updateEventForm}
-										required
-									></textarea>
-								</div>
-
-								<div className={styles["form-group"]}>
-									<label htmlFor="category">
-										Select Product Category<span>*</span>
-									</label>
-									<Select
-										styles={customStyles}
-										options={categoryOptions}
-										// placeholder="Select Product"
-										isClearable
-										onChange={(e) =>
-											setEventForm({
-												...eventForm,
-												category: [e.value.toString()],
-											})
-										}
-										name="category"
-										id="category"
-										isLoading={categories ? false : true}
-									/>
-								</div>
-
-								<div className="mb-12 grid grid-cols-2 gap-4">
-									<div>
-										<label htmlFor="price">
-											Price (&#8358;) <span>*</span>
-										</label>
-										<input
-											type="number"
-											name="price"
-											className="w-full rounded-lg"
-											onChange={updateEventForm}
-											required
-										/>
-									</div>
-									<div>
-										<label>Model Number </label>
-										<input
-											type="number"
-											name="modelNo"
-											className="w-full rounded-lg"
-											onChange={updateEventForm}
-										/>
-									</div>
-								</div>
-
-								<div className="mb-12 grid grid-cols-2 gap-4">
-									<div>
-										<label htmlFor="width">Width (Specify the unit)</label>
-										<input
-											type="number"
-											name="width"
-											className="w-full rounded-lg"
-											onChange={updateEventForm}
-										/>
-									</div>
-									<div>
-										<label>Height (Specify the unit)</label>
-										<input
-											type="number"
-											name="height"
-											className="w-full rounded-lg"
-											onChange={updateEventForm}
-										/>
-									</div>
-								</div>
-
-								<div className="mb-12 grid grid-cols-2 gap-4">
-									<div>
-										<label htmlFor="weight">Weight (Specify the unit)</label>
-										<input
-											type="number"
-											name="weight"
-											className="w-full rounded-lg"
-											onChange={updateEventForm}
-										/>
-									</div>
-									<div>
-										<label>Color</label>
-										<input
-											type="text"
-											name="color"
-											className="w-full rounded-lg"
-											onChange={updateEventForm}
-										/>
-									</div>
-								</div>
-
-								<div className="mb-12">
-									<label>
-										Upload Images <span>*</span>
-									</label>
-									<div className="uploadcare-button">
-										<Widget
-											crop="1:1"
-											onChange={uploadImage}
-											publicKey={process.env.NEXT_PUBLIC_UPLOAD_CARE_PUBLIC_KEY}
-										/>
-									</div>
-								</div>
-							</>
-						)}
-
-						<div className="mb-12 grid grid-cols-2 gap-4">
-							<div className="">
-								<label htmlFor="minimumBid">
-									Minimum Bid <span>*</span>{" "}
-								</label>
-								<input
-									name="minimumBid"
-									id="minimumBid"
-									className="w-full rounded-lg"
-									onChange={updateEventForm}
-								/>
-							</div>
-
-							<div className="">
-								<label htmlFor="accessFee">
-									Access Fee <span>*</span>{" "}
-								</label>
-								<input
-									name="accessFee"
-									id="accessFee"
-									className="w-full rounded-lg"
-									onChange={updateEventForm}
-								/>
-							</div>
-						</div>
-
-						<div className="mb-12 grid grid-cols-2 gap-4">
-							<div className="">
-								<label>
-									Start Date <span>*</span>
-								</label>
-								<input
-									name="startDate"
-									type="date"
-									className="w-full rounded-lg"
-									onChange={updateEventForm}
-								/>
-							</div>
-
-							<div className="">
-								<label>
-									Start Time <span>*</span>
-								</label>
-								<input
-									name="startTime"
-									type="time"
-									className="w-full rounded-lg"
-									onChange={updateEventForm}
-								/>
-							</div>
-						</div>
-
-						<div className="mb-12 grid grid-cols-2 gap-4">
-							<div className="">
-								<label>
-									End Date <span>*</span>
-								</label>
-								<input
-									name="endDate"
-									type="date"
-									className="w-full rounded-lg"
-									onChange={updateEventForm}
-								/>
-							</div>
-
-							<div className="">
-								<label>
-									End Time <span>*</span>
-								</label>
-								<input
-									name="endTime"
-									type="time"
-									className="w-full rounded-lg"
-									onChange={updateEventForm}
-								/>
-							</div>
-						</div>
-
-						<div className="mt-10">
-							<Button
-								bgColor="#743B96"
-								name={
-									loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"
-								}
-								paddingX="20px"
-								paddingY="8px"
-								isBoxShadow={true}
-								width="100%"
+					<>
+						<fieldset>
+							<label>
+								Product Name <span>*</span>
+							</label>
+							<input
+								name="productName"
+								className="w-full rounded-lg"
+								onChange={updateEventForm}
+								required
 							/>
+						</fieldset>
+
+						<fieldset>
+							<label>
+								Description <span>*</span>
+							</label>
+							<textarea
+								rows={3}
+								name="description"
+								onChange={updateEventForm}
+								required
+							></textarea>
+						</fieldset>
+
+						<fieldset>
+							<label htmlFor="category">
+								Select Product Category <span>*</span>
+							</label>
+							<Select
+								styles={customStyles}
+								options={categoryOptions}
+								placeholder=""
+								isClearable
+								onChange={(e) =>
+									setEventForm({
+										...eventForm,
+										category: [e?.value.toString()],
+									})
+								}
+								name="category"
+								id="category"
+								isLoading={categories ? false : true}
+							/>
+						</fieldset>
+
+						<div className="grid grid-cols-2 gap-8">
+							<fieldset>
+								<label htmlFor="price">
+									Price (&#8358;) <span>*</span>
+								</label>
+								<input
+									type="number"
+									name="price"
+									className="w-full rounded-lg"
+									onChange={updateEventForm}
+									required
+								/>
+							</fieldset>
+							<fieldset>
+								<label>Model Number </label>
+								<input
+									type="number"
+									name="modelNo"
+									className="w-full rounded-lg"
+									onChange={updateEventForm}
+								/>
+							</fieldset>
 						</div>
-					</form>
-				</div>
+
+						<div className="grid grid-cols-2 gap-8">
+							<fieldset>
+								<label htmlFor="width">Width (Specify the unit)</label>
+								<input
+									type="number"
+									name="width"
+									className="w-full rounded-lg"
+									onChange={updateEventForm}
+								/>
+							</fieldset>
+							<fieldset>
+								<label>Height (Specify the unit)</label>
+								<input
+									type="number"
+									name="height"
+									className="w-full rounded-lg"
+									onChange={updateEventForm}
+								/>
+							</fieldset>
+						</div>
+
+						<div className="grid grid-cols-2 gap-8">
+							<fieldset>
+								<label htmlFor="weight">Weight (Specify the unit)</label>
+								<input
+									type="number"
+									name="weight"
+									className="w-full rounded-lg"
+									onChange={updateEventForm}
+								/>
+							</fieldset>
+							<fieldset>
+								<label>Color</label>
+								<input
+									type="text"
+									name="color"
+									className="w-full rounded-lg"
+									onChange={updateEventForm}
+								/>
+							</fieldset>
+						</div>
+
+						<fieldset>
+							<label>
+								Upload Images <span>*</span>
+							</label>
+							<div className="uploadcare-button">
+								<Widget
+									crop="1:1"
+									onChange={uploadImage}
+									publicKey="db374fee85cbc01904a3"
+								/>
+							</div>
+						</fieldset>
+					</>
+
+					<div className="grid grid-cols-2 gap-8">
+						<fieldset>
+							<label htmlFor="minimumBid">
+								Minimum Bid <span>*</span>{" "}
+							</label>
+							<input
+								name="minimumBid"
+								id="minimumBid"
+								className="w-full rounded-lg"
+								onChange={updateEventForm}
+							/>
+						</fieldset>
+
+						<fieldset>
+							<label htmlFor="accessFee">
+								Access Fee <span>*</span>{" "}
+							</label>
+							<input
+								name="accessFee"
+								id="accessFee"
+								className="w-full rounded-lg"
+								onChange={updateEventForm}
+							/>
+						</fieldset>
+					</div>
+
+					<div className="grid grid-cols-2 gap-8">
+						<fieldset>
+							<label>
+								Start Date <span>*</span>
+							</label>
+							<input
+								name="startDate"
+								type="date"
+								className="w-full rounded-lg"
+								onChange={updateEventForm}
+							/>
+						</fieldset>
+
+						<fieldset>
+							<label>
+								Start Time <span>*</span>
+							</label>
+							<input
+								name="startTime"
+								type="time"
+								className="w-full rounded-lg"
+								onChange={updateEventForm}
+							/>
+						</fieldset>
+					</div>
+
+					<div className="grid grid-cols-2 gap-8">
+						<fieldset>
+							<label>
+								End Date <span>*</span>
+							</label>
+							<input
+								name="endDate"
+								type="date"
+								className="w-full rounded-lg"
+								onChange={updateEventForm}
+							/>
+						</fieldset>
+
+						<fieldset>
+							<label>
+								End Time <span>*</span>
+							</label>
+							<input
+								name="endTime"
+								type="time"
+								className="w-full rounded-lg"
+								onChange={updateEventForm}
+							/>
+						</fieldset>
+					</div>
+
+
+
+					<Button
+					name=	{loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"}
+					paddingY="10px"
+					width="100%"
+					/>
+					
+					
+				</form>
 			</Modal>
 		</AdminLayout>
 	);

@@ -10,9 +10,11 @@ function EndedEvents({ data }) {
     "Status",
   ];
 
+  const endedEvents = data?.filter((event) => event.ended);
+
   return (
     <>
-      <Table thead={thead} data={data} name="event" />
+      <Table thead={thead} data={endedEvents} name="event" />
     </>
   );
 }

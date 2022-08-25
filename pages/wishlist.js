@@ -24,13 +24,13 @@ const Wishlist = () => {
 
 			<div className="flex justify-end">
 				<div className="flex gap-40 bg-white pt-7 w-2/3">
-					<div className="flex gap-5">
+					<div className="flex items-center gap-5">
 						<div className="p-6">
 							<Image src={profile} alt="" />
 						</div>
 						<div>
-							<p className="text-black">Hello There </p>
-							<p className="text-sky-600">Akinpelu Akinkunmi</p>
+							<p className="text-black">Hello there </p>
+							{ user && <p className="text-sky-600">{user.last_name} {user.first_name}</p>}
 						</div>
 					</div>
 					<div className="select">

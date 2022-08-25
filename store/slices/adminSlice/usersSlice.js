@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import {
 	getCustomers,
 	getMerchants,
@@ -27,6 +28,9 @@ const initialState = {
 		merchantDetailsLoading: false,
 		user: null,
 	},
+	verifyUser:{
+		isLoading:false
+	}
 };
 
 // CUSTOMERS
@@ -76,7 +80,7 @@ export const usersSlice = createSlice({
 			state.customerDetails.customerDetailsLoading = true;
 		},
 		[singleCustomer.fulfilled]: (state, action) => {
-			state.customerDetailsLoading = false;
+			state.customerDetails.customerDetailsLoading= false;
 			state.customerDetails.user = action.payload.data.customer;
 		},
 
@@ -93,9 +97,21 @@ export const usersSlice = createSlice({
 			state.merchantDetails.merchantDetailsLoading = true;
 		},
 		[singleMerchant.fulfilled]: (state, action) => {
-			state.merchantDetailsLoading = false;
+			state.merchantDetails.merchantDetailsLoading= false;
 			state.merchantDetails.user = action.payload.data.merchant;
 		},
+
+		//VERIFY USER
+		[verifyUser.pending]: (state)=>{
+			state.verifyUser.isLoading = true
+		},
+
+		[verifyUser.fulfilled]: (state)=>{
+			state.verifyUser.isLoading = false
+			toast.success("User verified Successfully", {
+				autoClose: 4000
+			})
+		}
 	},
 });
 

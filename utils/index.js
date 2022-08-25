@@ -1,3 +1,4 @@
+import _  from 'lodash'
 export function truncateString(str, num) {
   if (str.length > num) {
     return str.slice(0, num) + "...";
@@ -25,4 +26,9 @@ export function formatNumber(number) {
   return Number(number).toLocaleString("en-US", {
     minimumIntegerDigits: 2,
   });
+}
+
+export const paginate = (items, pageNumber, pageSize)=>{
+  const startIndex = (pageNumber - 1 ) * pageSize
+  return _(items).slice(startIndex).take(pageSize).value()
 }

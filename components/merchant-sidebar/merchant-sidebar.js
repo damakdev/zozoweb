@@ -29,12 +29,12 @@ export default function MerchantSideBar() {
       active: <HomeIcon fill="#743B96" />,
       url: "/merchant/dashboard",
     },
-    {
-      title: "Bio-data",
-      icon: <RefreshIcon fill="#D5C4DF" />,
-      active: <RefreshIcon fill="#743B96" />,
-      url: "/merchant/dashboard/biodata",
-    },
+    // {
+    //   title: "Bio-data",
+    //   icon: <RefreshIcon fill="#D5C4DF" />,
+    //   active: <RefreshIcon fill="#743B96" />,
+    //   url: "/merchant/dashboard/biodata",
+    // },
     {
       title: "Orders",
       icon: <ReceiptIcon fill="#D5C4DF" />,
@@ -42,10 +42,10 @@ export default function MerchantSideBar() {
       url: "/merchant/item-orders",
     },
     {
-    	title: "wallet",
-    	icon: <WalletIcon fill="#D5C4DF" />,
-    	active: <WalletIcon fill="#743B96" />,
-    	url: "/merchant/wallet",
+      title: "wallet",
+      icon: <WalletIcon fill="#D5C4DF" />,
+      active: <WalletIcon fill="#743B96" />,
+      url: "/merchant/wallet",
     },
     {
       title: "Events",
@@ -69,14 +69,11 @@ export default function MerchantSideBar() {
         <ul>
           {links.map((item, index) => (
             <>
-              <li
-                key={index}
-                className={`flex items-center  cursor-pointer  ${
-                  router.pathname == item.url ? styles.active : " "
-                }`}
-              >
+              <li key={index}>
                 <Link href={item.url}>
-                  <a>
+                  <a
+                    className={router.pathname == item.url ? styles.active : ""}
+                  >
                     {router.pathname == item.url ? item.active : item.icon}
                     <h3 className="text-2xl">{item.title}</h3>
                   </a>
@@ -93,6 +90,7 @@ export default function MerchantSideBar() {
         </ul>
       </div>
       <Modal
+        width="25rem"
         display={modalDisplay}
         title="Confirm logout"
         close={() => setModalDisplay(false)}
@@ -102,8 +100,10 @@ export default function MerchantSideBar() {
           <div className={styles.buttons}>
             <Button
               onClick={() => {
+                setModalDisplay(false);
                 dispatch(logOutMerchant());
                 toast.success("You are logged out!");
+                router.push("/merchant");
               }}
             >
               Yes

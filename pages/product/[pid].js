@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { getSingleBidEvent } from "../../services/customer";
+import { useDispatch, useSelector } from "react-redux";
+import { _getApprovedEvents } from "../../store/slices/eventsSlice";
 import CustomerLayout from "../../components/CustomerLayout";
 import BreadCrumb from "../../components/bread-crumb";
 import ProductInfo from "../../components/product-info";
@@ -10,10 +10,11 @@ import AdsSlider from "../../components/ads-slider";
 import Slide1 from "../../public/images/slider-image-1.jpg";
 
 export default function Product() {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const biddingEventId = router.query.pid;
-  const [biddingEvent, setBiddingEvent] = useState(null);
-  const { biddingEvents } = useSelector((state) => state.events);
+  const { events: ongoingEvents } = useSelector(
+    (state) => state.events.ongoing
+  );
   const { user } = useSelector((state) => state.auth.customer);
 
   const breadCrumb = [
@@ -50,30 +51,25 @@ export default function Product() {
   });
 
   useEffect(() => {
-    if (biddingEventId && user) {
-      getSingleBidEvent(user.id, biddingEventId).then((response) =>
-        setBiddingEvent(response.data)
-      );
-    }
-  }, [biddingEventId]);
+    dispatch(_getApprovedEvents());
+  }, []);
 
   if (!user) {
     router.push("/");
   }
-
 
   return (
     <CustomerLayout>
       <section className="mb-6">
         <BreadCrumb data={breadCrumb} />
         <ProductInfo
-          data={biddingEvent}
-          user={user}
-          biddingEventId={biddingEventId}
+        // data={biddingEvent}
+        // user={user}
+        // biddingEventId={biddingEventId}
         />
       </section>
       <section className="mb-6">
-        <ProductsSection products={biddingEvents} title="similar products" />
+        <ProductsSection products={ongoingEvents} title="similar products" />
       </section>
       <section>
         <AdsSlider data={ads} />

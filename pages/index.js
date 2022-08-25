@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { _getApprovedBiddingEvents } from "../store/slices/eventsSlice";
-import { _getAllCategories } from "../store/slices/categoriesSlice";
-import { _getBiddingEventsByStatus} from "../store/slices/eventsSlice";
 import {
-  getCurrentUser,
-  verifyAccount,
-  resolveAccountVerification,
-} from "../services/customer";
+  _getCompletedEvents,
+  _getOngoingEvents,
+  _getUpcomingEvents,
+  _getBiddingEventsByStatus,
+} from "../store/slices/eventsSlice";
+import { _getAllCategories } from "../store/slices/categoriesSlice";
 import CustomerLayout from "../components/CustomerLayout";
 import Categories from "../components/categories";
 import MainSlider from "../components/main-slider";
@@ -24,19 +23,19 @@ import styles from "../styles/home.module.scss";
 
 function Home() {
   const dispatch = useDispatch();
-  const { biddingEvents } = useSelector((state) => state.events);
-  const { biddingEventsStatus } = useSelector((state) => state.events);
-  
-  
   const { categories } = useSelector((state) => state.categories);
+  const { events: ongoingEvents } = useSelector(
+    (state) => state.events.ongoing
+  );
+  const { events: upcomingEvents } = useSelector(
+    (state) => state.events.upcoming
+  );
+  const { events: completedEvents } = useSelector(
+    (state) => state.events.completed
+  );
 
-  
+//   const top
 
-  
-  
-
-  
-  
   const mainSlider = Array(5).fill({
     image: Slide1,
     text: `Bid now, Pay less,
@@ -48,13 +47,6 @@ items you love.`,
     image: Slide1,
     text: `Today’s hide and 
 seek win.`,
-  });
-
-  const products = Array(8).fill({
-    image: Slide1,
-    productName: `Yellow Headphones`,
-    price: 10000,
-    time: "2022-06-28T22:38:00.000Z",
   });
 
   const testimonials = Array(5).fill({
@@ -78,12 +70,12 @@ seek win.`,
     text: `We come correct in all our dealings. We partner with top, trusted brands to give you high-quality products that offer real value for every penny you spend. No scams. No Counterfeits. Everything here is legit; take our words for it.`,
   });
 
-  // useEffect(() => {
-  //   getCurrentUser({
-  //     email_secret: 8778,
-  //     account_email: "akinlade.co@gmail.com",
-  //   }).then((response) => console.log(response));
-  // }, []);
+  useEffect(() => {
+    if (!ongoingEvents) dispatch(_getOngoingEvents());
+    if (!upcomingEvents) dispatch(_getUpcomingEvents());
+    if (!completedEvents) dispatch(_getCompletedEvents());
+    if (!categories) dispatch(_getAllCategories());
+  }, []);
 
   return (
     <>
@@ -99,22 +91,20 @@ seek win.`,
         <OptionsBanner />
         <section className={styles.body}>
           <div className={styles.sidebar}>
-            <BidInfoCard data={biddingEventsStatus} title="Ongoing Bids" />
-            <BidInfoCard data={biddingEventsStatus} title="Upcoming Bids " />
-            <BidInfoCard data={biddingEventsStatus} title="Top Bids" />
+            <BidInfoCard data={ongoingEvents} title="ongoing events" />
+            <BidInfoCard data={upcomingEvents} title="upcoming events" />
+            {/* <BidInfoCard data={biddingEventsStatus} title="top events" /> */}
             <TestimonialCard data={testimonials} />
             <NewsletterCard />
           </div>
           <div className={styles.content}>
+            <ProductsSection products={ongoingEvents} title="Ongoing Events" />
+            <ProductsSection products={upcomingEvents} title="Upcoming Events" />
             <ProductsSection
-              products={biddingEvents}
-              title="trending products"
+              products={completedEvents?.slice(-8).reverse()}
+              title="Recently Completed Events"
             />
-            <ProductsSection
-              products={biddingEvents}
-              title="wishlist products"
-            />
-            <AdsSlider data={ads} />
+            {/* <AdsSlider data={ads} /> */}
             <WhyZozo data={whyZozo} />
           </div>
         </section>

@@ -32,7 +32,7 @@ const useCountdown = (startDate, endDate) => {
       // today is still before the end date
       new Date().getTime() <= endTimeMs
     ) {
-    //   console.log("started");
+      //   console.log("started");
 
       const interval = setInterval(() => {
         setCountDown(endTimeMs - new Date().getTime());
@@ -40,7 +40,7 @@ const useCountdown = (startDate, endDate) => {
 
       return () => clearInterval(interval);
     }
-  }, [parseInt(new Date().getTime() / 1000)]);
+  }, [new Date().getTime() / 1000]);
 
   return getReturnValues(countDown);
 };

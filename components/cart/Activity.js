@@ -6,97 +6,109 @@ import greenswitch from "../../assets/greenswitch.svg";
 import headphones from "../../assets/headphones.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useCountdown } from "react-countdown-circle-timer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatNumber } from "../../utils";
 import { removeCartItem, clearCart } from "../../store/slices/cartSlice";
 import Button from "../ui/Button";
+import { _getWonBidEvents } from "../../store/slices/eventsSlice";
 
 const Activity = () => {
-	const { cart } = useSelector((state) => state.cart);
-	const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
-	return (
-		<div className="activity_form w-11/12 mx-auto mt-20">
-			{!cart && (
-				<div className="mt-40">
-					{" "}
-					<h3 className="text-center mt-20"> No Won Bids</h3>{" "}
-					<Link href="/">
-						<Button
-							name="Continue Shopping"
-							
-							paddingY="15px"
-							width="90%"
-							className="mt-20 ml-10"
-						/>
-					</Link>
-				</div>
-			)}
-			{cart && (
-				<>
-					<div className="flex justify-between py-20">
-						<div>
-							<p className="text-3xl text-semibold">Items in my cart</p>
-						</div>
-						<div className="flex gap-6 cursor-pointer">
-							<div
-								className="text-3xl text-semibold"
-								onClick={() => dispatch(clearCart())}
-							>
-								forfeit Bid
-							</div>
+  const { user } = useSelector((state) => state.auth.customer);
+  const { events, loading } = useSelector((state) => state.events.won);
+  useEffect(() => {
+    dispatch(_getWonBidEvents(user?.customer.id));
+  }, [dispatch]);
 
-							{/* <div>
-						<Image src={greenswitch} />
-					</div> */}
-						</div>
-					</div>
+  const content = (
+    <>
+      <div className="flex justify-between py-20">
+        <div>
+          <p className="text-3xl text-semibold">Won Bids</p>
+        </div>
+        <div className="flex gap-6 cursor-pointer">
+          <div
+            className="text-3xl text-semibold"
+            // onClick={() => dispatch(clearCart())}
+          >
+            forfeit Bid
+          </div>
+        </div>
+      </div>
 
-					<div>
-						<table className="w-full border-separate border-spacing-x-0 border-spacing-y-20">
-							<tr>
-								<td className="text-3xl">Items</td>
-								<td className="text-3xl">Bid price</td>
-								<td className="text-3xl">Timer</td>
-								<td className="text-3xl">Remove</td>
-							</tr>
+      <div>
+        <table className="w-full border-separate border-spacing-x-0 border-spacing-y-20">
+          <thead>
+            <tr>
+              <th className="">Items</th>
+              <th className="">Access amount</th>
+              <th className="">Minimum amount</th>
+              <th className="">Final Price</th>
+              <th className="">Started</th>
+              <th className="">Ended</th>
+            </tr>
+          </thead>
 
-							{cart.length > 0 &&
-								cart.map((item, index) => {
-									return (
-										<tr key={index} className="text-2xl">
-											<td className="flex items-center">
-												<img src={item.image} width="100px" height="100px" />
-												<span className="ml-5">{item.name}</span>
-											</td>
-											<td>
-												# <span>{Number(item.price).toLocaleString()}</span>
-											</td>
-
-											<td> {item.timer}</td>
-											<td onClick={() => dispatch(removeCartItem(item))}>
-												<svg
-													width="11"
-													height="10"
-													viewBox="0 0 11 10"
-													fill="none"
-													xmlns="http://www.w3.org/2000/svg"
-												>
-													<path
-														d="M6.71881 4.98928L10.5051 1.35242L9.46596 0.270631L5.67971 3.90749L2.04285 0.121237L0.961058 1.16034L4.59792 4.9466L0.811665 8.58346L1.85077 9.66525L5.63702 6.02838L9.27389 9.81464L10.3557 8.77554L6.71881 4.98928Z"
-														fill="black"
-													/>
-												</svg>
-											</td>
-										</tr>
-									);
-								})}
-						</table>
-					</div>
-				</>
-			)}
-		</div>
-	);
+          <tbody>
+            {events?.map((item, index) => {
+              return (
+                <tr key={index} className="text-2xl">
+                  <td className="flex items-center">
+                    <img
+                      src={item.product.images.main}
+                      width="100px"
+                      height="100px"
+                    />
+                    <span className="ml-5">{item.product.name}</span>
+                  </td>
+                  <td>
+                    # <span>{Number(item.access_amount).toLocaleString()}</span>
+                  </td>
+                  <td>
+                    #{" "}
+                    <span>{Number(item.minimum_amount).toLocaleString()}</span>
+                  </td>
+                  <td>
+                    # <span>{Number(item.last_amount).toLocaleString()}</span>
+                  </td>
+                  <td> {new Date(item.start_time).toDateString()}</td>
+                  <td> {new Date(item.end_time).toDateString()}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+  return (
+    <div className="activity_form w-11/12 mx-auto mt-20">
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <div>
+          {events?.length > 0 ? (
+            content
+          ) : (
+            <div className="mt-40">
+              {" "}
+              <h3 className="text-center mt-20"> No Won Bids</h3>{" "}
+              <Link href="/">
+                <Button
+                  name="Continue Shopping"
+                  paddingY="15px"
+                  width="90%"
+                  className="mt-20 ml-10"
+                />
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Activity;

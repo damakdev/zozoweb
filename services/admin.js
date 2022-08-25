@@ -52,3 +52,7 @@ export function adminAddProduct(body) {
     export function createCategory(body){
 return axios.post('/admin/category/create', body)
     }
+
+    export function approveBid(id){
+      return axios.post(`admin/bidding/approve/${id}`)
+    }
