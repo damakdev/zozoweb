@@ -11,11 +11,48 @@ import flag from "../assets/flag.svg";
 import Button from "../components/ui/Button";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { usePaystackPayment } from "react-paystack";
+import { _wonBidPayment } from "../store/slices/eventsSlice";
+import axios from "axios";
 
 const Checkout = () => {
 	const { user } = useSelector((state) => state.auth.customer);
-	const { subTotal, cart } = useSelector((state) => state.cart);
+
+	const { events, subTotal } = useSelector((state) => state.events.won);
 	console.log(user);
+	console.log(subTotal);
+	const config = {
+		reference: new Date().getTime().toString(),
+		email: user.email,
+		amount: subTotal,
+		// amount: subTotal * 100,
+		publicKey: "pk_test_69632545288d812cae292185bebcfb87ca0feded",
+	};
+	const initializePayment = usePaystackPayment(config);
+	const onSuccess = (reference) => {
+		axios.post(`/customer/bidding/checkout`, {
+			winner_id: user.id.toString(),
+			payment_reference: reference.reference,
+		}).then((response)=>{
+			console.log(response)
+		})
+		// dispatch(
+		// 	_wonBidPayment({
+		// 		winner_id: user.customer.id,
+		// 		payment_reference: reference.reference,
+		// 	})
+		// );
+	};
+
+	const onClose = (reference) => {
+		console.log(reference);
+		// dispatch(_wonBidPayment(body));
+	};
+
+	const makePayment = () => {
+		initializePayment(onSuccess);
+	};
+
 	return (
 		<CustomerLayout>
 			<div className="checkout-wrapper bg-white p-20">
@@ -72,12 +109,12 @@ const Checkout = () => {
 						</div> */}
 						<div className="mb-10">
 							<span className="mr-20">Country</span>
-							<span className={`${styles.email_icon}` }>
+							<span className={`${styles.email_icon}`}>
 								<Image src={flag} />
 							</span>
 							<input
 								className={`${styles.email}`}
-								style={{marginLeft:"2px"}}
+								style={{ marginLeft: "2px" }}
 								type="text"
 								placeholder="Nigeria"
 								defaultValue={`${user.address.country}`}
@@ -86,11 +123,11 @@ const Checkout = () => {
 
 						<div className="mb-10">
 							<span className="">State</span>
-							
+
 							<input
 								className={`${styles.email}`}
 								type="text"
-								style={{marginLeft:"100px"}}
+								style={{ marginLeft: "100px" }}
 								placeholder="Nigeria"
 								defaultValue={` ${user.address.state}`}
 							/>
@@ -98,10 +135,10 @@ const Checkout = () => {
 
 						<div className="mb-10">
 							<span className="">City</span>
-							
+
 							<input
 								className={`${styles.email}`}
-								style={{marginLeft:"110px"}}
+								style={{ marginLeft: "110px" }}
 								type="text"
 								placeholder="Nigeria"
 								defaultValue={` ${user.address.city}`}
@@ -110,10 +147,10 @@ const Checkout = () => {
 
 						<div className="mb-20">
 							<span className="mr-10">Street</span>
-							
+
 							<input
 								className={`${styles.email}`}
-								style={{marginLeft:"70px"}}
+								style={{ marginLeft: "70px" }}
 								type="text"
 								placeholder="Nigeria"
 								defaultValue={` ${user.address.street}`}
@@ -147,6 +184,7 @@ const Checkout = () => {
 											paddingX="30px"
 											fontSize="14px"
 											width="400px"
+											onClick={makePayment}
 										/>
 									</a>
 								</Link>

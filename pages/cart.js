@@ -20,16 +20,14 @@ const Cart = () => {
 
   const { user } = useSelector((state) => state.auth.customer);
   // const { subTotal, cart } = useSelector((state) => state.cart);
-  const { events } = useSelector((state) => state.events.won);
+  const { events, subTotal} = useSelector((state) => state.events.won);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(_getWonBidEvents(user?.customer.id));
   }, [dispatch]);
 
-  let subTotal = events?.reduce((prev, cur) => {
-    return prev + cur.winner.amount;
-  }, 0);
+
 
   return (
     <CustomerLayout>

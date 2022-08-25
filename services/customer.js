@@ -87,6 +87,9 @@ export function updateStake(body) {
 export function getBidEventByStatus(body) {
   return axios.post(`/customer/bidding/status`, body);
 }
+export function wonBidPayment(body) {
+  return axios.post(`/customer/bidding/checkout`, body);
+}
 
 export function getSingleCustomerEvent(customer_id, event_id) {
   return axios.get(`/customer/event/one/${customer_id}/${event_id}`);

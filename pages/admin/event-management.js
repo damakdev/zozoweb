@@ -289,8 +289,8 @@ function Bids() {
 				)}
 			</div>
 
-			<Modal title="Category" display={categoryModal} close={openCategory}>
-				<div className={`overflow-y-auto w-10/12 mx-auto pb-20 text-black`}>
+			<Modal title="Category" display={categoryModal} close={openCategory} height="500px" width="900px">
+				<div className={`overflow-y-auto w-11/12 px-5 mx-auto pb-20 text-black`}>
 					<div className=" my-20">
 						<label className="block text-3xl font-bold mb-5 ">
 							Category Name
