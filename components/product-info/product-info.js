@@ -261,7 +261,7 @@ export default function ProductInfo() {
                   </Button>
                 )}
                 {data.access_status === "approved" &&
-                  !data.biddingEventId.ended && (
+                  !data.bidding_event.ended && (
                     <input
                       type="number"
                       placeholder="Place your amount"
