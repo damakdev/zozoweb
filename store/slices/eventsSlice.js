@@ -104,6 +104,7 @@ const initialState = {
     subTotal:0,
     loading: false,
     error: false,
+    winners_id: []
   },
   customer: {
     events: null,
@@ -207,6 +208,7 @@ const eventsSlice = createSlice({
         state.won.loading = false;
         if (action.payload) {
           state.won.events = action.payload.data.bidding_event;
+          state.won.winners_id = action.payload.data.bidding_event.map((items)=>items.winner.id)
           state.won.subTotal = action.payload.data.bidding_event?.reduce((prev, cur) => {
             return prev + cur.winner.amount;
           }, 0);

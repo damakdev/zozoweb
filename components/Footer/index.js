@@ -126,17 +126,13 @@ function Footer() {
                 About Us
               </li>
 
-              <Link href="/">
+              <Link href="/about">
                 <li>
                   <a>About Zozo </a>
                 </li>
               </Link>
-              <Link href="/">
-                <li>
-                  <a>Zozo Blog </a>
-                </li>
-              </Link>
-              <Link href="/">
+             
+              <Link href="/contact">
                 <li>
                   <a>Contact Us</a>
                 </li>

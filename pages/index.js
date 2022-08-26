@@ -95,7 +95,7 @@ seek win.`,
             <BidInfoCard data={upcomingEvents} title="upcoming events" />
             {/* <BidInfoCard data={biddingEventsStatus} title="top events" /> */}
             <TestimonialCard data={testimonials} />
-            <NewsletterCard />
+            {/* <NewsletterCard /> */}
           </div>
           <div className={styles.content}>
             <ProductsSection products={ongoingEvents} title="Ongoing Events" />

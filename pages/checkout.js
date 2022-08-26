@@ -18,7 +18,8 @@ import axios from "axios";
 const Checkout = () => {
 	const { user } = useSelector((state) => state.auth.customer);
 
-	const { events, subTotal } = useSelector((state) => state.events.won);
+
+	const { events, subTotal, winners_id } = useSelector((state) => state.events.won);
 	console.log(user);
 	console.log(subTotal);
 	const config = {
@@ -31,7 +32,7 @@ const Checkout = () => {
 	const initializePayment = usePaystackPayment(config);
 	const onSuccess = (reference) => {
 		axios.post(`/customer/bidding/checkout`, {
-			winner_id: user.id.toString(),
+			winner_id: winners_id,
 			payment_reference: reference.reference,
 		}).then((response)=>{
 			console.log(response)
