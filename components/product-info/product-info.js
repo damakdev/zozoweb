@@ -260,14 +260,15 @@ export default function ProductInfo() {
                     Ended
                   </Button>
                 )}
-                {data.access_status === "approved" && !data.bidding_event.ended &&  (
-                  <input
-                    type="number"
-                    placeholder="Place your amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                )}
+                {data.access_status === "approved" &&
+                  !data.bidding_event.ended && (
+                    <input
+                      type="number"
+                      placeholder="Place your amount"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                    />
+                  )}
 
                 {data.isMember && !data.bidding_event.ended && (
                   <Button type="button" onClick={updateBidHandler}>
