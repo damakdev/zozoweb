@@ -97,17 +97,17 @@ function Footer() {
                 Information{" "}
               </li>
 
-              <Link href="/">
+              <Link href="/terms">
                 <li>
                   <a>Terms of Use </a>
                 </li>
               </Link>
-              <Link href="/">
+              <Link href="/privacy">
                 <li>
                   <a>Privacy Policy </a>
                 </li>
               </Link>
-              <Link href="/">
+              {/* <Link href="/">
                 <li>
                   <a>Sitemap</a>
                 </li>
@@ -116,7 +116,7 @@ function Footer() {
                 <li>
                   <a>Partnership </a>
                 </li>
-              </Link>
+              </Link> */}
             </ul>
           </div>
 

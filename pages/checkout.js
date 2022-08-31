@@ -25,14 +25,13 @@ const Checkout = () => {
 	const config = {
 		reference: new Date().getTime().toString(),
 		email: user.email,
-		amount: subTotal,
-		// amount: subTotal * 100,
+		 amount: subTotal * 100,
 		publicKey: "pk_test_69632545288d812cae292185bebcfb87ca0feded",
 	};
 	const initializePayment = usePaystackPayment(config);
 	const onSuccess = (reference) => {
 		axios.post(`/customer/bidding/checkout`, {
-			winner_id: winners_id,
+			winner_ids: winners_id,
 			payment_reference: reference.reference,
 		}).then((response)=>{
 			console.log(response)
