@@ -19,11 +19,11 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import MerchantLayout from "../../components/MerchantLayout";
 import Loader from "../../components/loader";
+import ErrorMessage from "../../components/error-message/error-message";
 import Select from "react-select";
 import Modal from "../../components/modal/modal";
 import Button from "../../components/ui/button/";
 import styles from "../../styles/merchant-events.module.scss";
-import ErrorMessage from "../../components/error-message/error-message";
 
 function Events() {
 	const { user } = useSelector((state) => state.auth.merchant);
