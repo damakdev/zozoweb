@@ -1044,9 +1044,10 @@ export function CashIcon(props) {
   );
 }
 
-export function EditIcon({ className }) {
+export function EditIcon({ className, ...props }) {
   return (
     <svg
+      {...props}
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -2105,6 +2106,24 @@ export function HamburgerIcon(props) {
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function CheckMark(props) {
+  return (
+    <svg
+      {...props}
+      width="32"
+      height="30"
+      viewBox="0 0 32 30"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M28.3671 1.54081C24.1486 5.19181 20.5796 8.66731 17.3121 13.2018C15.8711 15.2018 14.2686 17.5558 13.2211 19.7783C12.6231 20.9568 11.5451 22.7983 11.1776 24.5688C9.16763 22.6988 7.00863 20.5763 4.79963 18.9138C3.22513 17.7293 -1.30987 20.1443 0.536132 21.5333C3.84463 24.0218 6.59613 27.1213 9.81413 29.7208C11.1601 30.8068 14.1431 28.4483 14.8441 27.4588C17.1451 24.1988 17.4596 20.2138 19.1366 16.6578C21.6971 11.2193 26.2381 6.75181 30.7216 2.87231C33.6921 0.101814 30.6241 -0.409186 28.3716 1.54081"
+        fill="#37B34A"
       />
     </svg>
   );
