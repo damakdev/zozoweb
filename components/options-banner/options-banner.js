@@ -4,9 +4,12 @@ import {
   StarIcon,
   ControllerIcon,
 } from "../../public/svg/icons";
+import useWindowDimension from "../../hooks/useWindowDimension";
 import styles from "./options-banner.module.scss";
 
 export default function OptionsBanner() {
+  const { width } = useWindowDimension();
+
   return (
     <section className={styles.container}>
       <div>
@@ -15,16 +18,20 @@ export default function OptionsBanner() {
       </div>
       <div>
         <GavelIcon />
-        All new exciting auction
+        All new exciting auctions
       </div>
-      <div>
-        <StarIcon />
-        Special offers
-      </div>
-      <div>
-        <ControllerIcon />
-        Fun game
-      </div>
+      {width >= 480 && (
+        <div>
+          <StarIcon />
+          Special offers
+        </div>
+      )}
+      {width >= 600 && (
+        <div>
+          <ControllerIcon />
+          Fun games
+        </div>
+      )}
     </section>
   );
 }

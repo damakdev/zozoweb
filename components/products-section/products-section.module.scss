@@ -53,7 +53,8 @@
   .content,
   .content-loading {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: 1.2rem;
     background-color: var(--bg-white);
     padding: 2rem;
     .card {
@@ -162,5 +163,44 @@
 @keyframes shine {
   to {
     background-position-x: -200%;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .container {
+    .header {
+      span:nth-child(2) {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .container {
+    .content,
+    .content-loading {
+      grid-template-columns: 1fr 1fr;
+      .card {
+        padding: 1rem 0;
+        img {
+          width: 13rem;
+          height: 13rem;
+        }
+        h3 {
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .container {
+    .header {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
   }
 }
