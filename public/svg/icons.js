@@ -2102,7 +2102,7 @@ export function HamburgerIcon(props) {
     >
       <path
         d="M8.99998 14H1.99998M18 2H1.99998H18ZM18 8H1.99998H18Z"
-        stroke="white"
+        stroke="var(--accent-color)"
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
