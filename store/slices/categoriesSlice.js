@@ -28,8 +28,10 @@ const categoriesSlice = createSlice({
         state.status = "loading";
       })
       .addCase(_getAllCategories.fulfilled, (state, action) => {
-        state.categories = action.payload.data.category;
-        state.status = "success";
+        if (action.payload) {
+          state.categories = action.payload.data.category;
+          state.status = "success";
+        }
       })
       .addCase(_getAllCategories.rejected, (state, action) => {
         state.status = "error";
