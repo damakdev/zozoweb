@@ -83,7 +83,8 @@ export default function Nav() {
       <nav className={styles.nav}>
         <div className={styles.content}>
           {/* <HamburgerIcon className="mr-auto" /> */}
-          {/* <Link href="/how-to-bid">How to Bid</Link> */}
+          <Link href="/how-to-bid">How to Bid</Link>
+          <Link href="/">Start Bidding</Link>
           <Link href="/merchant">Start Selling</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
