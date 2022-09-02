@@ -7,6 +7,7 @@ import {
   _getBiddingEventsByStatus,
 } from "../store/slices/eventsSlice";
 import { _getAllCategories } from "../store/slices/categoriesSlice";
+import useWindowDimension from "../hooks/useWindowDimension";
 import CustomerLayout from "../components/CustomerLayout";
 import Categories from "../components/categories";
 import MainSlider from "../components/main-slider";
@@ -23,6 +24,7 @@ import styles from "../styles/home.module.scss";
 
 function Home() {
   const dispatch = useDispatch();
+  const { width } = useWindowDimension();
   const { categories } = useSelector((state) => state.categories);
   const { events: ongoingEvents } = useSelector(
     (state) => state.events.ongoing
@@ -34,7 +36,7 @@ function Home() {
     (state) => state.events.completed
   );
 
-//   const top
+  //   const top
 
   const mainSlider = Array(5).fill({
     image: Slide1,
@@ -71,41 +73,48 @@ seek win.`,
   });
 
   useEffect(() => {
-    if (!ongoingEvents) dispatch(_getOngoingEvents());
-    if (!upcomingEvents) dispatch(_getUpcomingEvents());
-    if (!completedEvents) dispatch(_getCompletedEvents());
-    if (!categories) dispatch(_getAllCategories());
+    dispatch(_getOngoingEvents());
+    dispatch(_getUpcomingEvents());
+    dispatch(_getCompletedEvents());
+    dispatch(_getAllCategories());
   }, []);
 
   return (
     <>
       <CustomerLayout>
         <section className={styles.hero}>
-          <Categories categories={categories} />
+          {width >= 720 && <Categories categories={categories} />}
           <MainSlider data={mainSlider} />
-          <div className={styles["vertical-sliders"]}>
-            <VerticalSlider data={verticalSlider} />
-            <VerticalSlider data={verticalSlider} />
-          </div>
+          {width >= 1200 && (
+            <div className={styles["vertical-sliders"]}>
+              <VerticalSlider data={verticalSlider} />
+              <VerticalSlider data={verticalSlider} />
+            </div>
+          )}
         </section>
         <OptionsBanner />
         <section className={styles.body}>
-          <div className={styles.sidebar}>
-            <BidInfoCard data={ongoingEvents} title="ongoing events" />
-            <BidInfoCard data={upcomingEvents} title="upcoming events" />
-            {/* <BidInfoCard data={biddingEventsStatus} title="top events" /> */}
-            <TestimonialCard data={testimonials} />
-            {/* <NewsletterCard /> */}
-          </div>
+          {width >= 872 && (
+            <div className={styles.sidebar}>
+              <BidInfoCard data={ongoingEvents} title="ongoing events" />
+              <BidInfoCard data={upcomingEvents} title="upcoming events" />
+              {/* <BidInfoCard data={biddingEventsStatus} title="top events" /> */}
+              <TestimonialCard data={testimonials} />
+              {/* <NewsletterCard /> */}
+            </div>
+          )}
           <div className={styles.content}>
             <ProductsSection products={ongoingEvents} title="Ongoing Events" />
-            <ProductsSection products={upcomingEvents} title="Upcoming Events" />
+            <ProductsSection
+              products={upcomingEvents}
+              title="Upcoming Events"
+            />
             <ProductsSection
               products={completedEvents?.slice(-8).reverse()}
               title="Recently Completed Events"
             />
             {/* <AdsSlider data={ads} /> */}
-            <WhyZozo data={whyZozo} />
+            {/* <WhyZozo data={whyZozo} /> */}
           </div>
         </section>
       </CustomerLayout>
