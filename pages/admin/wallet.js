@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AdminLayout from "../../components/Admin/AdminLayout";
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
@@ -10,9 +10,20 @@ import {
 import styles from "../../styles/admin/wallet.module.scss";
 import Table from "../../components/Table/Table";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { _getMerchantWallets } from "../../store/slices/adminSlice/walletSlice";
+
 
 function Wallet() {
-	const thead = ["#", "Name", "Bids", "Total Value", "Profit"];
+	const dispatch = useDispatch()
+	const {wallets} = useSelector(state=>state.wallet.walletList)
+	
+	useEffect(() => {
+	dispatch(_getMerchantWallets())
+	}, [dispatch])
+	
+	console.log(wallets)
+	const thead = ["#", "Name", "Escrow Balance", "Withdrawable amount"];
 	const data = [
 		{
 			id: "1",
@@ -294,7 +305,7 @@ function Wallet() {
 				<Table
 					name="adminWallet"
 					thead={thead}
-					data={data}
+					data={wallets}
 					isSearch={true}
 					isFilter={true}
 					isExport={true}

@@ -16,6 +16,7 @@ import { GreenMarker, VerifiedMarkIcon } from "../../public/svg/icons";
 import Pagination from "../../components/Pagination";
 import { paginate } from "../../utils";
 import Loader from "../../components/loader";
+import Link from "next/link";
 function MerchantMgt() {
 	const thead = [
 		"No",
@@ -33,6 +34,7 @@ function MerchantMgt() {
 	const { user, merchantDetailsLoading } = useSelector(
 		(state) => state.users.merchantDetails
 	);
+	
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const pageSize = 10;
@@ -86,7 +88,6 @@ function MerchantMgt() {
 				display={modalDisplay}
 				close={viewDetails}
 			>
-				
 				<div className={`${styles.modal} overflow-y-auto`}>
 					{!user ? (
 						<div className="h-full" style={{ marginTop: "50px" }}>
@@ -125,6 +126,17 @@ function MerchantMgt() {
 										)}
 									</div>
 									<div>
+										<Link href={`/admin/merchant-wallet/${user.id}`}>
+											<Button
+												bgColor="#743B96"
+												name="Wallet History"
+												paddingX="15px"
+												paddingY="8px"
+												isBoxShadow={true}
+												border="none"
+												className="mr-5"
+											/>
+										</Link>
 										{user.account.verified && (
 											<Button
 												bgColor="#EB5757"
@@ -189,7 +201,6 @@ function MerchantMgt() {
 						</>
 					)}
 				</div>
-				
 			</Modal>
 		</AdminLayout>
 	);

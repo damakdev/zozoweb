@@ -1,4 +1,4 @@
-import React ,{useRef}from "react";
+import React, { useRef } from "react";
 import {
 	Bell,
 	BlackDot,
@@ -12,7 +12,7 @@ import searchIcon from "../../assets/search.svg";
 import Image from "next/image";
 import styles from "../Table/table.module.scss";
 import Button from "../ui/Button";
-import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { DownloadTableExcel } from "react-export-table-to-excel";
 function Table({
 	data,
 	thead,
@@ -52,16 +52,16 @@ function Table({
 		<>
 			<div className="flex mb-10 flex-row-reverse mr-20">
 				{isExport && (
-					 <DownloadTableExcel
-					 filename="Zozo information"
-					 sheet={name}
-					 currentTableRef={tableRef.current}
-				   >
-					<div className={styles.exportButton}>
-						<ExportIcon />
-						<button className="mr-3">Export</button>
-						{/* <DropdownIcon /> */}
-					</div>
+					<DownloadTableExcel
+						filename="Zozo information"
+						sheet={name}
+						currentTableRef={tableRef.current}
+					>
+						<div className={styles.exportButton}>
+							<ExportIcon />
+							<button className="mr-3">Export</button>
+							{/* <DropdownIcon /> */}
+						</div>
 					</DownloadTableExcel>
 				)}
 
@@ -98,7 +98,7 @@ function Table({
 							{head}
 						</tr>
 					</thead>
-          
+
 					<tbody>
 						{name == "item-order" &&
 							data.map((item, index) => {
@@ -153,7 +153,7 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										<td >{item.id}</td>
+										<td>{item.id}</td>
 										<td>{new Date(item.account.createdAt).toDateString()}</td>
 										<td>{item.account.first_name}</td>
 										<td>{item.account.last_name}</td>
@@ -406,10 +406,9 @@ function Table({
 								return (
 									<tr key={index}>
 										<td className="flex items-center ">{item.id}</td>
-										<td>{item.name}</td>
-										<td>{item.bid}</td>
-										<td>{item.value}</td>
-										<td>{item.profit}</td>
+										<td>Someone Anyone</td>
+										<td>{formatAmount(item.escrow_balance)}</td>
+										<td>{formatAmount(item.withdrawable)}</td>
 									</tr>
 								);
 							})}

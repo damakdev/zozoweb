@@ -56,3 +56,11 @@ return axios.post('/admin/category/create', body)
     export function approveBid(id){
       return axios.post(`admin/bidding/approve/${id}`)
     }
+
+    export function getMerchantWallets(){
+      return axios.get(`/admin/wallet`)
+    }
+
+    export function getWithdrawRequest(status){
+      return axios.get(`/admin/request/status/${status}`)
+    }
