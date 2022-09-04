@@ -65,6 +65,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Head>
+        <link rel="shortcut icon" href="/favicon.png" />
         <title>Zozo</title>
       </Head>
       <ToastContainer

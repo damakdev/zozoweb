@@ -18,3 +18,17 @@
     }
   }
 }
+
+@media screen and (max-width: 480px) {
+  .container {
+    justify-content: space-evenly;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .container {
+    & > div {
+      font-size: 1.2rem;
+    }
+  }
+}

@@ -1,5 +1,10 @@
 .container {
   display: inline-block;
+  height: 4rem;
+  svg {
+    transform-origin: center !important;
+    height: 4rem;
+  }
   img {
     width: 18rem;
   }
