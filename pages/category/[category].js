@@ -29,7 +29,7 @@ function CategoryList() {
 	if (cateProduct.products) {
 		products = cateProduct.products.products.filter((item) => {
 		
-			return item.bidding_events[0] && item.bidding_events[0].ended;
+			return item.bidding_events[0] && !item.bidding_events[0].ended;
 		});
 		
 	}

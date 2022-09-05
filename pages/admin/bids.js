@@ -10,12 +10,15 @@ import {
 	getSingleEvent,
 } from "../../store/slices/adminSlice/adminEventSlice";
 import Pagination from "../../components/Pagination";
-import { formatNumber, paginate } from "../../utils";
+import { formatNumber, paginate, truncateString } from "../../utils";
 import Loader from "../../components/loader";
+import useWindowDimension from "../../hooks/useWindowDimension";
+import styles from "../../styles/admin/customerMgt.module.scss";
+import Button from "../../components/ui/Button";
 
 function Bids() {
 	const [modalDisplay, setModalDisplay] = useState(false);
-
+	const { width } = useWindowDimension();
 	const dispatch = useDispatch();
 	const { allEvent, isLoading } = useSelector(
 		(state) => state.adminEvent.allEvents
@@ -63,7 +66,7 @@ function Bids() {
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
 						<Loader />
 					</div>
-				) : (
+				) : width >= 780 ? (
 					<>
 						<Table
 							name="adminBids"
@@ -74,6 +77,66 @@ function Bids() {
 							isExport={true}
 							viewDetails={viewDetails}
 						/>
+
+						<Pagination
+							items={allEvent.length}
+							currentPage={currentPage}
+							onPageChange={handlePageChange}
+							pageSize={pageSize}
+						/>
+					</>
+				) : (
+					<>
+						{paginatedData.map((item, index) => {
+							return (
+								<div
+									className={` grid grid-cols-2  text-2xl my-8 py-5   ${styles.mobile_table}`}
+									key={index}
+								>
+									<div
+										className="py-9 pl-8  shadow-lg font-bold"
+										style={{ background: "#F3F3F3" }}
+									>
+										<ul>
+											{thead.map((item, index) =>
+												item !== "No" ? <li key={index}>{item}</li> : ""
+											)}
+										</ul>
+									</div>
+									<div className="py-9  pl-5 bg-white  shadow-lg ">
+										<ul>
+											<li>{truncateString(item.product.name, 20)}</li>
+											<li>{formatNumber(item.access_amount)}</li>
+											<li>{formatNumber(item.minimum_amount)}</li>
+											<li>{new Date(item.start_time).toDateString()}</li>
+											<li>{new Date(item.end_time).toDateString()}</li>
+											<li>
+												<span
+													className={`${
+														item.approved ? "text-green-600 " : "text-red-600 "
+													} text-2xl`}
+												>
+													{item.approved ? "Verified" : "Unverified"}
+												</span>
+											</li>
+											<li>
+												{item.ended
+													? formatNumber(item.last_amount)
+													: "Undecided"}
+											</li>
+											<li>{item.ended ? item.last_amount : "Undecided"}</li>
+											<li onClick={() => viewDetails(item.id)}>
+												<Button
+													name="View more details"
+													paddingY="12px"
+													paddingX="12px"
+												/>
+											</li>
+										</ul>
+									</div>
+								</div>
+							);
+						})}
 
 						<Pagination
 							items={allEvent.length}

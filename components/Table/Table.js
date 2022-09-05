@@ -184,17 +184,25 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										{/* <td>
-										<input type="checkbox" />
-									</td> */}
-										<td>{item.date}</td>
-										<td>{item.firstName}</td>
-										<td>{item.lastName}</td>
-										<td>{item.phone}</td>
-										<td>{item.email}</td>
-										<td>{item.status}</td>
+										<td>{item.id}</td>
+										<td>{new Date(item.account.createdAt).toDateString()}</td>
+										<td>{item.account.first_name}</td>
+										<td>{item.account.last_name}</td>
+										<td>{truncateString(item.account.email, 20)}</td>
+										<td>{item.auctions.length}</td>
+										<td>
+											<span
+												className={`${
+													item.account.verified
+														? "text-green-600 "
+														: "text-red-600 "
+												} text-2xl`}
+											>
+												{item.account.verified ? "Verified" : "Unverified"}
+											</span>
+										</td>
 										<td
-											onClick={viewDetails}
+											onClick={() => viewDetails(item.id)}
 											colSpan="2"
 											className="cursor-pointer tracking-widest"
 										>
@@ -406,7 +414,13 @@ function Table({
 								return (
 									<tr key={index}>
 										<td className="flex items-center ">{item.id}</td>
-										<td>Someone Anyone</td>
+										<td className="capitalize">{item.merchant.account.last_name} {item.merchant.account.first_name}</td>
+										<td >
+												{item.merchant.account.email}{" "}
+											</td>
+											<td >
+												{item.merchant.account.phone_number}
+											</td>
 										<td>{formatAmount(item.escrow_balance)}</td>
 										<td>{formatAmount(item.withdrawable)}</td>
 									</tr>

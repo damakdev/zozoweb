@@ -14,8 +14,9 @@ import Button from "../../components/ui/Button";
 import styles from "../../styles/admin/customerMgt.module.scss";
 import { GreenMarker, VerifiedMarkIcon } from "../../public/svg/icons";
 import Pagination from "../../components/Pagination";
-import { paginate } from "../../utils";
+import { paginate, truncateString } from "../../utils";
 import Loader from "../../components/loader";
+import useWindowDimension from "../../hooks/useWindowDimension";
 
 function CustomerMgt() {
 	const thead = [
@@ -29,6 +30,7 @@ function CustomerMgt() {
 	const [modalDisplay, setModalDisplay] = useState(false);
 
 	const [currentPage, setCurrentPage] = useState(1);
+	const { width } = useWindowDimension();
 	const pageSize = 10;
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
@@ -60,7 +62,7 @@ function CustomerMgt() {
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
 						<Loader />
 					</div>
-				) : (
+				) : width >= 780 ? (
 					<>
 						<Table
 							name="customerMgt"
@@ -69,6 +71,62 @@ function CustomerMgt() {
 							viewDetails={viewDetails}
 							isExport={true}
 						/>
+
+						<Pagination
+							items={users.length}
+							currentPage={currentPage}
+							onPageChange={handlePageChange}
+							pageSize={pageSize}
+						/>
+					</>
+				) : (
+					<>
+						{paginatedData.map((item, index) => {
+							return (
+								<div
+									className={` grid grid-cols-2  text-2xl my-8 py-5   ${styles.mobile_table}`}
+									key={index}
+								>
+									<div
+										className="py-9 pl-8  shadow-lg font-bold"
+										style={{ background: "#F3F3F3" }}
+									>
+										<ul>
+											{thead.map((item, index) =>
+												item !== "No" ? <li key={index}>{item}</li> : ""
+											)}
+										</ul>
+									</div>
+									<div className="py-9  pl-5 bg-white  shadow-lg ">
+										<ul>
+											<li>{new Date(item.account.createdAt).toDateString()}</li>
+											<li>{item.account.first_name}</li>
+											<li>{item.account.last_name}</li>
+											<li>{truncateString(item.account.email,20)}</li>
+											<li>
+												{" "}
+												<span
+													className={`${
+														item.account.verified
+															? "text-green-600 "
+															: "text-red-600 "
+													} text-2xl`}
+												>
+													{item.account.verified ? "Verified" : "Unverified"}
+												</span>
+											</li>
+											<li onClick={() => viewDetails(item.id)}>
+												<Button
+													name="View more details"
+													paddingY="12px"
+													paddingX="12px"
+												/>
+											</li>
+										</ul>
+									</div>
+								</div>
+							);
+						})}
 
 						<Pagination
 							items={users.length}
