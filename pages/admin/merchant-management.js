@@ -14,8 +14,10 @@ import Button from "../../components/ui/Button";
 import styles from "../../styles/admin/customerMgt.module.scss";
 import { GreenMarker, VerifiedMarkIcon } from "../../public/svg/icons";
 import Pagination from "../../components/Pagination";
-import { paginate } from "../../utils";
+import { paginate, truncateString } from "../../utils";
 import Loader from "../../components/loader";
+import Link from "next/link";
+import useWindowDimension from "../../hooks/useWindowDimension";
 function MerchantMgt() {
 	const thead = [
 		"No",
@@ -23,16 +25,18 @@ function MerchantMgt() {
 		"First name",
 		"Last name",
 		"Email",
+		"Number of Auctions",
 		"Verification Status",
 	];
 	const [modalDisplay, setModalDisplay] = useState(false);
 	const [tab, setTab] = useState("basic");
-
+	const {width} = useWindowDimension()
 	const dispatch = useDispatch();
 	const { isLoading, users } = useSelector((state) => state.users.merchants);
 	const { user, merchantDetailsLoading } = useSelector(
 		(state) => state.users.merchantDetails
 	);
+	
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const pageSize = 10;
@@ -61,10 +65,10 @@ function MerchantMgt() {
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
 						<Loader />
 					</div>
-				) : (
+				) :  width >= 780 ? (
 					<>
 						<Table
-							name="customerMgt"
+							name="merchantMgt"
 							thead={thead}
 							data={paginatedData}
 							viewDetails={viewDetails}
@@ -78,7 +82,62 @@ function MerchantMgt() {
 							pageSize={pageSize}
 						/>
 					</>
-				)}
+				) : (<>
+					{paginatedData.map((item, index) => {
+						return (
+							<div
+								className={` grid grid-cols-2  text-2xl my-8 py-5   ${styles.mobile_table}`}
+								key={index}
+							>
+								<div
+									className="py-9 pl-8  shadow-lg font-bold"
+									style={{ background: "#F3F3F3" }}
+								>
+									<ul>
+										{thead.map((item, index) =>
+											item !== "No" ? <li key={index}>{item}</li> : ""
+										)}
+									</ul>
+								</div>
+								<div className="py-9  pl-5 bg-white  shadow-lg ">
+									<ul>
+										<li>{new Date(item.account.createdAt).toDateString()}</li>
+										<li>{item.account.first_name}</li>
+										<li>{item.account.last_name}</li>
+										<li>{truncateString(item.account.email,20)}</li>
+										<li>{item.auctions.length}</li>
+										<li>
+											{" "}
+											<span
+												className={`${
+													item.account.verified
+														? "text-green-600 "
+														: "text-red-600 "
+												} text-2xl`}
+											>
+												{item.account.verified ? "Verified" : "Unverified"}
+											</span>
+										</li>
+										<li onClick={() => viewDetails(item.id)}>
+											<Button
+												name="View more details"
+												paddingY="12px"
+												paddingX="12px"
+											/>
+										</li>
+									</ul>
+								</div>
+							</div>
+						);
+					})}
+
+					<Pagination
+						items={users.length}
+						currentPage={currentPage}
+						onPageChange={handlePageChange}
+						pageSize={pageSize}
+					/>
+				</>)}
 			</div>
 
 			<Modal
@@ -86,7 +145,6 @@ function MerchantMgt() {
 				display={modalDisplay}
 				close={viewDetails}
 			>
-				
 				<div className={`${styles.modal} overflow-y-auto`}>
 					{!user ? (
 						<div className="h-full" style={{ marginTop: "50px" }}>
@@ -125,6 +183,17 @@ function MerchantMgt() {
 										)}
 									</div>
 									<div>
+										<Link href={`/admin/merchant-wallet/${user.id}`}>
+											<Button
+												bgColor="#743B96"
+												name="Wallet History"
+												paddingX="15px"
+												paddingY="8px"
+												isBoxShadow={true}
+												border="none"
+												className="mr-5"
+											/>
+										</Link>
 										{user.account.verified && (
 											<Button
 												bgColor="#EB5757"
@@ -189,7 +258,6 @@ function MerchantMgt() {
 						</>
 					)}
 				</div>
-				
 			</Modal>
 		</AdminLayout>
 	);

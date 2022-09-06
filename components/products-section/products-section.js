@@ -91,7 +91,7 @@ export default function ProductsSection({ title, products }) {
   );
 }
 
-function Card({ product }) {
+export function Card({ product }) {
   const [days, hours, minutes, seconds] = useCountdown(
     product.start_time,
     product.end_time

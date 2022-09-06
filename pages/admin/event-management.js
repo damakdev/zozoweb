@@ -13,7 +13,6 @@ import {
 	addProduct,
 	getProducts,
 	createBidEvent,
-	
 } from "../../services/merchant";
 // import {
 // 	adminAddProduct,
@@ -30,14 +29,15 @@ import {
 	_createCategory,
 	_approveBid,
 } from "../../store/slices/adminSlice/adminEventSlice";
-import { formatNumber } from "../../utils";
-import styles from "../../styles/merchant-events.module.scss";
+import { formatNumber, truncateString } from "../../utils";
+import styles from "../../styles/admin/merchant-events.module.scss";
 import { DeleteIcon, Plus } from "../../public/svg/icons";
 import { getAllCategories } from "../../services/customer";
 import { toast } from "react-toastify";
 import Pagination from "../../components/Pagination";
 import { paginate } from "../../utils";
 import Loader from "../../components/loader";
+import useWindowDimension from "../../hooks/useWindowDimension";
 
 function Bids() {
 	const dispatch = useDispatch();
@@ -59,7 +59,7 @@ function Bids() {
 		modelNo: "",
 		image: "",
 		productId: "",
-		startDate: "",
+		starliate: "",
 		startTime: "",
 		endDate: "",
 		endTime: "",
@@ -75,6 +75,7 @@ function Bids() {
 	const description = useRef("");
 	const [currentPage, setCurrentPage] = useState(1);
 	const pageSize = 10;
+	const { width } = useWindowDimension();
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
 	};
@@ -155,7 +156,7 @@ function Bids() {
 		setLoading(true);
 		const body = {
 			product_id: product_id || eventForm.productId,
-			start_time: `${eventForm.startDate} ${eventForm.startTime}`,
+			start_time: `${eventForm.starliate} ${eventForm.startTime}`,
 			end_time: `${eventForm.endDate} ${eventForm.endTime}`,
 			access_amount: eventForm.accessFee,
 			minimum_amount: eventForm.minimumBid,
@@ -173,7 +174,7 @@ function Bids() {
 	}
 
 	function createProductAndEvent() {
-		console.log("yh")
+		console.log("yh");
 		setLoading(true);
 		const body = {
 			name: eventForm.productName,
@@ -215,7 +216,7 @@ function Bids() {
 	}, [dispatch]);
 
 	function eventHandler(e) {
-		e.preventDefault();
+		e.prevenliefault();
 
 		// if (addNewProduct) {
 		// 	createProductAndEvent();
@@ -267,7 +268,7 @@ function Bids() {
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
 						<Loader />
 					</div>
-				) : (
+				) : width >= 780 ? (
 					<>
 						<Table
 							name="eventMgt"
@@ -286,11 +287,74 @@ function Bids() {
 							pageSize={pageSize}
 						/>
 					</>
+				) : (
+					<>
+						{paginatedData.map((item, index) => {
+							return (
+								<div
+									className={` grid grid-cols-2  text-2xl my-8 py-5   ${styles.mobile_table}`}
+									key={index}
+								>
+									<div
+										className="py-9 pl-8  shadow-lg font-bold"
+										style={{ background: "#F3F3F3" }}
+									>
+										<ul>
+											{thead.map((item, index) =>
+												item !== "No" ? <li key={index}>{item}</li> : ""
+											)}
+										</ul>
+									</div>
+									<div className="py-9  pl-5 bg-white  shadow-lg ">
+										<ul>
+											<li>{truncateString(item.product.name, 20)}</li>
+											<li>{new Date(item.start_time).toDateString()}</li>
+											<li>{new Date(item.end_time).toDateString()}</li>
+											<li>{item.merchant_name}</li>
+											<li>
+												<span
+													className={`${
+														item.approved ? "text-green-600 " : "text-red-600 "
+													} text-2xl`}
+												>
+													{item.approved ? "Approved" : "Unapproved"}
+												</span>
+											</li>
+											<li>{formatNumber(item.minimum_amount)}</li>
+
+											<li onClick={() => viewBidModal(item.id)}>
+												<Button
+													name="View more details"
+													paddingY="12px"
+													paddingX="12px"
+												/>
+											</li>
+										</ul>
+									</div>
+								</div>
+							);
+						})}
+
+						<Pagination
+							items={allEvent.length}
+							currentPage={currentPage}
+							onPageChange={handlePageChange}
+							pageSize={pageSize}
+						/>
+					</>
 				)}
 			</div>
 
-			<Modal title="Category" display={categoryModal} close={openCategory} height="500px" width="900px">
-				<div className={`overflow-y-auto w-11/12 px-5 mx-auto pb-20 text-black`}>
+			<Modal
+				title="Category"
+				display={categoryModal}
+				close={openCategory}
+				height="500px"
+				width="900px"
+			>
+				<div
+					className={`overflow-y-auto w-11/12 px-5 mx-auto pb-20 text-black`}
+				>
 					<div className=" my-20">
 						<label className="block text-3xl font-bold mb-5 ">
 							Category Name
@@ -703,7 +767,7 @@ function Bids() {
 								Start Date <span>*</span>
 							</label>
 							<input
-								name="startDate"
+								name="starliate"
 								type="date"
 								className="w-full rounded-lg"
 								onChange={updateEventForm}
@@ -749,15 +813,11 @@ function Bids() {
 						</fieldset>
 					</div>
 
-
-
 					<Button
-					name=	{loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"}
-					paddingY="10px"
-					width="100%"
+						name={loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"}
+						paddingY="10px"
+						width="100%"
 					/>
-					
-					
 				</form>
 			</Modal>
 		</AdminLayout>

@@ -28,6 +28,10 @@ export function getAllCategories() {
   return axios.get(`/customer/category`);
 }
 
+export function getAllCategoryProduct(body) {
+  return axios.post(`/customer/product/category/name`, body);
+}
+
 export function getAllProducts() {
   return axios.get(`/customer/product`);
 }
