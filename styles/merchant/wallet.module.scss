@@ -1,33 +1,113 @@
-.table {
-	width: 100%;
-	text-align: center;
-	background-color: #f3f3f3;
-	border-radius: 10px;
-	thead {
-		color: #7d7d7d;
-
-		th {
-			font-weight: lighter !important;
-			font-size: 170px;
+.container {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  min-height: 100%;
+  padding: 3rem;
+  background-color: var(--bg-white);
+  column-gap: 2rem;
+  .chart {
+  }
+  .table {
+    margin-top: 2rem;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    opacity: 1;
+    transition: all 0.4s;
+    background-color: var(--bg-primary);
+    tr {
+      th,
+      td {
+        padding: 1rem;
+      }
+    }
+    thead {
+      tr {
+        th {
+          color: var(--accent-color);
+          text-align-last: left;
+        }
+      }
+    }
+    tbody {
+      tr {
+        transition: all 0.4s;
+        cursor: pointer;
+        &:hover {
+        //   outline: 1px solid var(--accent-color);
+        }
+        &:nth-child(odd) {
+          background-color: var(--bg-white);
+        }
+        td {
+          &:not(:first-child) {
+            // text-align: center;
+          }
+        }
+      }
+    }
+  }
+  .panel {
+    background-color: rgb(229 231 235 /1);
+    padding: 2rem;
+    .total-balance {
+      margin-top: 2rem;
+      color: var(--text-black);
+      h4 {
+        font-size: 1.8rem;
+      }
+      h2 {
+        font-size: 3.6rem;
+      }
+    }
+    .balance {
+      display: flex;
+      margin-top: 2rem;
+      & > div {
+        // display: flex;
+        width: 50%;
+        // & > svg {
+        //   width: 6rem;
+        // }
+		h1 {
+			font-size: 1.3rem;
+			font-weight: 400;
 		}
-	}
-	color: black;
-	td,
-	th {
-		padding: 15px 10px;
-	}
-
-	tr {
-		background-color: white;
-	
-	}
-
-	tr:hover {
-		background-color: #f3f3f3;
-	
-	}
-
-	tr:first-child {
-		background-color: #f3f3f3;
-	}
+        & > div {
+          display: flex;
+          align-items: center;
+          & > svg {
+            display: inline;
+          }
+          p {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+    form {
+      margin-top: 3rem;
+      fieldset {
+        margin-bottom: 1rem;
+        h4 {
+          font-size: 1.4rem;
+          font-weight: 500;
+          //   margin-bottom: 0.5rem;
+          color: var(--text-black);
+        }
+        input {
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          width: 100%;
+          box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+          outline: none;
+        }
+      }
+      button {
+        font-size: 1.4rem;
+        margin-top: 2rem;
+      }
+    }
+  }
 }

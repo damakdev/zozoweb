@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import LogoWhite from "../../public/images/logo-white.png";
-import LogoColored from "../../public/images/logo-colored.png";
 import styles from "./logo.module.scss";
 
 export default function Logo({ variant }) {
@@ -24,10 +23,9 @@ export default function Logo({ variant }) {
     return (
       <Link href="/">
         <a className={styles.container}>
-          {/* <img src={LogoColored.src} alt="zozo-logo" /> */}
           <motion.svg
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
+            // initial={{ scale: 0 }}
+            // animate={{ scale: 1 }}
             // variants={pathVariant}
             // initial="hidden"
             // animate="visible"
@@ -39,7 +37,6 @@ export default function Logo({ variant }) {
             <g id="Layer_2" data-name="Layer 2">
               <g id="Layer_1-2" data-name="Layer 1">
                 <motion.path
-                  
                   fill="#743b96"
                   d="M98.86,0A99,99,0,0,0,3.32,124.42L77.44,97.93,72.2,85.8c3.07,5.12,13.39,6,25.22,2.65A65.85,65.85,0,0,0,112,82.22c10.61-6.16,17-14.21,15.41-19.94l6.9,19.87,3.22,9.27h0a22,22,0,0,1-5.38,7.67c1.36,5.44-4.88,13-14.64,17.34-10.36,4.62-20.74,3.93-23.19-1.56a2.13,2.13,0,0,1-.11-.33c-6-.13-10.49-1.94-12-5.42l-.92-2.19L6.26,133.74A98.92,98.92,0,1,0,98.86,0ZM84.71,37.54c11.61-5,23.06-4.45,25.61,1.39s-4.84,14.59-16.45,19.65S70.81,63,68.28,57.24,73.1,42.6,84.71,37.54ZM122.92,63.4s-1.53,1.7-4,4.21c-5,5-13,14.88-31.14,16.3-3.59.28-6.31,0-11.88-1.23l-3-6.51c-5.69-2.44-10-6.57-11.7-12A18.22,18.22,0,0,1,60.67,62c2.3,3.13,6.4,5.28,11.55,6.26a36,36,0,0,0,4.86.57,49.72,49.72,0,0,0,17.24-2.46c8.62-2.74,15.74-7.29,20.15-12.33.3-.35.59-.71.88-1.07,3.38-4.3,4.78-8.9,3.47-13a10.78,10.78,0,0,0-1.07-2.31,17.89,17.89,0,0,1,4.37,7.14A19,19,0,0,1,121,58.6ZM89.86,120.72a5.33,5.33,0,0,0,.32.87,7,7,0,0,0,3.25,3.17c3.73,1.93,9.81,2,16.69.33a54.7,54.7,0,0,0,10.44-3.77,60,60,0,0,0,6.38-3.52c7.08-4.53,12-10,13.28-14.66a8,8,0,0,0,.19-3.92c-.07-.26-.15-.51-.24-.76h0l2,6.1,1.81,5.59.08.24h-.12c-1,6.17-8.82,14-19.9,19.24-13.75,6.53-27.35,6.65-30.38.27a6.06,6.06,0,0,1-.56-2.25l-3.51-6.83ZM59.32,135.05a8.93,8.93,0,0,0,2.21,5.67c5.5,6.8,20.6,11.68,38.37,11.68s32.87-4.88,38.37-11.68a9,9,0,0,0,2.22-5.67V146.4c0,9.58-18.17,17.35-40.59,17.35S59.32,156,59.32,146.4Z"
                 />
@@ -104,7 +101,7 @@ export default function Logo({ variant }) {
   return (
     <Link href="/">
       <a className={styles.container}>
-        <img src={LogoWhite.src} alt="zozo-logo" />
+        <motion.img src={LogoWhite.src} alt="zozo-logo" />
       </a>
     </Link>
   );
