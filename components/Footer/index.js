@@ -15,7 +15,7 @@ function Footer() {
     <footer className={styles.container}>
       <div className={styles.first_section}>
         <div
-          style={{ maxWidth: 1440 }}
+          // style={{ maxWidth: 1440 }}
           className={`flex justify-between py-7 align-center w-11/12 mx-auto `}
         >
           <div className="my-auto">

@@ -50,8 +50,8 @@ function Wallet() {
 				className={`pt-10 w-11/12 mx-auto pb-20 mt-1 ${styles.wallet}`}
 				style={{ backgroundColor: "#E5E5E5" }}
 			>
-				<div className="grid grid-cols-4 justify-between gap-10 items-center w-full">
-					<h3 className=" py-20 col-span-3 text-5xl font-semibold mt-1 text-semibold text-black">
+				<div className="grid grid-cols-1 lg:grid-cols-4 justify-between lg:gap-10 items-center w-full">
+					<h3 className=" lg:py-20 py-10 col-span-3 text-5xl font-semibold mt-1 text-semibold text-black">
 						Wallet
 					</h3>
 					<p className="text-3xl text-violet-600">
