@@ -105,6 +105,29 @@
   }
 }
 
+.bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 5rem;
+  width: 100%;
+  background-color: var(--accent-color);
+  z-index: 1;
+  svg {
+    width: 2rem;
+    height: 2rem;
+    fill: #ffffff;
+    opacity: 1;
+    path {
+      fill: #ffffff;
+      fill-opacity: 1;
+    }
+  }
+}
+
 @media screen and (max-width: 540px) {
   .header {
     .content {
