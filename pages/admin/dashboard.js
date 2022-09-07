@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/Admin/AdminLayout";
+import Loader from "../../components/loader";
 import { Bar, Line, Pie } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import Table from "../../components/Table/Table";
@@ -61,106 +62,121 @@ function Dashboard() {
 				<div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 mt-10  gap-4">
 					<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 						<h3 className=" ml-6 mb-10">Customer list</h3>
-						<div className="bg-gray-100 py-9">
-							<div className="flex justify-around  mx-auto  font-semibold w-11/12">
-								<h4 className="w-4/12">Name</h4>
-								<h4>Date registered</h4>
-								<h4>Status</h4>
+						{customers && customers.isLoading ? (
+							<div className="py-10">
+								<Loader />
 							</div>
-						</div>
-
-						{fiveCustomer &&
-							fiveCustomer.map((item, index) => {
-								return (
-									<div
-										key={index}
-										className="flex justify-around mt-5 even:bg-gray-100 py-6 items-center "
-									>
-										<div className="flex items-center w-4/12">
-											<img
-												className=" mr-8"
-												src={item.account.avatar}
-												style={{
-													borderRadius: "50%",
-													width: "50px",
-													height: "45px",
-												}}
-											/>
-											{item.account.last_name} {item.account.first_name}
-										</div>
-
-										<h4>{convertUtc(item.createdAt)}</h4>
-
-										<h4
-											className={`${
-												item.account.verified
-													? "text-green-600"
-													: "text-red-600"
-											}`}
-										>
-											{item.account.verified ? "Verified" : "Unverified"}
-										</h4>
+						) : (
+							<>
+								<div className="bg-gray-100 py-9">
+									<div className="flex justify-around  mx-auto  font-semibold w-11/12">
+										<h4 className="w-4/12">Name</h4>
+										<h4>Date registered</h4>
+										<h4>Status</h4>
 									</div>
-								);
-							})}
+								</div>
 
-						<div className=" flex mt-10 justify-center">
-							<Link href="/admin/customer-management">
-								<Button name="View more" paddingX="12px" paddingY="7px" />
-							</Link>
-						</div>
+								{fiveCustomer &&
+									fiveCustomer.map((item, index) => {
+										return (
+											<div
+												key={index}
+												className="flex justify-around mt-5 even:bg-gray-100 py-6 items-center "
+											>
+												<div className="flex items-center w-4/12">
+													<img
+														className=" mr-8  hidden lg:block "
+														src={item.account.avatar}
+														style={{
+															borderRadius: "50%",
+															width: "50px",
+															height: "45px",
+														}}
+													/>
+													{item.account.last_name} {item.account.first_name}
+												</div>
+
+												<h4>{convertUtc(item.createdAt)}</h4>
+
+												<h4
+													className={`${
+														item.account.verified
+															? "text-green-600"
+															: "text-red-600"
+													}`}
+												>
+													{item.account.verified ? "Verified" : "Unverified"}
+												</h4>
+											</div>
+										);
+									})}
+
+								<div className=" flex mt-10 justify-center">
+									<Link href="/admin/customer-management">
+										<Button name="View more" paddingX="12px" paddingY="7px" />
+									</Link>
+								</div>
+							</>
+						)}
 					</div>
 
 					<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 						<h3 className=" ml-6 mb-10">Merchant list</h3>
-						<div className="bg-gray-100 py-9">
-							<div className="flex justify-around  mx-auto  font-semibold w-11/12">
-								<h4 className="w-4/12">Name</h4>
-								<h4>Number of events</h4>
-								<h4>Status</h4>
+						{merchants && merchants.isLoading ? (
+							<div className="py-10">
+								<Loader />
 							</div>
-						</div>
-						{fiveMerchant &&
-							fiveMerchant.map((item, index) => {
-								return (
-									<div
-										key={index}
-										className="flex justify-around mt-5 even:bg-gray-100 py-6 items-center "
-									>
-										<div className="flex items-center w-5/12">
-											<img
-												className=" mr-8"
-												src={item.account.avatar}
-												style={{
-													borderRadius: "50%",
-													width: "50px",
-													height: "45px",
-												}}
-											/>
-											{item.account.last_name} {item.account.first_name}
-										</div>
-
-										<h4>{item.auctions.length}</h4>
-
-
-										<h4
-											className={`${
-												item.account.verified
-													? "text-green-600"
-													: "text-red-600"
-											}`}
-										>
-											{item.account.verified ? "Verified" : "Unverified"}
-										</h4>
+						) : (
+							<>
+								<div className="bg-gray-100 py-9">
+									<div className="flex justify-around  mx-auto  font-semibold w-11/12">
+										<h4 className="w-4/12">Name</h4>
+										<h4>Number of events</h4>
+										<h4>Status</h4>
 									</div>
-								);
-							})}
+								</div>
+								{fiveMerchant &&
+									fiveMerchant.map((item, index) => {
+										return (
+											<div
+												key={index}
+												className="flex justify-around mt-5 even:bg-gray-100 py-6 items-center "
+											>
+												<div className="flex items-center w-5/12">
+													<img
+														className=" mr-8 hidden lg:block"
+														src={item.account.avatar}
+														style={{
+															borderRadius: "50%",
+															width: "50px",
+															height: "45px",
+														}}
+													/>
+													{item.account.last_name} {item.account.first_name}
+												</div>
 
-						<div className=" flex mt-10 justify-center">
-							<Link href="/admin/merchant-management">
-								<Button name="View more" paddingX="12px" paddingY="7px" />
-							</Link>
-						</div>
+												<h4>{item.auctions.length}</h4>
+
+												<h4
+													className={`${
+														item.account.verified
+															? "text-green-600"
+															: "text-red-600"
+													}`}
+												>
+													{item.account.verified ? "Verified" : "Unverified"}
+												</h4>
+											</div>
+										);
+									})}
+
+								<div className=" flex mt-10 justify-center">
+									<Link href="/admin/merchant-management">
+										<Button name="View more" paddingX="12px" paddingY="7px" />
+									</Link>
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 
@@ -168,52 +184,60 @@ function Dashboard() {
 				<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 					<h3 className=" ml-6 mb-10">Top Auctions by Bids</h3>
 
-					<div className="bg-gray-100 py-9">
-						<div className="flex justify-around  mx-auto  font-semibold w-11/12">
-							<h4 className="w-5/12">Name</h4>
-							<h4>Access Amount</h4>
-							<h4>Status</h4>
+					{allEvent && allEvent.isLoading ? (
+						<div className="py-10">
+							<Loader />
 						</div>
-					</div>
-
-					{topAuctions &&
-						topAuctions.map((item, index) => {
-							return (
-								<div
-									key={index}
-									className="flex justify-around items-center mt-5 even:bg-gray-100 py-6  text-2xl"
-								>
-									<div className="flex items-center items-center w-4/12">
-										<img
-											className=" mr-8"
-											src={item.product.images.main}
-											style={{
-												width: "50px",
-												height: "45px",
-											}}
-										/>
-										{truncateString(item.product.name, 20)}
-									</div>
-
-									<h4 className="">{item.access_amount}</h4>
-									<h4 className="">
-										{item.ended && item.started
-											? "Ended"
-											: !item.ended && item.started
-											? "Ongoing"
-											: !item.started && !item.ended
-											? "Upcoming"
-											: ""}
-									</h4>
+					) : (
+						<>
+							<div className="bg-gray-100 py-9">
+								<div className="flex justify-around  mx-auto  font-semibold w-11/12">
+									<h4 className="w-5/12">Name</h4>
+									<h4>Access Amount</h4>
+									<h4>Status</h4>
 								</div>
-							);
-						})}
+							</div>
 
-					<div className=" flex mt-10  justify-center">
-						<Link href="/admin/event-management">
-							<Button name="View more" paddingX="12px" paddingY="7px" />
-						</Link>
-					</div>
+							{topAuctions &&
+								topAuctions.map((item, index) => {
+									return (
+										<div
+											key={index}
+											className="flex justify-around items-center mt-5 even:bg-gray-100 py-6  text-2xl"
+										>
+											<div className="flex items-center items-center w-4/12">
+												<img
+													className=" mr-8 hidden lg:block"
+													src={item.product.images.main}
+													style={{
+														width: "50px",
+														height: "45px",
+													}}
+												/>
+												{truncateString(item.product.name, 20)}
+											</div>
+
+											<h4 className="">{item.access_amount}</h4>
+											<h4 className="">
+												{item.ended && item.started
+													? "Ended"
+													: !item.ended && item.started
+													? "Ongoing"
+													: !item.started && !item.ended
+													? "Upcoming"
+													: ""}
+											</h4>
+										</div>
+									);
+								})}
+
+							<div className=" flex mt-10  justify-center">
+								<Link href="/admin/event-management">
+									<Button name="View more" paddingX="12px" paddingY="7px" />
+								</Link>
+							</div>
+						</>
+					)}
 				</div>
 
 				{/* BARCHART */}

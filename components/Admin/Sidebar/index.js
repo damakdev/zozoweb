@@ -18,7 +18,7 @@ import {
 } from "../../../public/svg/icons";
 import styles from "../../../styles/admin/admin-sidebar.module.scss";
 import useWindowDimension from "../../../hooks/useWindowDimension";
-function AdminSidebar({showSidebar}) {
+function AdminSidebar({ showSidebar }) {
 	const router = useRouter();
 	const { width } = useWindowDimension();
 	const { user } = useSelector((state) => state.auth.admin);
@@ -125,16 +125,15 @@ function AdminSidebar({showSidebar}) {
 				</div>
 			)}
 
-			{width < 780 && showSidebar && (
+			{width < 780 && showSidebar && user && (
 				<div className={styles.container}>
 					<div className="w-10/12 mx-auto">
 						<div className="flex justify-around items-center py-6 mb-10">
 							<img
 								src={user.avatar}
 								alt="profile picture"
-								width={60}
-							
-								style={{ borderRadius: "50%", height:"60px" }}
+								width={50}
+								style={{ borderRadius: "50%", height: "50px" }}
 							/>
 							<div>
 								<p className="font-semibold capitalize">

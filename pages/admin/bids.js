@@ -54,6 +54,7 @@ function Bids() {
 	];
 
 	const paginatedData = paginate(allEvent, currentPage, pageSize);
+	console.log(paginatedData)
 
 	return (
 		<AdminLayout>
@@ -178,41 +179,65 @@ function Bids() {
 								</div>
 								<div className="px-20 py-10 flex">
 									<div className="font-semibold text-2xl">
-										<p className=" my-10">Product name: </p>
-										<p className=" my-10">Minimum Bid: </p>
-										<p className=" my-10">Merchant name: </p>
-										<p className=" mb-10">Phone number :</p>
-										<p className="mb-10">Email :</p>
+										<p className=" w-48 lg:w-full mt-7 lg:mt-10">
+											Product name:{" "}
+										</p>
+										<p className=" w-48 lg:w-full mt-7 lg:mt-10">
+											Minimum Bid:{" "}
+										</p>
+										<p className=" w-52 lg:w-full mt-7 lg:mt-10">
+											Merchant name:{" "}
+										</p>
+										<p className=" w-48 lg:w-full mt-7 lg:mt-10">
+											Phone number :
+										</p>
+										<p className=" w-48 lg:w-full mt-7 lg:mt-10">Email :</p>
 										{event.winner && (
 											<>
-												<p className=" my-10">Winner: </p>
-												<p className=" my-10">Winner's Phone number: </p>
-												<p className=" my-10">Final Bid: </p>
-												<p className=" my-10">Payment made: </p>
+												<p className=" w-48 lg:w-full mt-7 lg:mt-10">
+													Winner:{" "}
+												</p>
+												<p className=" w-52 lg:w-full mt-7 lg:mt-10">
+													Phone number:{" "}
+												</p>
+												<p className=" w-48 lg:w-full mt-7 lg:mt-10">
+													Final Bid:{" "}
+												</p>
+												<p className=" w-52 lg:w-full mt-7 lg:mt-10">
+													Payment made:{" "}
+												</p>
 											</>
 										)}
 									</div>
-									<div className="ml-20  text-2xl">
-										<p className=" my-10 pt-1">{event.product.name}</p>
-										<p className=" my-10 pt-1">
+									<div className=" ml-5 text-2xl">
+										<p className="w-52 lg:w-full mt-7 lg:mt-10">
+											{event.product.name}
+										</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">
 											{formatNumber(event.minimum_amount)}
 										</p>
-										<p className=" my-10 pt-1">Akinpelumi Lade </p>
-										<p className="text-2xl mb-10">0903747665155 </p>
-										<p className="text-2xl mb-10">taotao@gmail.com </p>
+										<p className="w-52 lg:w-full mt-7 lg:mt-10">
+											Akinpelumi Lade{" "}
+										</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">
+											0903747665155{" "}
+										</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">
+											taotao@gmail.com{" "}
+										</p>
 										{event.winner && (
 											<>
-												<p className="text-2xl mb-10">
+												<p className="w-60 lg:w-full mt-7 lg:mt-10">
 													{`${event.winner.customer.account.last_name} ${event.winner.customer.account.first_name} `}{" "}
 												</p>
-												<p className="text-2xl mb-10">
+												<p className="w-40 lg:w-full mt-7 lg:mt-10">
 													{event.winner.customer.account.phone_number}
 												</p>
-												<p className="text-2xl mb-10">
+												<p className="w-40 lg:w-full mt-7 lg:mt-10">
 													{formatNumber(event.winner.amount)}{" "}
 												</p>
 
-												<p className="text-2xl mb-10">
+												<p className="w-48 lg:w-full mt-7 lg:mt-10">
 													{event.winner.payment_made ? "Yes" : "No"}
 												</p>
 											</>

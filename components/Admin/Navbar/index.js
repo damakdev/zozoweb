@@ -15,7 +15,7 @@ function Navbar({toggle}) {
 
 	return (
 		<>
-			{width >= 780 && (
+			{width >= 780 && user && (
 				<div className="bg-white w-full h-32 ">
 					<div className="flex flex-row-reverse pt-7 items-center mr-10">
 						<div className=" ml-10 leading-normal">
@@ -39,7 +39,7 @@ function Navbar({toggle}) {
 				</div>
 			)}
 
-			{width < 780 && (
+			{width < 780 &&  (
 				<div className=" py-8" style={{ backgroundColor: "#743B96" }}>
 					<div className=" flex justify-around items-center w-10/12">
 						<img src="/images/mobile-logo.png" className="pl-10" />

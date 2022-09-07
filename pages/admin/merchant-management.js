@@ -30,13 +30,12 @@ function MerchantMgt() {
 	];
 	const [modalDisplay, setModalDisplay] = useState(false);
 	const [tab, setTab] = useState("basic");
-	const {width} = useWindowDimension()
+	const { width } = useWindowDimension();
 	const dispatch = useDispatch();
 	const { isLoading, users } = useSelector((state) => state.users.merchants);
 	const { user, merchantDetailsLoading } = useSelector(
 		(state) => state.users.merchantDetails
 	);
-	
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const pageSize = 10;
@@ -58,14 +57,14 @@ function MerchantMgt() {
 	return (
 		<AdminLayout>
 			<div className="pt-10 w-11/12 mx-auto pb-20 mt-1">
-				<h3 className="py-20 text-5xl font-semibold mt-1 text-semibold text-black">
+			<h3 className="lg:py-20  py-10 lg:text-5xl  text-4xl font-semibold mt-1 text-semibold text-black">
 					Merchant Management
 				</h3>
 				{!users ? (
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
 						<Loader />
 					</div>
-				) :  width >= 780 ? (
+				) : width >= 780 ? (
 					<>
 						<Table
 							name="merchantMgt"
@@ -82,62 +81,64 @@ function MerchantMgt() {
 							pageSize={pageSize}
 						/>
 					</>
-				) : (<>
-					{paginatedData.map((item, index) => {
-						return (
-							<div
-								className={` grid grid-cols-2  text-2xl my-8 py-5   ${styles.mobile_table}`}
-								key={index}
-							>
+				) : (
+					<>
+						{paginatedData.map((item, index) => {
+							return (
 								<div
-									className="py-9 pl-8  shadow-lg font-bold"
-									style={{ background: "#F3F3F3" }}
+									className={` grid grid-cols-2  text-2xl my-8 py-5   ${styles.mobile_table}`}
+									key={index}
 								>
-									<ul>
-										{thead.map((item, index) =>
-											item !== "No" ? <li key={index}>{item}</li> : ""
-										)}
-									</ul>
+									<div
+										className="py-9 pl-8  shadow-lg font-bold"
+										style={{ background: "#F3F3F3" }}
+									>
+										<ul>
+											{thead.map((item, index) =>
+												item !== "No" ? <li key={index}>{item}</li> : ""
+											)}
+										</ul>
+									</div>
+									<div className="py-9  pl-5 bg-white  shadow-lg ">
+										<ul>
+											<li>{new Date(item.account.createdAt).toDateString()}</li>
+											<li>{item.account.first_name}</li>
+											<li>{item.account.last_name}</li>
+											<li>{truncateString(item.account.email, 15)}</li>
+											<li>{item.auctions.length}</li>
+											<li>
+												{" "}
+												<span
+													className={`${
+														item.account.verified
+															? "text-green-600 "
+															: "text-red-600 "
+													} text-2xl`}
+												>
+													{item.account.verified ? "Verified" : "Unverified"}
+												</span>
+											</li>
+											<li onClick={() => viewDetails(item.id)}>
+												<Button
+													name="View more details"
+													paddingY="12px"
+													paddingX="12px"
+												/>
+											</li>
+										</ul>
+									</div>
 								</div>
-								<div className="py-9  pl-5 bg-white  shadow-lg ">
-									<ul>
-										<li>{new Date(item.account.createdAt).toDateString()}</li>
-										<li>{item.account.first_name}</li>
-										<li>{item.account.last_name}</li>
-										<li>{truncateString(item.account.email,20)}</li>
-										<li>{item.auctions.length}</li>
-										<li>
-											{" "}
-											<span
-												className={`${
-													item.account.verified
-														? "text-green-600 "
-														: "text-red-600 "
-												} text-2xl`}
-											>
-												{item.account.verified ? "Verified" : "Unverified"}
-											</span>
-										</li>
-										<li onClick={() => viewDetails(item.id)}>
-											<Button
-												name="View more details"
-												paddingY="12px"
-												paddingX="12px"
-											/>
-										</li>
-									</ul>
-								</div>
-							</div>
-						);
-					})}
+							);
+						})}
 
-					<Pagination
-						items={users.length}
-						currentPage={currentPage}
-						onPageChange={handlePageChange}
-						pageSize={pageSize}
-					/>
-				</>)}
+						<Pagination
+							items={users.length}
+							currentPage={currentPage}
+							onPageChange={handlePageChange}
+							pageSize={pageSize}
+						/>
+					</>
+				)}
 			</div>
 
 			<Modal
@@ -152,22 +153,21 @@ function MerchantMgt() {
 						</div>
 					) : (
 						<>
-							<div className="grid grid-cols-2 justify-around w-9/12 mx-auto items-center">
+							<div className="grid grid-cols-1 lg:grid-cols-2 justify-around l w-9/12 mx-auto items-center">
 								<div>
 									<img
 										src={user.account.avatar}
-										className="rounded-lg h-4/12 "
-									/>
+										className="rounded-lg h-4/12 mb-7 mx-auto"									/>
 								</div>
 
-								<div className="ml-7 ">
-									<h3 className="text-4xl mb-4 font-semibold text-black">
+								<div className="ml-7 lg:text-4xl text-3xl text-center lg:text-left ">
+									<h3 className="lg:mb-4 font-semibold text-black capitalize">
 										{user.account.last_name} {user.account.first_name}
 									</h3>
-									<div className="flex items-center mb-20">
+									<div className="flex items-center lg:mb-20 mb-5 w-4/12 lg:w-full mx-auto">
 										{user.account.verified && (
 											<>
-												<h3 className="text-4xl text-green-600 pt-5 mr-4 ">
+												<h3 className=" text-green-600 pt-5 mr-4 ">
 													Verified{" "}
 												</h3>
 												<GreenMarker />
@@ -176,14 +176,14 @@ function MerchantMgt() {
 
 										{!user.account.verified && (
 											<>
-												<h3 className="text-4xl text-red-600 pt-5 mr-4 ">
+												<h3 className="text-red-600 pt-5 mr-4 ">
 													Unverified{" "}
 												</h3>
 											</>
 										)}
 									</div>
 									<div>
-										<Link href={`/admin/merchant-wallet/${user.id}`}>
+										{/* <Link href={`/admin/merchant-wallet/${user.id}`}>
 											<Button
 												bgColor="#743B96"
 												name="Wallet History"
@@ -191,9 +191,10 @@ function MerchantMgt() {
 												paddingY="8px"
 												isBoxShadow={true}
 												border="none"
-												className="mr-5"
+												className="mt-3 lg:mt-1 mr-5 "
+												
 											/>
-										</Link>
+										</Link> */}
 										{user.account.verified && (
 											<Button
 												bgColor="#EB5757"
@@ -202,6 +203,7 @@ function MerchantMgt() {
 												paddingY="8px"
 												isBoxShadow={true}
 												border="none"
+												className="mt-3 lg:mt-1 "
 											/>
 										)}
 
@@ -213,6 +215,7 @@ function MerchantMgt() {
 												paddingY="8px"
 												isBoxShadow={true}
 												border="none"
+												className="mt-3 lg:mt-1 "
 												onClick={() =>
 													dispatch(
 														verifyUser({
@@ -234,24 +237,28 @@ function MerchantMgt() {
 										About
 									</h3>
 								</div>
-								<div className="px-20 py-10 flex">
-									<div>
-										<p className="text-3xl my-10">First name :</p>
-										<p className="text-3xl my-10">Last name :</p>
-										<p className="text-3xl mb-10">Phone number :</p>
-										<p className="text-3xl mb-10">Email :</p>
+								<div className="px-20 py-10 flex justify-between lg:justify-evenly lg:w-full w-11/12">
+									<div className="lg:text-3xl text-2xl font-semibold  ">
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">First name :</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">Last name :</p>
+										<p className="w-48 lg:w-full mt-7 lg:mt-10">
+											Phone number :
+										</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">Email :</p>
 									</div>
-									<div className="ml-20 ">
-										<p className="text-2xl my-10 pt-1 ">
+									<div className="lg:text-3xl text-2xl -ml-20 ">
+										<p className="w-40 lg:w-full mt-7 lg:mt-10 capitalize">
 											{user.account.first_name}
 										</p>
-										<p className="text-2xl my-10 pt-1">
+										<p className="w-40 lg:w-full mt-7 lg:mt-10 capitalize">
 											{user.account.last_name}
 										</p>
-										<p className="text-2xl mb-10">
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">
 											{user.account.phone_number}{" "}
 										</p>
-										<p className="text-2xl mb-10">{user.account.email} </p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">
+											{user.account.email}{" "}
+										</p>
 									</div>
 								</div>
 							</div>

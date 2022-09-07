@@ -243,7 +243,33 @@ function Bids() {
 	return (
 		<AdminLayout>
 			<div className="pt-10 pb-20 mt-1" style={{ backgroundColor: "#E5E5E5" }}>
-				<div className="flex justify-between items-center">
+
+{width < 780 && (
+	<div className="sm:flex-col lg:flex-row justify-between items-center">
+	<h3 className="py-20 text-5xl font-semibold  mt-1 text-semibold text-black">
+		Event Management
+	</h3>
+	<div className="flex mr-20">
+		<div
+			className=" flex items-center py-4 px-5 rounded-lg bg-purple-900 mr-5 text-white"
+			onClick={openCreateEventModal}
+		>
+			<Plus />
+			<button className="ml-3">Create Event</button>
+		</div>
+		<Button
+			name="Create Category"
+			paddingX="20px"
+			paddingY="7px"
+			onClick={openCategory}
+		/>
+	</div>
+</div>
+)}
+
+
+			{width >= 780 && (
+					<div className="flex lg:flex-row justify-between items-center">
 					<h3 className="py-20 text-5xl font-semibold pl-20 mt-1 text-semibold text-black">
 						Event Management
 					</h3>
@@ -263,6 +289,7 @@ function Bids() {
 						/>
 					</div>
 				</div>
+			)}
 
 				{!allEvent ? (
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
@@ -363,11 +390,11 @@ function Bids() {
 							className="bg-gray-200 px-10 py-5 outline-none rounded-lg w-full text-black "
 							ref={categoryName}
 						/>
-						<label className="block text-3xl font-bold mt-20 mb-10 ">
+						<label className="block text-3xl font-bold mt-20 mb-10 text-2xl lg: ">
 							Description
 						</label>
 						<input
-							className="bg-gray-200 px-10 mb-10 py-5 outline-none rounded-lg w-full text-black "
+							className="bg-gray-200 px-10 mb-10 text-2xl lg: py-5 outline-none rounded-lg w-full text-black "
 							ref={description}
 						/>
 						<div>
@@ -422,7 +449,7 @@ function Bids() {
 								/>
 
 								<div className="ml-10">
-									<h3 className="text-4xl mb-10 text-black">
+									<h3 className=" text-2xl lg:text-4xl mb-10 text-black">
 										{event.product.name}
 									</h3>
 
@@ -431,23 +458,23 @@ function Bids() {
 											event.started &&
 											!event.canceled &&
 											!event.ended && (
-												<h3 className="text-green-600 mb-10">Ongoing</h3>
+												<h3 className="text-green-600 mb-10 text-2xl lg:">Ongoing</h3>
 											)}
 
 										{!event.started && event.approved && (
-											<h3 className="text-red-600 mb-10">Not started</h3>
+											<h3 className="text-red-600 mb-10 text-2xl lg:">Not started</h3>
 										)}
 
 										{!event.approved && (
-											<h3 className="text-red-600 mb-10">Unapproved</h3>
+											<h3 className="text-red-600 mb-10 text-2xl lg:">Unapproved</h3>
 										)}
 
 										{event.canceled && (
-											<h3 className="text-red-600 mb-10">Canceled</h3>
+											<h3 className="text-red-600 mb-10 text-2xl lg:">Canceled</h3>
 										)}
 
-										{event.started && event.ended && (
-											<h3 className="text-violet-600 mb-10">Concluded</h3>
+										{event.started && event.ended && !event.canceled && (
+											<h3 className="text-violet-600 mb-10 text-2xl lg:">Concluded</h3>
 										)}
 
 										{event.approved &&
@@ -530,28 +557,35 @@ function Bids() {
 										Basic Information
 									</h3>
 								</div>
-								<div className="px-20 py-10 flex">
-									<div>
-										<p className="text-3xl my-10">Merchant name: :</p>
-										<p className="text-3xl mb-10">Product :</p>
-										<p className="text-3xl mb-10">Start date :</p>
-										<p className="text-3xl mb-10">End date: :</p>
-										<p className="text-3xl mb-10">Amount :</p>
-										<p className="text-3xl mb-10">Winner :</p>
-									</div>
-									<div className="ml-20 ">
-										<p className="text-2xl my-10 pt-1">Akinpelumi Lade </p>
-										<p className="text-2xl mb-10">{event.product.name} </p>
-										<p className="text-2xl mb-10">
-											{new Date(event.start_time).toDateString()}{" "}
+								<div className="px-20 py-10 flex justify-between lg:justify-evenly lg:w-full w-11/12">
+								<div className="lg:text-3xl text-2xl font-semibold  ">
+										<p className="w-60 lg:w-full mt-7 lg:mt-10">
+											Merchant name: 
 										</p>
-										<p className="text-2xl mb-10">
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">Product :</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">Start date :</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">End date: :</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">Amount :</p>
+										<p className="w-40 lg:w-full mt-7 lg:mt-10">Winner :</p>
+									</div>
+									<div className="ml-4 ">
+										<p className="w-58 lg:w-full mt-7 lg:mt-10">
+											Akinpelumi Lade
+										</p>
+										<p className="w-64 lg:w-full mt-3 lg:mt-10">
+										{width >= 780 &&<span>{truncateString(event.product.name, 34)}</span>}
+											{width < 780 && <span> {truncateString(event.product.name, 13)}</span>}
+										</p>
+										<p className="w-58 lg:w-full mt-3 lg:mt-6">
+											{new Date(event.start_time).toDateString()}
+										</p>
+										<p className="w-58 lg:w-full mt-3 lg:mt-6">
 											{new Date(event.end_time).toDateString()}
 										</p>
-										<p className="text-2xl mb-10">
+										<p className="w-40 lg:w-full mt-3 lg:mt-6">
 											{formatNumber(event.access_amount)}{" "}
 										</p>
-										<p className="text-2xl  mb-10">
+										<p className="w-40 lg:w-full mt-3 lg:mt-10">
 											{" "}
 											{event.winner ? event.winner : "Undecided"}
 										</p>
