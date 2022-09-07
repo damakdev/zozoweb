@@ -5,3 +5,9 @@
   margin-left: 25rem;
   background-color: var(--bg-white);
 }
+
+@media screen and (max-width: 1200px) {
+  .children {
+    margin-left: 20rem;
+  }
+}

@@ -8,7 +8,7 @@ import {
 } from "../../services/customer";
 
 export const _getCompletedEvents = createAsyncThunk(
-  `events/getAllCompletedEvents`,
+  `customer/getAllCompletedEvents`,
   async () => {
     try {
       const response = await getBidEventByStatus({ status: "completed" });
@@ -20,10 +20,10 @@ export const _getCompletedEvents = createAsyncThunk(
 );
 
 export const _wonBidPayment = createAsyncThunk(
-  `events/wonBidPayment`,
+  `customer/wonBidPayment`,
   async (body) => {
     try {
-      console.log("yh")
+      console.log("yh");
       const response = await wonBidPayment(body);
       return response;
     } catch (error) {
@@ -32,9 +32,8 @@ export const _wonBidPayment = createAsyncThunk(
   }
 );
 
-
 export const _getOngoingEvents = createAsyncThunk(
-  `events/getAllOngoingEvents`,
+  `customer/getAllOngoingEvents`,
   async () => {
     try {
       const response = await getBidEventByStatus({ status: "ongoing" });
@@ -46,7 +45,7 @@ export const _getOngoingEvents = createAsyncThunk(
 );
 
 export const _getUpcomingEvents = createAsyncThunk(
-  `events/getAllUpcomingEvents`,
+  `customer/getAllUpcomingEvents`,
   async () => {
     try {
       const response = await getBidEventByStatus({ status: "upcoming" });
@@ -58,7 +57,7 @@ export const _getUpcomingEvents = createAsyncThunk(
 );
 
 export const _getApprovedEvents = createAsyncThunk(
-  `events/getApprovedEvents`,
+  `customer/getApprovedEvents`,
   async (body) => {
     try {
       const response = await getApprovedBidEvents(body);
@@ -70,7 +69,7 @@ export const _getApprovedEvents = createAsyncThunk(
 );
 
 export const _getWonBidEvents = createAsyncThunk(
-  `events/getWonBidEvents`,
+  `customer/getWonBidEvents`,
   async (body) => {
     try {
       const response = await getWonBidEvents(body);
@@ -82,7 +81,7 @@ export const _getWonBidEvents = createAsyncThunk(
 );
 
 export const _getCustomerEvents = createAsyncThunk(
-  `events/getAllCustomerEvents`,
+  `customer/getAllCustomerEvents`,
   async (id) => {
     try {
       const response = await getAllCustomerEvents(id);
@@ -101,10 +100,10 @@ const initialState = {
   },
   won: {
     events: null,
-    subTotal:0,
+    subTotal: 0,
     loading: false,
     error: false,
-    winners_id: []
+    winners_id: [],
   },
   customer: {
     events: null,
@@ -208,10 +207,15 @@ const eventsSlice = createSlice({
         state.won.loading = false;
         if (action.payload) {
           state.won.events = action.payload.data.bidding_event;
-          state.won.winners_id = action.payload.data.bidding_event.map((items)=>items.winner.id.toString())
-          state.won.subTotal = action.payload.data.bidding_event?.reduce((prev, cur) => {
-            return prev + cur.winner.amount;
-          }, 0);
+          state.won.winners_id = action.payload.data.bidding_event.map(
+            (items) => items.winner.id.toString()
+          );
+          state.won.subTotal = action.payload.data.bidding_event?.reduce(
+            (prev, cur) => {
+              return prev + cur.winner.amount;
+            },
+            0
+          );
           return;
         }
       })
@@ -219,31 +223,27 @@ const eventsSlice = createSlice({
         state.won.error = true;
       });
 
-
-
-      //WON BIDS PAYMENT
+    //WON BIDS PAYMENT
     builder
-    .addCase(_wonBidPayment.pending, (state) => {
-      // state.won.loading = true;
-      console.log("loading...")
-    })
-    .addCase(_wonBidPayment.fulfilled, (state, action) => {
-      console.log(action)
-      state.won.loading = false;
-      // if (action.payload) {
-      //   state.won.events = action.payload.data.bidding_event;
-      //   state.won.subTotal = action.payload.data.bidding_event?.reduce((prev, cur) => {
-      //     return prev + cur.winner.amount;
-      //   }, 0);
-      //   return;
-      // }
-    })
-    .addCase(_wonBidPayment.rejected, (state) => {
-      // state.won.error = true;
-        console.log("error...")
-    });
-
-
+      .addCase(_wonBidPayment.pending, (state) => {
+        // state.won.loading = true;
+        console.log("loading...");
+      })
+      .addCase(_wonBidPayment.fulfilled, (state, action) => {
+        console.log(action);
+        state.won.loading = false;
+        // if (action.payload) {
+        //   state.won.events = action.payload.data.bidding_event;
+        //   state.won.subTotal = action.payload.data.bidding_event?.reduce((prev, cur) => {
+        //     return prev + cur.winner.amount;
+        //   }, 0);
+        //   return;
+        // }
+      })
+      .addCase(_wonBidPayment.rejected, (state) => {
+        // state.won.error = true;
+        console.log("error...");
+      });
 
     //GET ALL CUSTOMER EVENTS
     builder
