@@ -227,7 +227,7 @@ function CustomerMgt() {
 									<div className="lg:text-3xl text-2xl font-semibold  ">
 										<p className="w-40 lg:w-full mt-7 lg:mt-10">First name :</p>
 										<p className=" w-40 lg:w-full mt-7 lg:mt-10">Last name :</p>
-										<p className=" w-48 lg:w-full mt-7 lg:mt-10">
+										<p className=" w-52 lg:w-full mt-7 lg:mt-10">
 											Phone number :
 										</p>
 										<p className=" w-40 lg:w-full mt-7 lg:mt-10">Email :</p>
