@@ -146,7 +146,7 @@ export default function Index() {
 
           <p>
             Don&apos;t have an account?
-            <Link href="/signup"> Sign up for free!</Link>
+            <Link href="/signup"> Sign up here!</Link>
           </p>
         </form>
       </div>

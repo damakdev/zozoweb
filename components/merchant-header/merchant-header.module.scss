@@ -33,7 +33,7 @@
       background-color: var(--bg-primary);
       content: "";
     }
-    svg {
+    & > svg {
       margin-right: 3rem;
     }
     & > div {

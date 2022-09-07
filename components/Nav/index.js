@@ -7,6 +7,8 @@ import {
   WishlistIcon,
   ProfileIcon,
   HamburgerIcon,
+  HomeIcon,
+  ProfileCircleIcon,
 } from "../../public/svg/icons";
 import useWindowDimension from "../../hooks/useWindowDimension";
 import Logo from "../logo";
@@ -98,6 +100,23 @@ export default function Nav() {
             <Link href="/contact">Contact</Link>
             {/* <Link href="/">Help</Link> */}
           </div>
+        </nav>
+      )}
+
+      {width < 872 && (
+        <nav className={styles["bottom-nav"]}>
+          <Link href="/">
+            <HomeIcon />
+          </Link>
+          <Link href="/wishlist">
+            <WishlistIcon />
+          </Link>
+          <Link href="/cart">
+            <GavelIcon />
+          </Link>
+          <Link href="/profile">
+            <ProfileCircleIcon />
+          </Link>
         </nav>
       )}
     </>
