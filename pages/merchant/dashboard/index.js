@@ -19,11 +19,10 @@ import { lineChartData, pieChartData } from "../../../public/data";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import MerchantLayout from "../../../components/MerchantLayout";
+import Loader from "../../../components/loader";
 import LineChart from "../../../components/line-chart";
 import PieChart from "../../../components/pie-chart";
 import styles from "../../../styles/merchant/dashboard.module.scss";
-import { BarLoader } from "react-spinners";
-import Loader from "../../../components/loader";
 
 export default function Index() {
   const { user } = useSelector((state) => state.auth.merchant);
@@ -289,7 +288,7 @@ export default function Index() {
                   <p>Unable to log in to this system</p>
                 </div>
               </div>
-              <div className={styles.download}>
+              {/* <div className={styles.download}>
                 <h1>
                   Download
                   <br />
@@ -299,7 +298,7 @@ export default function Index() {
               <div className={styles.support}>
                 <h1>Need help?</h1>
                 <p>24/7 support center</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
