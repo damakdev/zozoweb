@@ -186,9 +186,10 @@ export default function Index() {
               </div>
               <div className="text-center">
                 <p>
-                  By continuing, you agree to Zozo{" "}
-                  <Link href="/">conditions of use</Link> and{" "}
-                  <Link href="/">Privacy notice.</Link>
+                  By signing up you hereby agree to operate on one account and
+                  agree to the terms and conditions.
+                  {/* <Link href="/">conditions of use</Link> and{" "}
+                  <Link href="/">Privacy notice.</Link> */}
                 </p>
               </div>
               <Button>
@@ -201,10 +202,12 @@ export default function Index() {
             </>
           )}
 
-          <p>
-            Already have an account?
-            <Link href="/login"> Login!</Link>
-          </p>
+          {!next && (
+            <p>
+              Zozo is restricted to one account per person,{" "}
+              <Link href="/login">Login!</Link> if you already have an account.
+            </p>
+          )}
         </form>
       </div>
     </div>
