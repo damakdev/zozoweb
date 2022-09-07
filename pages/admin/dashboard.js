@@ -62,7 +62,7 @@ function Dashboard() {
 				<div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 mt-10  gap-4">
 					<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 						<h3 className=" ml-6 mb-10">Customer list</h3>
-						{customers && customers.isLoading ? (
+						{customers && merchants.isLoading ? (
 							<div className="py-10">
 								<Loader />
 							</div>
