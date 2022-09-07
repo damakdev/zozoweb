@@ -21,12 +21,17 @@ const Wishlist = () => {
 
 	return (
 		<CustomerLayout>
-			<div className="w-full bg-white py-6  px-9 flex justify-between align-center text-black">
-				<h3 className="text-4xl">Watchlist </h3>
-				<h6 className="text-2xl pt-2 text-red-600 cursor-pointer" onClick={() => dispatch(clearCart())}>
-					Clear Watchlist
-				</h6>
-			</div>
+			{cart.length > 0 && (
+				<div className="w-full bg-white py-6  px-9 flex justify-between align-center text-black">
+					<h3 className="text-4xl">Watchlist </h3>
+					<h6
+						className="text-2xl pt-2 text-red-600 cursor-pointer"
+						onClick={() => dispatch(clearCart())}
+					>
+						Clear Watchlist
+					</h6>
+				</div>
+			)}
 
 			<div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-16">
 				{cart.length > 0 &&
@@ -41,7 +46,7 @@ const Wishlist = () => {
 								<Image src={box1} alt="cart" width={200} height={200} />
 							</div>
 							<div>
-								<h1 className="text-black">Your Zozo Watchlist is empty</h1>
+								<h1 className="text-black ">Your Zozo Watchlist is empty</h1>
 
 								<div className="flex justify-center">
 									{!user && (
