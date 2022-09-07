@@ -79,7 +79,7 @@ seek win.`,
     <>
       <CustomerLayout>
         <section className={styles.hero}>
-          {width >= 720 && <Categories categories={categories} />}
+          {width >= 780 && <Categories categories={categories} />}
           <MainSlider data={mainSlider} />
           {width >= 1200 && (
             <div className={styles["vertical-sliders"]}>
