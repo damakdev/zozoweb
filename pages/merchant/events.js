@@ -23,7 +23,7 @@ import ErrorMessage from "../../components/error-message/error-message";
 import Select from "react-select";
 import Modal from "../../components/modal/modal";
 import Button from "../../components/ui/button/";
-import styles from "../../styles/merchant-events.module.scss";
+import styles from "../../styles/admin/merchant-events.module.scss";
 
 function Events() {
 	const { user } = useSelector((state) => state.auth.merchant);

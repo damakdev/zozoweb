@@ -28,23 +28,33 @@ function CategoryList() {
 
 	if (cateProduct.products) {
 		products = cateProduct.products.products.filter((item) => {
-		
 			return item.bidding_events[0] && !item.bidding_events[0].ended;
 		});
-		
 	}
 
 	return (
 		<CustomerLayout>
 			<div className={styles.category}>
 				<div className={styles.categoryNames}>
-					<ul>
-						{categories?.map((category) => (
-							<Link key={category.id} href={`/category/${category.name}`}>
-								<li>{category.name}</li>
-							</Link>
-						))}
-					</ul>
+					{categories && (
+						<div className={`${styles.cateContainer}`}>
+							<ul>
+								{categories &&
+									categories?.map((category) => (
+										<Link key={category.id} href={`/category/${category.name}`}>
+											<li
+												className={`${
+													router.query.category == category.name &&
+													styles.active
+												} text-center px-3 py-2 `}
+											>
+												{category.name}
+											</li>
+										</Link>
+									))}
+							</ul>
+						</div>
+					)}
 				</div>
 				<div className={`bg-white mt-10   py-10 px-20 ${styles.categoryList}`}>
 					{cateProduct.isLoading && (
@@ -59,20 +69,14 @@ function CategoryList() {
 								No Bid{" "}
 							</div>
 						)}
-					<div className={`grid grid-cols-4 gap-10 ${styles.content}`}>
+					<div
+						className={`grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-3 ${styles.content}`}
+					>
 						{!cateProduct.isLoading &&
 							cateProduct.products &&
 							cateProduct.products.products.length > 0 &&
 							products.map((item, index) => {
-								return (
-									<Link
-										href={user ? `/product/${item.id}` : "javascript:void(0)"}
-										a
-										key={index}
-									>
-										<ProductCard product={item} />
-									</Link>
-								);
+								return 	<ProductCard product={item} key={index} />;
 							})}
 					</div>
 				</div>

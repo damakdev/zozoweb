@@ -1,6 +1,6 @@
 import React from "react";
 import CustomerLayout from "../components/CustomerLayout";
-import styles from "./../styles/cart.module.scss";
+import styles from "./../styles/watchlist.module.scss";
 import Image from "next/image";
 import email from "../assets/email.svg";
 import card from "../assets/card.svg";

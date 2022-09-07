@@ -24,6 +24,7 @@ const cartSlice = createSlice({
 				price: action.payload.product.price,
 				start: action.payload.start_time,
 				end: action.payload.end_time,
+				ended: action.payload.ended,
 				image: action.payload.product.images.main,
 				access_amount: action.payload.access_amount,
 				minimum_amount: action.payload.minimum_amount,

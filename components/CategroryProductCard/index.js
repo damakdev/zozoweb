@@ -8,7 +8,6 @@ import styles from "../../styles/categoryList.module.scss";
 import { formatNumber, truncateString } from '../../utils';
 
 function ProductCard({ product }) {
-       console.log(product)
       const [days, hours, minutes, seconds] = useCountdown(
         product.bidding_events[0].start_time,
         product.bidding_events[0].end_time
@@ -24,7 +23,7 @@ function ProductCard({ product }) {
     
       return (
         <Link
-          href={user ? `/product/${product.id}` : "javascript:void(0)"}
+          href={user ? `/product/${product.bidding_events[0].id}` : "javascript:void(0)"}
           key={product.id}
         >
           <a onClick={eventHandler} className={styles.card}>

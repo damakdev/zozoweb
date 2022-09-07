@@ -2,7 +2,7 @@ import React from "react";
 import CustomerLayout from "../components/CustomerLayout";
 import Link from "next/link";
 import Button from "../components/ui/Button";
-import styles from "./../styles/cart.module.scss";
+import styles from "../styles/watchlist.module.scss";
 import Image from "next/image";
 import profile from "../assets/profile.svg";
 import QR from "../assets/qr.png";
@@ -22,31 +22,28 @@ const Wishlist = () => {
 	return (
 		<CustomerLayout>
 			<div className="w-full bg-white py-6  px-9 flex justify-between align-center text-black">
-				<h3 className="text-5xl">Watchlist </h3>
-				<h6 className="text-3xl pt-2" onClick={() => dispatch(clearCart())}>
+				<h3 className="text-4xl">Watchlist </h3>
+				<h6 className="text-2xl pt-2 text-red-600 cursor-pointer" onClick={() => dispatch(clearCart())}>
 					Clear Watchlist
 				</h6>
 			</div>
 
-			<div className="grid grid-cols-2 gap-4 mt-16">
+			<div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-16">
 				{cart.length > 0 &&
 					cart.map((item, index) => <Watchlist details={item} key={index} />)}
 			</div>
 
 			<div className=" ">
 				{cart.length < 1 && (
-					<div className={` ${styles.cart} bg-white mt-10 `}>
-						<div className="flex  mt-20">
-							<div>
+					<div className={` ${styles.cart} bg-white w-10/12 mx-auto  mt-10 `}>
+						<div className="flex items-center justify-center  mt-20">
+							<div className="mr-5">
 								<Image src={box1} alt="cart" width={200} height={200} />
 							</div>
 							<div>
 								<h1 className="text-black">Your Zozo Watchlist is empty</h1>
-								<p className={`${styles.purple_text} mt-3`}>
-									Bid on today's deals
-								</p>
 
-								<div className="flex gap-10 mt-12">
+								<div className="flex justify-center">
 									{!user && (
 										<>
 											<div className="">
