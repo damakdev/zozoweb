@@ -2,13 +2,9 @@
   margin-top: 4rem;
   display: flex;
   justify-content: space-between;
+  column-gap: 3rem;
   padding: 5rem;
   background-color: var(--bg-white);
-  & > div {
-    &:not(:last-child) {
-      margin-right: 3rem;
-    }
-  }
   .image-preview,
   .loading-image-preview {
     & > img {
@@ -294,5 +290,108 @@
 @keyframes shine {
   to {
     background-position-x: -200%;
+  }
+}
+
+@media screen and (max-width: 1125px) {
+  .container {
+    .ongoing-bidders {
+      ul {
+        li {
+          p {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .container {
+    display: flex;
+    padding: 2rem;
+    // flex-wrap: wrap;
+    .image-preview,
+    .loading-image-preview {
+      img {
+        // width: 20rem;
+        // height: 20rem;
+      }
+      // width: 48%;
+    }
+    .product-description,
+    .loading-product-description {
+      width: 40rem;
+    }
+    .ongoing-bidders,
+    .loading-ongoing-bidders {
+      h3 {
+        font-size: 1.7rem;
+      }
+      ul {
+        li {
+          div {
+            h4 {
+              line-height: 1.4;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .container {
+    flex-wrap: wrap;
+    .image-preview,
+    .loading-image-preview {
+      width: 45%;
+    }
+    .product-description,
+    .loading-product-description {
+      width: 45%;
+    }
+    .ongoing-bidders,
+    .loading-ongoing-bidders {
+      margin-top: 3rem;
+      width: 100%;
+      h3 {
+        font-size: 1.7rem;
+      }
+      ul {
+        height: 25rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    padding: 3rem;
+    // flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    .image-preview,
+    .loading-image-preview {
+      width: 100%;
+    }
+    .product-description,
+    .loading-product-description {
+      margin-top: 2rem;
+      width: 100%;
+    }
+    .ongoing-bidders,
+    .loading-ongoing-bidders {
+      margin-top: 3rem;
+      width: 100%;
+      h3 {
+        font-size: 1.7rem;
+      }
+      ul {
+        height: 25rem;
+      }
+    }
   }
 }
