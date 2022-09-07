@@ -71,9 +71,9 @@ export default function Product() {
       <section className="mb-6">
         <ProductsSection products={ongoingEvents} title="similar products" />
       </section>
-      <section>
+      {/* <section>
         <AdsSlider data={ads} />
-      </section>
+      </section> */}
     </CustomerLayout>
   );
 }
