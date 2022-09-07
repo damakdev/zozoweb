@@ -38,9 +38,7 @@ function Home() {
 
   const mainSlider = Array(5).fill({
     image: Slide1,
-    text: `Bid now, Pay less,
-and Save big on
-items you love.`,
+    text: `Get High-quality products at your own price.`,
   });
 
   const verticalSlider = Array(5).fill({
