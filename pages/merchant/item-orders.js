@@ -2,7 +2,6 @@ import { useState } from "react";
 import Table from "../../components/Table/Table";
 import MerchantLayout from "../../components/MerchantLayout";
 import MerchantNav from "../../components/Merchant/Merchant_Nav";
-import styles from "../../styles/merchant/Items-order.module.scss";
 import {
   FilterIcon,
   Bell,
@@ -12,23 +11,12 @@ import {
 } from "../../public/svg/icons";
 import Modal from "../../components/modal/modal";
 import Image from "next/image";
-import Button from "../../components/ui/Button";
+import Button from "../../components/ui/button/";
+import styles from "../../styles/merchant/Items-order.module.scss";
 
 function ItemOrders() {
   const [modalDisplay, setModalDisplay] = useState(false);
 
-  const viewDetails = () => {
-    setModalDisplay((modalDisplay) => !modalDisplay);
-  };
-  const thead = [
-    "Item name",
-    "Item code",
-    "Event name",
-    "Bidder's name",
-    "Bidder's ID",
-    "Date",
-    " ",
-  ];
   const data = [
     {
       name: "Iphone 11",
@@ -55,45 +43,73 @@ function ItemOrders() {
       date: "07-08-2019",
     },
   ];
+
   return (
     <MerchantLayout title="Items Order">
       <div className={`${styles.container} pb-20`}>
-        <div className="w-11/12 mx-auto mb-10">
-          <div className="flex justify-between items-center">
-            <h4 className="text-4xl " style={{ fontWeight: "bold" }}>
-              {" "}
-              Won Items
-            </h4>
-
-            <div className="flex">
-              <div className={styles.filterButton}>
-                <FilterIcon />
-                <button>Filter</button>
-              </div>
-
-              <div className={styles.exportButton}>
-                <ExportIcon />
-                <button className="mr-3">Export</button>
-                <DropdownIcon />
-              </div>
-            </div>
+        <div className={styles.header}>
+          <div>
+            <label htmlFor="status">Status:</label>
+            <select
+              name="status"
+              id="status"
+              // value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="all">all</option>
+              <option value="ongoing">ongoing</option>
+              <option value="completed">completed</option>
+              <option value="upcoming">upcoming</option>
+              <option value="canceled">canceled</option>
+            </select>
           </div>
+          <Button onClick={() => setModalDisplay()}>
+            <span>+</span> Export Data
+          </Button>
         </div>
-        <Table
-          thead={thead}
-          data={data}
-          name="item-order"
-          viewDetails={viewDetails}
-        />
+        <div
+          className="p-6 rounded-lg"
+          style={{ backgroundColor: "var(--bg-primary)" }}
+        >
+          <table>
+            <thead>
+              <tr>
+                <th />
+                <th>Item name</th>
+                <th>Item code</th>
+                <th>Event name</th>
+                <th> Bidder's name</th>
+                <th>Bidder's ID</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map((event, index) => (
+                <tr key={index} onClick={() => setModalDisplay(true)}>
+                  <td onClick={(e) => e.stopPropagation()}>
+                    <input type="checkbox" name="" id="" />
+                  </td>
+                  <td>{event.name}</td>
+                  <td>{event.code}</td>
+                  <td>{event.event}</td>
+                  <td>{event.bidder_name}</td>
+                  <td>{event.bidder_id}</td>
+                  <td>{event.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <Modal
-        title="Won item details"
+        title="details"
         display={modalDisplay}
-        close={viewDetails}
+        close={() => setModalDisplay(false)}
+        height="50rem"
       >
-        <div className={`${styles.modal} overflow-y-auto`}>
-          <div
+        <div className={styles["order-details"]}>
+          {/* <div
             className="drop-shadow-lg my-5  p-3 bg-white w-20"
             onClick={viewDetails}
           >
@@ -116,7 +132,7 @@ function ItemOrders() {
                 fillOpacity="0.6"
               />
             </svg>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-2 justify-around w-9/12 mx-auto items-center">
             <Image
