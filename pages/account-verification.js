@@ -27,9 +27,10 @@ export default function Index() {
       toast.warn("You are not logged in!");
       return;
     }
-    verifyAccount({ account_email: user.email }).then((response) =>
-      console.log(response)
-    );
+    verifyAccount({ account_email: user.email }).then((response) => {
+      toast.success("Verification link sent");
+      // console.log(response)
+    });
   }
 
   if (user?.verified) {
