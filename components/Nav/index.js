@@ -14,6 +14,7 @@ import {
 } from "../../public/svg/icons";
 import useWindowDimension from "../../hooks/useWindowDimension";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import Button from "../ui/button/";
 import Loader from "../loader";
 import Logo from "../logo";
 import Link from "next/link";
@@ -146,19 +147,33 @@ export default function Nav() {
         </nav>
       )}
 
-      {width < 872 && (
+      {width < 720 && (
         <nav className={styles["bottom-nav"]}>
           <Link href="/">
-            <HomeIcon />
+            <a>
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1000 1000"
+              >
+                <path d="M739.3,990H616.7c-12.8,0-23.2-10.4-23.2-23.2V751.7c0-27.9-22.7-50.5-50.5-50.5h-86c-27.9,0-50.5,22.7-50.5,50.5v215.1c0,12.8-10.4,23.2-23.2,23.2H260.1c-53.5,0-96.9-43.5-96.9-96.9V556c-28.2,1.2-73.8,2.3-73.9,2.3c-6.8,0.8-13-2.1-17.6-6.8c-39.4-39.4-39.6-116.6-0.5-155.8L428.4,38.6c38.1-38.1,104.5-38.1,142.7,0l357.1,357.1c39.5,39.6,39.7,116.8,0.6,155.8c-4.6,4.7-10.8,7.6-17.6,6.8c-0.1,0-45.8-2.7-74.9-2.3v337.1C836.2,946.5,792.8,990,739.3,990z M639.9,943.6h99.5c27.9,0,50.5-22.7,50.5-50.5V535.2c0-25.6,27.1-25.6,48.9-25.6c20.4,0,47.7,1.1,63.1,1.8c15.2-23.5,12.9-63.5-6.5-83L538.3,71.4c-20.6-20.5-56.5-20.5-77.1,0L104.1,428.5c-19.2,19.2-21,59.4-5.5,83c15.2-0.7,42.2-1.8,62.4-1.8c21.7,0,48.6,0,48.6,25.5v357.9c0,27.9,22.7,50.5,50.5,50.5H360V751.8c0-53.4,43.5-96.9,96.9-96.9h86c53.4,0,96.9,43.5,96.9,96.9L639.9,943.6L639.9,943.6L639.9,943.6z" />
+              </svg>
+            </a>
           </Link>
           <Link href="/wishlist">
-            <WishlistIcon />
+            <a>
+              <WishlistIcon />
+            </a>
           </Link>
           <Link href="/cart">
-            <GavelIcon />
+            <a>
+              <GavelIcon variant="outline" />
+            </a>
           </Link>
           <Link href="/profile">
-            <ProfileCircleIcon />
+            <a>
+              <ProfileIcon />
+            </a>
           </Link>
         </nav>
       )}
@@ -175,17 +190,38 @@ export default function Nav() {
           >
             <div className={styles.title}>
               {user && <h1>Hello, {user.first_name}</h1>}
-              {!user && <Link href="/login">Login</Link>}
+              {/* {!user && <Link href="/login">Login</Link>} */}
+              {/* <h1>{user && "Hello, " + user.first_name}</h1> */}
             </div>
-            <ul style={{ height: categories ? "100%" : "70%" }}>
-              <li className="!text-2xl font-medium">Categories</li>
+            <p>Categories</p>
+            <ul style={{ height: user ? "55%" : "60%" }}>
               {!categories && <Loader />}
               {categories?.map((category) => (
-                <Link key={category.id} href={`/category/${category.name}`}>
-                  <li>{category.name}</li>
-                </Link>
+                <li key={category.id}>
+                  <Link href={`/category/${category.name}`}>
+                    <a>{category.name}</a>
+                  </Link>
+                </li>
               ))}
             </ul>
+            {user && (
+              <Button
+                onClick={() => {
+                  router.push("/");
+                  setMobileMenu(false);
+                  dispatch(logOutCustomer());
+                }}
+              >
+                Logout
+              </Button>
+            )}
+            {!user && (
+              <>
+                <Link href="/login">
+                  <a className={styles.login}>Log in</a>
+                </Link>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
