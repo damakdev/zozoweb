@@ -6,12 +6,15 @@ import { SignUpBanner } from "../public/svg/images";
 import { _registerCustomer } from "../store/slices/authSlice";
 import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import useWindowDimension from "../hooks/useWindowDimension";
+import Logo from "../components/logo";
 import Link from "next/link";
 import Button from "../components/ui/button/";
 import styles from "../styles/signup.module.scss";
 
 export default function Index() {
   const dispatch = useDispatch();
+  const { width } = useWindowDimension();
   const { loading } = useSelector((state) => state.auth.customer);
   const { token } = useSelector((state) => state.auth.customer);
   const { user } = useSelector((state) => state.auth.customer);
@@ -71,9 +74,11 @@ export default function Index() {
     <div className={styles.container}>
       <div className={styles.main}>
         <div>
+          {width > 780 && <Logo />}
           <SignUpBanner />
         </div>
         <form onSubmit={signupHandler}>
+          {width <= 780 && <Logo variant="purple" />}
           <h1>Create Account</h1>
           <Link href="/">
             <a className={styles["google-auth"]}>
@@ -124,10 +129,9 @@ export default function Index() {
 
           {next && (
             <>
-              <LeftArrow
-                onClick={() => setNext(false)}
-                className="absolute h-6 -translate-y-60 left-24 cursor-pointer"
-              />
+              <div onClick={() => setNext(false)} className={styles["go-back"]}>
+                <LeftArrow />
+              </div>
               <div className="grid grid-cols-2 w-full gap-x-8">
                 <div className={styles["form-group"]}>
                   <label htmlFor="firstName">First Name</label>
