@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CustomerLayout from "../components/CustomerLayout";
 import styles from "./../styles/watchlist.module.scss";
 import Image from "next/image";
@@ -14,34 +14,45 @@ import Link from "next/link";
 import { usePaystackPayment } from "react-paystack";
 import { _wonBidPayment } from "../store/slices/eventsSlice";
 import axios from "axios";
+import Modal from "../components/modal/modal";
+import { CheckoutIcon } from "../public/svg/icons";
+import { formatNumber } from "../utils";
+import { useRouter } from "next/router";
 
 const Checkout = () => {
 	const { user } = useSelector((state) => state.auth.customer);
+	const [modalDisplay, setModalDisplay] = useState(false);
+	const router = useRouter();
+	const modalFunc = () => {
+		setModalDisplay((modalDisplay) => !modalDisplay);
+	};
 
-
-	const { events, subTotal, winners_id } = useSelector((state) => state.events.won);
+	const redirectHome = () => {
+		router.push("/");
+	};
+	const { events, subTotal, winners_id } = useSelector(
+		(state) => state.events.won
+	);
 	console.log(user);
 	console.log(subTotal);
 	const config = {
 		reference: new Date().getTime().toString(),
 		email: user.email,
-		 amount: subTotal * 100,
+		amount: (subTotal + 2000) * 100,
 		publicKey: "pk_test_69632545288d812cae292185bebcfb87ca0feded",
 	};
 	const initializePayment = usePaystackPayment(config);
 	const onSuccess = (reference) => {
-		axios.post(`/customer/bidding/checkout`, {
-			winner_ids: winners_id,
-			payment_reference: reference.reference,
-		}).then((response)=>{
-			console.log(response)
-		})
-		// dispatch(
-		// 	_wonBidPayment({
-		// 		winner_id: user.customer.id,
-		// 		payment_reference: reference.reference,
-		// 	})
-		// );
+		axios
+			.post(`/customer/bidding/checkout`, {
+				winner_ids: winners_id,
+				payment_reference: reference.reference,
+			})
+			.then((response) => {
+				console.log(response);
+			});
+
+		modalFunc();
 	};
 
 	const onClose = (reference) => {
@@ -74,39 +85,6 @@ const Checkout = () => {
 								defaultValue={user.email}
 							/>
 						</div>
-						{/* <div className="mb-10">
-							<span className="mr-12">Card Number</span>
-							<span className={`${styles.email_icon}`}>
-								<Image src={card} />
-							</span>
-							<input
-								className={`${styles.email}`}
-								type="text"
-								// placeholder="card number"
-							/>
-							<input
-								className={`${styles.dm}`}
-								type="email"
-								datatype="DD MM"
-								placeholder="MM/YY"
-							/>
-							<input
-								className={`${styles.cvc}`}
-								type="text"
-								placeholder="cvc"
-							/>
-						</div> */}
-						{/* <div className="mb-10">
-							<span className="mr-4">Cardholder Name</span>
-							<span className={`${styles.email_icon}`}>
-								<Image src={profile} />
-							</span>
-							<input
-								className={`${styles.email}`}
-								type="email"
-								// placeholder="Emmanuel Okorie"
-							/>
-						</div> */}
 						<div className="mb-10">
 							<span className="mr-20">Country</span>
 							<span className={`${styles.email_icon}`}>
@@ -201,6 +179,33 @@ const Checkout = () => {
 					</div>
 				</div>
 			</div>
+
+			<Modal display={modalDisplay} close={redirectHome} width={50}>
+				<div className="w-10/12 mx-auto">
+					<CheckoutIcon className="flex justify-self-center w-full" />
+
+					<h3 className="text-green-600 text-center lg:my-20 my-10 text-3xl leading-relaxed">
+						Hurray! Your Payment was successful
+					</h3>
+
+					<h3 className="text-green-600 text-center  my-10 t text-3xl leading-loose">
+						Payment Amount <br />
+						&#x20A6; {formatNumber(subTotal)}
+					</h3>
+					<Link href="/">
+						<div className="flex justify-center">
+							<Button
+								name="Return Home"
+								bgColor="#27AE60"
+								paddingX="20px"
+								paddingY="5px"
+								border="none"
+								className="mt-6 "
+							/>
+						</div>
+					</Link>
+				</div>
+			</Modal>
 		</CustomerLayout>
 	);
 };

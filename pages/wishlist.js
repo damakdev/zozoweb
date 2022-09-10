@@ -48,10 +48,10 @@ const Wishlist = () => {
 							<div>
 								<h1 className="text-black ">Your Zozo Watchlist is empty</h1>
 
-								<div className="flex justify-center">
+								<div className="flex flex-col lg:flex-row md:flex-row justify-center">
 									{!user && (
 										<>
-											<div className="">
+											<div className=" my-3 ">
 												<Link href="/login">
 													<Button
 														name="SIGN IN TO YOUR ACCOUNT"
@@ -62,7 +62,7 @@ const Wishlist = () => {
 													/>
 												</Link>
 											</div>
-											<div>
+											<div className=" my-3 w-full justify-center flex">
 												<Link href="/signup">
 													<Button
 														name="SIGN UP NOW"

@@ -82,12 +82,12 @@ const Cart = () => {
 
 						<div className="flex justify-between mb-5 mt-16">
 							<div>SUBTOTAL</div>
-							<div>N{subTotal?.toLocaleString()}</div>
+							{subTotal > 0 ? <div>N{subTotal?.toLocaleString()}</div> : "---"}
 						</div>
 
 						<div className="flex justify-between">
 							<div>SHIPPING EST</div>
-							<div>N2,000</div>
+							<div>{subTotal > 0 ? "N2,000" : "---"}</div>
 						</div>
 						<div className="flex justify-between mt-40">
 							{/* <div>Enter code</div>
@@ -98,9 +98,13 @@ const Cart = () => {
 						<hr />
 						<div className="flex justify-between mt-10">
 							<div>TOTAL PRICE</div>
-							<div>
-								N <span>{(subTotal + 2000).toLocaleString()}</span>
-							</div>
+							{subTotal > 0 ? (
+								<div>
+									N <span>{(subTotal + 2000).toLocaleString()}</span>
+								</div>
+							) : (
+								"---"
+							)}
 						</div>
 						<div className="mt-6">
 							<Link href="/checkout">

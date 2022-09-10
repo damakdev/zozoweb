@@ -23,11 +23,10 @@ const Activity = () => {
 		dispatch(_getWonBidEvents(user?.customer.id));
 	}, [dispatch]);
 
+	let unpaid_bids;
 
-	let unpaid_bids
-	
-	if(events ) unpaid_bids= events.filter((item)=>!item.payment_made )
-	
+	if (events) unpaid_bids = events.filter((item) => item.payment_made  == false);
+
 	const content = (
 		<>
 			<div className="flex justify-between py-20">
@@ -44,7 +43,7 @@ const Activity = () => {
 				</div>
 			</div>
 
-			<div >
+			<div>
 				{width >= 790 && events && (
 					<div className={`${styles.won_bid}`}>
 						<div className={`flex justify-between mb-10`}>
@@ -58,29 +57,30 @@ const Activity = () => {
 
 						<div>
 							{unpaid_bids?.map((item, index) => {
-								
 								return (
 									<div
 										key={index}
 										className=" flex items-center justify-between text-2xl mb-20"
 									>
-										<p className={`flex items-center ${styles.item_row}`} >
+										<p className={`flex items-center ${styles.item_row}`}>
 											<img src={item.product.images.main} />
 											<span className="ml-4">
 												{truncateString(item.product.name, 15)}
 											</span>
 										</p>
 										<p>
-											&#x20A6; <span>{Number(item.access_amount).toLocaleString()}</span>
+											&#x20A6;{" "}
+											<span>{Number(item.access_amount).toLocaleString()}</span>
 										</p>
 										<p>
-											&#x20A6; 
+											&#x20A6;
 											<span>
 												{Number(item.minimum_amount).toLocaleString()}
 											</span>
 										</p>
 										<p>
-										&#x20A6; <span>{Number(item.last_amount).toLocaleString()}</span>
+											&#x20A6;{" "}
+											<span>{Number(item.last_amount).toLocaleString()}</span>
 										</p>
 										{/* <p> {new Date(item.start_time).toDateString()}</p>
                   <p> {new Date(item.end_time).toDateString()}</p> */}

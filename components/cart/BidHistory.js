@@ -24,7 +24,15 @@ export const Events = ({ item }) => {
 						{new Date(item.bidding_event.end_time).toDateString()}
 					</div>
 					<div className={`w-10/12`}>
-						<div className={` ${item.paymentApproved || !item.paymentApproved ? "bg-green-600" : "bg-red-600"}  text-white text-2xl p-4`}>{item.paymentApproved || !item.paymentApproved ? "Won" : "LOST"}</div>
+						<div
+							className={` ${
+								item.paymentApproved || !item.paymentApproved
+									? "bg-green-600"
+									: "bg-red-600"
+							}  text-white text-2xl p-4`}
+						>
+							{item.paymentApproved || !item.paymentApproved ? "Won" : "LOST"}
+						</div>
 						<div className={`flex justify-between`}>
 							<h3 className={`${styles.item_row}`}>Items</h3>
 							<h3 className="">Access Bid</h3>
@@ -114,7 +122,7 @@ const BidHistory = () => {
 	const { events } = useSelector((state) => state.events.customer);
 
 	useEffect(() => {
-		dispatch(_getCustomerEvents(user.customer.id));
+		if(user) dispatch(_getCustomerEvents(user.customer.id));
 	}, [dispatch]);
 	return (
 		<div className={`${styles.bid_history} pb-60`}>
@@ -124,9 +132,14 @@ const BidHistory = () => {
 					return <Events key={index} item={item} />;
 				})}
 
-			{events && events.length < 1 && (
+			{events && events.length < 1  && (
 				<p className="justify-center text-center mt-20 ">
 					You haven't participated in any Bidding events
+				</p>
+			)}
+			{!user  && (
+				<p className="justify-center text-center mt-20 ">
+					Please Login to view your History
 				</p>
 			)}
 		</div>

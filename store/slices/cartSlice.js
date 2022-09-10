@@ -11,13 +11,6 @@ const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addCart: (state, action) => {
-			//   state.isLoading = true;
-
-			// state.cart = action.payload;
-			// state.subTotal = action.payload
-			//   .map((event) => event.winner.amount)
-			//   .reduce((prev, next) => prev + next);
-
 			let newEvent = {
 				id: action.payload.id,
 				name: action.payload.product.name,
@@ -32,11 +25,6 @@ const cartSlice = createSlice({
 
 			if (state.cart.length < 1) {
 				state.cart.push(newEvent);
-
-				// state.subTotal = state.cart.reduce(
-				// 	(prev, cur) => Number(prev) + Number(cur.price),
-				// 	0
-				// );
 				toast.success(`${newEvent.name} successfully added to Watchlist`, {
 					autoClose: 4000,
 				});
@@ -44,10 +32,6 @@ const cartSlice = createSlice({
 				let isExist = state.cart.find((event) => event.id == newEvent.id);
 				if (!isExist) {
 					state.cart.push(newEvent);
-					// state.subTotal = state.cart.reduce(
-					// 	(prev, cur) => Number(prev) + Number(cur.price),
-					// 	0
-					// );
 
 					toast.success(`${newEvent.name} successfully added to cart`, {
 						autoClose: 4000,
