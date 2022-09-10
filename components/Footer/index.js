@@ -15,8 +15,7 @@ function Footer() {
 		<footer className={styles.container}>
 			<div className={styles.first_section}>
 				<div
-					// style={{ maxWidth: 1440 }}
-					className={`flex justify-between py-7 align-center w-11/12 mx-auto `}
+					className={`lg:flex lg:justify-between lg:py-7 lg:align-center w-11/12 mx-auto hidden lg:block `}
 				>
 					<div className="my-auto">
 						<Image src={logo} alt="Logo" />
@@ -50,11 +49,8 @@ function Footer() {
 			</div>
 
 			<div className={styles.second_section}>
-				<div
-					style={{ maxWidth: 1440 }}
-					className="flex justify-between py-10 align-center w-11/12 mx-auto"
-				>
-					<div>
+				<div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 justify-between py-10 align-center w-11/12 mx-auto">
+					<div className="my-3 md:my-1 lg:my-1">
 						<ul>
 							<li className="font-semibold pb-4 text-3xl tracking-wider">
 								Help
@@ -70,30 +66,10 @@ function Footer() {
 									<a>How Zozo Works </a>
 								</li>
 							</Link>
-							{/* <Link href="/">
-                <li>
-                  <a>Tips & Features</a>
-                </li>
-              </Link> */}
-							{/* <Link href="/">
-                <li>
-                  <a>Zozo Auctions </a>
-                </li>
-              </Link> */}
-							{/* <Link href="/">
-                <li>
-                  <a>Order & shiping </a>
-                </li>
-              </Link> */}
-							{/* <Link href="/">
-                <li>
-                  <a>Payments </a>
-                </li>
-              </Link> */}
 						</ul>
 					</div>
 
-					<div>
+					<div className="my-7 md:my-1 lg:my-1">
 						<ul className=" border-l border-slate-200 pl-4">
 							<li className="font-semibold pb-4 text-3xl tracking-wider">
 								Information{" "}
@@ -109,20 +85,10 @@ function Footer() {
 									<a>Privacy Policy </a>
 								</li>
 							</Link>
-							{/* <Link href="/">
-                <li>
-                  <a>Sitemap</a>
-                </li>
-              </Link>
-              <Link href="/">
-                <li>
-                  <a>Partnership </a>
-                </li>
-              </Link> */}
 						</ul>
 					</div>
 
-					<div>
+					<div className="my-7 md:my-1 lg:my-1">
 						<ul className=" border-l border-slate-200 pl-4">
 							<li className="font-semibold pb-4 text-3xl tracking-wider">
 								About Us
@@ -142,7 +108,7 @@ function Footer() {
 						</ul>
 					</div>
 
-					<div className="w-3/12">
+					<div className="my-7 md:my-1 lg:my-1">
 						<p className="mb-4">
 							{`Nigeria's leading online penny auction platform for high quality
 							products and offerings to help you afford your best life.`}
@@ -178,31 +144,17 @@ function Footer() {
 			<div
 				className={`${styles.third_section} border-t-2 py-10 border-slate-100`}
 			>
-				<div className="flex justify-around py-6 align-center w-1/4 mx-auto">
-					<div className={styles.img_cover}>
+				<div className="flex  justify-around py-6 align-center w-3/4 lg:w-1/4 md:w-1/4 mx-auto">
+					<div className={`${styles.img_cover} mx-4`}>
 						<Linkedin />
 					</div>
-					<div className={styles.img_cover}>
+					<div className={`${styles.img_cover} mx-4`}>
 						<Image src={facebook} alt="facebook" width={20} />
 					</div>
-					<div className={styles.img_cover}>
+					<div className={`${styles.img_cover} mx-4 l`}>
 						<Image src={twitter} alt="twitter" width={20} />
 					</div>
 				</div>
-
-				{/* <div className="flex justify-around py-6 align-center w-1/4 mx-auto">
-          <Link href="/">
-            <a>Terms</a>
-          </Link>
-
-          <Link href="/">
-            <a>Privacy</a>
-          </Link>
-
-          <Link href="/">
-            <a>Cookies</a>
-          </Link>
-        </div> */}
 			</div>
 		</footer>
 	);
