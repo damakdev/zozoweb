@@ -43,7 +43,6 @@ function Dashboard() {
 		topAuctions = arraySort
 			.sort((a, b) => Number(b.access_amount) - Number(a.access_amount))
 			.slice(0, 5);
-		console.log(topAuctions);
 	}
 	const viewDetails = () => {
 		setModalDisplay((modalDisplay) => !modalDisplay);
@@ -325,3 +324,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+Dashboard.requireAdminAuth = true;

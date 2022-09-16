@@ -40,13 +40,13 @@ const Wishlist = () => {
 
 			<div className=" ">
 				{cart.length < 1 && (
-					<div className={` ${styles.cart} bg-white w-10/12 mx-auto  mt-10 `}>
+					<div className={` ${styles.cart} bg-white lg:w-10/12  sm:w-full mx-auto mb-20 lg:mb-10 lg:mt-10 `}>
 						<div className="flex items-center justify-center  mt-20">
 							<div className="mr-5">
 								<Image src={box1} alt="cart" width={200} height={200} />
 							</div>
 							<div>
-								<h1 className="text-black ">Your Zozo Watchlist is empty</h1>
+								<h1 className="text-black   ">Your Zozo Watchlist is empty</h1>
 
 								<div className="flex flex-col lg:flex-row md:flex-row justify-center">
 									{!user && (

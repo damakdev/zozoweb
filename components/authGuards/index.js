@@ -40,7 +40,7 @@ export function AdminAuthGuard({ children }) {
 
   useEffect(() => {
     if (!user) {
-      router.push("/");
+      router.push("/admin/login");
     }
   }, [user, router]);
 

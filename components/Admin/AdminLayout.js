@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import AdminSidebar from "./Sidebar";
-
 import styles from "../../styles/admin/admin-layout.module.scss";
 import Navbar from "./Navbar";
 
@@ -20,3 +19,5 @@ function AdminLayout({ children }) {
 }
 
 export default AdminLayout;
+
+AdminLayout.requireAdminAuth = true;

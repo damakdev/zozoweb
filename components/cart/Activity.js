@@ -25,7 +25,7 @@ const Activity = () => {
 
 	let unpaid_bids;
 
-	if (events) unpaid_bids = events.filter((item) => item.payment_made  == false);
+	if (events) unpaid_bids = events.filter((item) => item.payment_made == false);
 
 	const content = (
 		<>
@@ -128,23 +128,26 @@ const Activity = () => {
 		</>
 	);
 	return (
-		<div className="activity_form w-11/12 mx-auto mt-20">
+		<div className={`activity_form w-11/12 mx-auto mt-20`}>
 			{loading ? (
-				<div>Loading...</div>
+				<div className="pb-5">Loading...</div>
 			) : (
 				<div>
 					{unpaid_bids?.length > 0 ? (
 						content
 					) : (
-						<div className="mt-40">
+						<div className={`lg:mt-40 ${styles.won_bids}`}>
 							{" "}
-							<h3 className="text-center mt-20"> No Won Bids</h3>{" "}
+							<h3 className="text-center lg:mt-20 text-3xl ">
+								{" "}
+								No Won Bids
+							</h3>{" "}
 							<Link href="/">
 								<Button
 									name="Continue Shopping"
-									paddingY="15px"
+									paddingY="12px"
 									width="90%"
-									className="mt-20 ml-10"
+									className="lg:mt-20 mt-5 ml-10 mb-10"
 								/>
 							</Link>
 						</div>

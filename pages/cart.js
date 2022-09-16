@@ -29,7 +29,7 @@ const Cart = () => {
 
 	return (
 		<CustomerLayout>
-			<h1>Your BIDS</h1>
+			<h1 className="text-5xl pt-10 pl-5">Your Bids</h1>
 			<div className={` flex  flex-col md:flex-row gap-20 mt-16 `}>
 				<div className={`${styles.wrapper} bg-white  lg:px-10 pt-10 w-full `}>
 					<div className={`${styles.nav} flex justify-between px-4 lg:w-6/12`}>
