@@ -102,7 +102,7 @@ export function Card({ product }) {
     if (user) {
       return;
     }
-    toast.warning("Login to continue!");
+    toast.info("Login to continue!");
   }
 
   return (

@@ -3,15 +3,31 @@
   .preview {
     display: flex;
     gap: 0 4rem;
-    svg {
+    position: relative;
+    & > span {
+      position: absolute;
+      // top: 0;
+      // background-color: var(--bg-white);
+      // height: 3rem;
+      // width: 3rem;
+      // border-radius: 50%;
+      // margin: 1rem;
+      svg {
+        // width: 2rem;
+        // height: 2rem;
+        cursor: pointer;
+      }
+    }
+    & > svg {
       // width: 25rem;
       path {
       }
     }
     img {
-      width: 30rem;
-      height: 27.4rem;
+      width: 27rem;
+      height: 27rem;
       object-fit: cover;
+      border-radius: 50%;
     }
     & > div {
       display: flex;
@@ -97,7 +113,7 @@
           p {
             font-size: 1.1rem;
           }
-          span {
+          & > span {
             display: flex;
             align-items: center;
             column-gap: 1rem;
@@ -113,15 +129,21 @@
             font-weight: 500;
             line-height: 1;
           }
-          input {
+          input,
+          select {
             font-size: 1.2rem;
             font-weight: 500;
             background-color: transparent;
             border-bottom: 1px solid #cccccc;
             padding-inline: 1rem;
             width: 30rem;
+            height: 27.25px;
             transition: all 0.3s;
             &:disabled {
+              border-bottom: 1px solid transparent;
+            }
+            &:focus-visible {
+              outline: 1px solid var(--accent-color);
               border-bottom: 1px solid transparent;
             }
           }

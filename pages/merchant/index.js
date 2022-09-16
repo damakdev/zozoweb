@@ -8,7 +8,10 @@ export default function Index() {
   const router = useRouter();
   const { token } = useSelector((state) => state.auth.merchant);
 
-  if (token) router.push("/merchant/dashboard");
+  if (token) {
+    router.push("/merchant/dashboard")
+    return
+  };
 
   return (
     <section className={styles.container}>

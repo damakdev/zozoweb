@@ -71,3 +71,7 @@ export function updateProfile(merchant_id) {
 export function updateAddress(merchant_id, body) {
   return axios.patch(`/merchant/address/${merchant_id}`, body);
 }
+
+export function addBankAccount(merchant_id, body) {
+  return axios.post(`/merchant/bank/${merchant_id}`, body);
+}

@@ -12,7 +12,7 @@ import { ToastContainer, Zoom, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.scss";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   axios.interceptors.request.use(
@@ -76,23 +76,23 @@ function MyApp({ Component, pageProps }) {
         transition={Zoom}
       />
       <PersistGate loading={null} persistor={persistor}>
-        {Component.requireMerchantAuth ? (
-          <MerchantAuthGuard>
+        <Layout key={router.route}>
+          {Component.requireMerchantAuth ? (
+            <MerchantAuthGuard>
+              <Component {...pageProps} />
+            </MerchantAuthGuard>
+          ) : Component.requireCustomerAuth ? (
+            <CustomerAuthGuard>
+              <Component {...pageProps} />
+            </CustomerAuthGuard>
+          ) : Component.requireAdminAuth ? (
+            <AdminAuthGuard>
+              <Component {...pageProps} />
+            </AdminAuthGuard>
+          ) : (
             <Component {...pageProps} />
-          </MerchantAuthGuard>
-        ) : Component.requireCustomerAuth ? (
-          <CustomerAuthGuard>
-            <Component {...pageProps} />
-          </CustomerAuthGuard>
-        ) : Component.requireAdminAuth ? (
-          <AdminAuthGuard>
-            <Component {...pageProps} />
-          </AdminAuthGuard>
-        ) : (
-          <Component {...pageProps} />
-        )}
-        {/* <Layout>
-				</Layout> */}
+          )}
+        </Layout>
       </PersistGate>
     </Provider>
   );
