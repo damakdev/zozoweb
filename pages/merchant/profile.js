@@ -1,115 +1,161 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { merchantUpdate } from "../../store/slices/authSlice";
-import { updateProfile, updateAddress } from "../../services/merchant";
+import { updateProfile, updateAddress, addBankAccount } from "../../services/merchant";
+import { uploadAvatar, updateAvatar } from "../../services/profile";
 import { ClipLoader } from "react-spinners";
+import { Widget } from "@uploadcare/react-widget";
 import {
   CheckMark,
   LocationIcon,
   EditIcon,
   ProfileCircleIcon,
 } from "../../public/svg/icons";
+import axios from "axios";
 import MerchantLayout from "../../components/MerchantLayout";
+import Select from "react-select";
 import Button from "../../components/ui/button/";
 import styles from "../../styles/merchant/profile.module.scss";
+import { toast } from "react-toastify";
 
 function Profile() {
+  const widgetApi = useRef();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth.merchant);
+  const [banks, setBanks] = useState(null)
   const [activeTab, setActiveTab] = useState("about");
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [about, setAbout] = useState({
-    firstName: user.first_name,
-    lastName: user.last_name,
-    email: user.email,
-    number: user.phone_number,
-    state: user.address.state,
-    city: user.address.city,
-    address: user.address.street,
-    zipCode: user.address.zip_code,
-    bankName: "",
+  const [profileData, setProfileData] = useState({
+    firstName: user?.first_name,
+    lastName: user?.last_name,
+    email: user?.email,
+    number: user?.phone_number,
+    state: user?.address.state,
+    city: user?.address.city,
+    address: user?.address.street,
+    zipCode: user?.address.zip_code,
+    image: user?.avatar,
+    bankCode: "",
     accountName: "",
     accountNumber: "",
   });
 
   function updateForm(e) {
     const { name, value } = e.target;
-    setAbout({
-      ...about,
+    setProfileData({
+      ...profileData,
       [name]: value,
     });
+  }
+
+  function uploadImageHandler(e) {
+    const { cdnUrl } = e;
+    setProfileData({ ...profileData, image: cdnUrl });
+    uploadAvatar(user.merchant.account_id, { avatar: cdnUrl }).then((response) => {
+      console.log(response)
+      toast.success("Updated successfully")
+    }).catch(() => {
+      setLoading(false)
+      toast.error("An error occurred")
+    })
+
   }
 
   function updateUserProfile() {
     setLoading(true);
     const body = {
-      first_name: about.firstName,
-      last_name: about.lastName,
-      phone_number: about.number,
+      first_name: profileData.firstName,
+      last_name: profileData.lastName,
+      phone_number: profileData.number,
     };
     console.log(body);
     updateProfile(user.merchant.id, body).then((response) => {
       console.log(response);
-      // dispatch(merchantUpdate(user.merchant.id));
       setLoading(false);
-    });
+      toast.success("Updated successfully")
+      // dispatch(merchantUpdate(user.merchant.id));
+    }).catch(() => {
+      setLoading(false)
+      toast.error("An error occurred")
+    })
   }
+
   function updateUserAddress() {
     setLoading(true);
     const body = {
-      street: user.address,
-      city: user.city,
-      country: user.country,
-      state: user.state,
-      zip_code: user.zipCode,
+      street: profileData.address,
+      city: profileData.city,
+      country: "nigeria",
+      state: profileData.state,
+      zip_code: profileData.zipCode,
     };
     updateAddress(user.merchant.id, body).then((response) => {
-      console.log(response);
-      // dispatch(merchantUpdate(user.merchant.id));
       setLoading(false);
-    });
+      console.log(response);
+      toast.success("Updated successfully")
+    }).catch(() => {
+      setLoading(false)
+      toast.error("An error occurred")
+    })
   }
 
   function updateUserBank() {
     setLoading(true);
-    // const body = {
-    //   street: user.address,
-    //   city: user.city,
-    //   country: user.country,
-    //   state: user.state,
-    //   zip_code: user.zipCode,
-    // };
-    // updateAddress(user.merchant.id, body).then((response) => {
-    //   console.log(response);
-    //   // dispatch(merchantUpdate(user.merchant.id));
-    //   setLoading(false);
-    // });
+    const body = {
+      account_name: profileData.accountName,
+      account_number: profileData.accountNumber,
+      bank_code: profileData.bankCode,
+      bank_name: banks.find((bank) => bank.code === profileData.bankCode).name,
+    };
+    console.log(body);
+    addBankAccount(user.merchant.id, body).then((response) => {
+      console.log(response);
+      setLoading(false);
+    }).catch(() => {
+      setLoading(false)
+      toast.error("An error occurred")
+    })
+  }
+
+  function getAllBanks() {
+    axios.get(`https://api.paystack.co/bank`).then((response) => setBanks(response.data.data))
   }
 
   return (
     <MerchantLayout title="My Profile">
       <div className={styles.container}>
         <div className={styles.preview}>
-          {/* <motion.img
-            src="https://s3-alpha-sig.figma.com/img/9d62/547e/6dbdbf0baf2c07237eb5d13020a5ba0b?Expires=1662940800&Signature=dnAV6I6XtGt~5xfD5K1HVfguvYL4~C~jf57Z09h1GQd42TFFGgUbBFRFM2c53Ub6FEkIrY-8NNCTobvqFSXuQHs0MI7YdWO5~cKv3~fG9gC4UjbVS7-gK2KbGGROqfFCmJrHJgWtamqGEOebPikb3MQRC8HexGioLylRiiRJR9W2Hu5VSiGPfoS44-H2Epdh6N4s3nHZFfJipZBclf3cFFw3WMbWcQOy9IsguizETa-UxjMi9JGmBfY3A6N1WWcmK7-2TeSt1HQv6U018thg2eOUZH5vxfYdJhMquvCTtTVSrb8Dznn-RTkpdOpcFnun6T1q~b0pLn1bA2sLkVsobg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
+          {profileData.image && <motion.img
+            src={profileData.image}
             alt=""
-          /> */}
-          <svg
+          />}
+          <span onClick={() => widgetApi.current.openDialog()}>
+            <EditIcon />
+          </span>
+          <div style={{ display: "none", position: "fixed" }} className="uploadcare-button">
+            <Widget
+              ref={widgetApi}
+              onChange={uploadImageHandler}
+              publicKey="db374fee85cbc01904a3"
+            />
+          </div>
+          {!profileData.image && <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={0.8}
             stroke="currentColor"
-            width="25rem"
+            width="27rem"
+            height="27rem"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
               d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
             />
-          </svg>
+          </svg>}
 
           <div>
             <h1>{`${user?.first_name} ${user?.last_name}`}</h1>
@@ -154,6 +200,7 @@ function Profile() {
               onClick={() => {
                 setActiveTab("bank");
                 setEdit(false);
+                getAllBanks()
               }}
               className={activeTab === "bank" ? styles.active : ""}
             >
@@ -163,8 +210,8 @@ function Profile() {
           <AnimatePresence>
             {activeTab === "about" && (
               <motion.div
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ x: "-100%", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
                 transition={{ type: "tween" }}
               >
                 <ul>
@@ -183,7 +230,7 @@ function Profile() {
                     <input
                       type="text"
                       name="firstName"
-                      value={about.firstName}
+                      value={profileData.firstName}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -193,7 +240,7 @@ function Profile() {
                     <input
                       type="text"
                       name="lastName"
-                      value={about.lastName}
+                      value={profileData.lastName}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -203,7 +250,7 @@ function Profile() {
                     <input
                       type="text"
                       name="email"
-                      value={about.email}
+                      value={profileData.email}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -213,7 +260,7 @@ function Profile() {
                     <input
                       type="number"
                       name="number"
-                      value={about.number}
+                      value={profileData.number}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -233,8 +280,8 @@ function Profile() {
           <AnimatePresence>
             {activeTab === "address" && (
               <motion.div
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ x: "-100%", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
                 transition={{ type: "tween" }}
               >
                 <ul>
@@ -253,7 +300,7 @@ function Profile() {
                     <input
                       type="text"
                       name="state"
-                      value={about.state}
+                      value={profileData.state}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -263,7 +310,7 @@ function Profile() {
                     <input
                       type="text"
                       name="city"
-                      value={about.city}
+                      value={profileData.city}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -273,7 +320,7 @@ function Profile() {
                     <input
                       type="text"
                       name="address"
-                      value={about.address}
+                      value={profileData.address}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -283,7 +330,7 @@ function Profile() {
                     <input
                       type="number"
                       name="zipCode"
-                      value={about.zipCode}
+                      value={profileData.zipCode}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -302,8 +349,8 @@ function Profile() {
           <AnimatePresence>
             {activeTab === "bank" && (
               <motion.div
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ x: "-100%", opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
                 transition={{ type: "tween" }}
               >
                 <ul>
@@ -318,21 +365,24 @@ function Profile() {
                     </span>
                   </li>
                   <li>
-                    <label htmlFor="bankName">Bank Name</label>
-                    <input
-                      type="text"
-                      name="bankName"
-                      value={about.bankName}
-                      onChange={updateForm}
+                    <label htmlFor="bankCode">Bank Name</label>
+                    <select name="bankCode" id="bankCode"
                       disabled={!edit}
-                    />
+                      value={profileData.bankCode}
+                      onChange={updateForm}
+                    >
+                      <option value="" disabled>{banks ? "Select Bank" : "Loading Banks..."}</option>
+                      {banks?.map((bank) => <option key={bank.id} value={bank.code}>
+                        {bank.name}
+                      </option>)}
+                    </select>
                   </li>
                   <li>
                     <label htmlFor="accountName">Account Name</label>
                     <input
                       type="text"
                       name="accountName"
-                      value={about.accountName}
+                      value={profileData.accountName}
                       onChange={updateForm}
                       disabled={!edit}
                     />
@@ -342,7 +392,7 @@ function Profile() {
                     <input
                       type="text"
                       name="accountNumber"
-                      value={about.accountNumber}
+                      value={profileData.accountNumber}
                       onChange={updateForm}
                       disabled={!edit}
                     />
