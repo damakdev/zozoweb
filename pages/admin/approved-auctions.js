@@ -4,8 +4,13 @@ import Table from "../../components/Table/Table";
 import Modal from "../../components/modal/modal";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { adminSingleEvent, getAllEventsList } from "../../services/admin";
 import {
+	adminSingleEvent,
+	getAllApprovedEventsList,
+	getAllEventsList,
+} from "../../services/admin";
+import {
+	getAllApprovedEvents,
 	getAllEvents,
 	getSingleEvent,
 } from "../../store/slices/adminSlice/adminEventSlice";
@@ -16,7 +21,7 @@ import useWindowDimension from "../../hooks/useWindowDimension";
 import styles from "../../styles/admin/customerMgt.module.scss";
 import Button from "../../components/ui/Button";
 
-function Bids() {
+function ApprovedBids() {
 	const [modalDisplay, setModalDisplay] = useState(false);
 	const { width } = useWindowDimension();
 	const dispatch = useDispatch();
@@ -38,7 +43,7 @@ function Bids() {
 	};
 
 	useEffect(() => {
-		dispatch(getAllEvents());
+		dispatch(getAllApprovedEvents());
 	}, [dispatch]);
 
 	const thead = [
@@ -54,13 +59,16 @@ function Bids() {
 	];
 
 	const paginatedData = paginate(allEvent, currentPage, pageSize);
-	console.log(paginatedData)
+	console.log(paginatedData);
 
 	return (
 		<AdminLayout>
-			<div className="pt-10 pb-20 mt-1" style={{ backgroundColor: "#E5E5E5" }}>
-				<h3 className="py-20 text-5xl font-semibold pl-20 mt-1 text-semibold text-black">
-					Bids
+			<div
+				className="pt-10 pb-20 w-11/12 mx-auto mt-1"
+				style={{ backgroundColor: "#E5E5E5" }}
+			>
+				<h3 className="py-20 text-5xl font-semibold  mt-1 text-semibold text-black">
+					Approved Bids
 				</h3>
 
 				{!allEvent ? (
@@ -155,17 +163,17 @@ function Bids() {
 				close={viewDetails}
 				height="500px"
 			>
-				<div className={` overflow-y-auto`}>
+				<div className={` overflow-y-auto w-full`}>
 					{!event ? (
 						<div className="" style={{ marginTop: "25%" }}>
 							<Loader />
 						</div>
 					) : (
 						<>
-							<div className=" w-5/12  mx-auto items-center">
+							<div className=" flex justify-center  items-center ">
 								<img
 									src={event.product.images.main}
-									className="rounded-lg h-4/12 "
+									className="rounded-lg w-3/12 "
 								/>
 							</div>
 							<div
@@ -253,4 +261,5 @@ function Bids() {
 	);
 }
 
-export default Bids;
+export default ApprovedBids;
+ApprovedBids.requireAdminAuth = true;

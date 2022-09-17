@@ -5,7 +5,7 @@ import {
 	singleCustomer,
 	verifyUser,
 } from "../../store/slices/adminSlice/usersSlice";
-
+import { useRouter } from "next/router";
 import Image from "next/image";
 import AdminLayout from "../../components/Admin/AdminLayout";
 import Modal from "../../components/modal/modal";
@@ -28,7 +28,7 @@ function CustomerMgt() {
 		"Verification Status",
 	];
 	const [modalDisplay, setModalDisplay] = useState(false);
-
+	const router = useRouter();
 	const [currentPage, setCurrentPage] = useState(1);
 	const { width } = useWindowDimension();
 	const pageSize = 10;
@@ -202,13 +202,15 @@ function CustomerMgt() {
 												isBoxShadow={true}
 												border="none"
 												className="mt-3 lg:mt-1"
-												onClick={() =>
+												onClick={() => {
 													dispatch(
 														verifyUser({
 															account_id: user.account.id.toString(),
 														})
-													)
-												}
+													);
+													
+													router.reload(window.location.pathname);
+												}}
 											/>
 										)}
 									</div>
@@ -257,3 +259,4 @@ function CustomerMgt() {
 }
 
 export default CustomerMgt;
+CustomerMgt.requireAdminAuth = true;

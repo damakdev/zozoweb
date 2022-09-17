@@ -5,7 +5,7 @@ import Modal from "../../components/modal/modal";
 import Image from "next/image";
 import Button from "../../components/ui/Button";
 
-function Bids() {
+function CashoutRequest() {
 	const [modalDisplay, setModalDisplay] = useState(false);
 
 	const viewDetails = () => {
@@ -82,4 +82,5 @@ function Bids() {
 	);
 }
 
-export default Bids;
+export default CashoutRequest;
+CashoutRequest.requireAdminAuth = true;

@@ -50,7 +50,7 @@ function Table({
 	const tableRef = useRef(null);
 	return (
 		<>
-			<div className="flex mb-10 flex-row-reverse mr-20">
+			<div className="flex mb-10 flex-row-reverse">
 				{isExport && (
 					<DownloadTableExcel
 						filename="Zozo information"
@@ -153,7 +153,7 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										<td>{item.id}</td>
+										<td>{item.newIndex}</td>
 										<td>{new Date(item.account.createdAt).toDateString()}</td>
 										<td>{item.account.first_name}</td>
 										<td>{item.account.last_name}</td>
@@ -233,7 +233,7 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										<td>{item.id}</td>
+										<td>{item.newIndex}</td>
 										<td>{truncateString(item.product.name, 20)}</td>
 										<td>{formatAmount(item.access_amount)}</td>
 										<td>{formatAmount(item.minimum_amount)}</td>
@@ -264,19 +264,27 @@ function Table({
 								);
 							})}
 
-						{name == "eventMgt" &&
+						{name == "allAuctions" &&
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
 										{/* <td>
 										<input type="checkbox" />
 									</td> */}
-										<td>{item.id}</td>
+										<td>{item.newIndex}</td>
 										<td>{item.product.name.substr(0, 22)}</td>
 										<td>{new Date(item.start_time).toDateString()}</td>
 										<td>{new Date(item.end_time).toDateString()}</td>
 										<td>{item.merchant_name}</td>
-										<td>{eventStatus(item.approved)}</td>
+										<td>
+											<span
+												className={`${
+													item.approved ? "text-green-600 " : "text-red-600 "
+												} text-2xl`}
+											>
+												{item.approved ? "Verified" : "Unverified"}
+											</span>
+										</td>
 										<td>{formatAmount(item.minimum_amount)}</td>
 										<td
 											onClick={() => viewDetails(item.id)}
@@ -414,13 +422,12 @@ function Table({
 								return (
 									<tr key={index}>
 										<td className="flex items-center ">{item.id}</td>
-										<td className="capitalize">{item.merchant.account.last_name} {item.merchant.account.first_name}</td>
-										<td >
-												{item.merchant.account.email}{" "}
-											</td>
-											<td >
-												{item.merchant.account.phone_number}
-											</td>
+										<td className="capitalize">
+											{item.merchant.account.last_name}{" "}
+											{item.merchant.account.first_name}
+										</td>
+										<td>{item.merchant.account.email} </td>
+										<td>{item.merchant.account.phone_number}</td>
 										<td>{formatAmount(item.escrow_balance)}</td>
 										<td>{formatAmount(item.withdrawable)}</td>
 									</tr>

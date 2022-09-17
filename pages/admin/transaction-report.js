@@ -56,3 +56,4 @@ function TransactionReport() {
 }
 
 export default TransactionReport;
+TransactionReport.requireAdminAuth = true;

@@ -252,3 +252,4 @@ function UserMgt() {
 }
 
 export default UserMgt;
+UserMgt.requireAdminAuth = true;

@@ -48,3 +48,4 @@ function WithdrawRequest() {
 }
 
 export default WithdrawRequest;
+WithdrawRequest.requireAdminAuth = true;

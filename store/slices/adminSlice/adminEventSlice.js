@@ -8,6 +8,7 @@ import {
 	cancelBidEvent,
 	createCategory,
 	approveBid,
+	getAllApprovedEventsList,
 } from "../../../services/admin";
 
 const initialState = {
@@ -32,6 +33,13 @@ export const _createCategory = createAsyncThunk(
 		return await createCategory(body);
 	}
 );
+export const getAllApprovedEvents = createAsyncThunk(
+	"events/getAllEvents",
+	async () => {
+		return await getAllApprovedEventsList();
+	}
+);
+
 export const getAllEvents = createAsyncThunk(
 	"events/getAllEvents",
 	async () => {
@@ -72,7 +80,7 @@ const adminEventSlice = createSlice({
 		},
 		[getAllEvents.fulfilled]: (state, action) => {
 			state.allEvents.isLoading = false;
-			state.allEvents.allEvent = action.payload.data.bidding_event;
+			state.allEvents.allEvent = action.payload.data.bidding_event.sort((a,b)=>b.id - a.id).map((el, index)=>({...el, newIndex : ++index}));;
 		},
 
 		[getSingleEvent.pending]: (state) => {

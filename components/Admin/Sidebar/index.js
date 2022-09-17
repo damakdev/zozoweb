@@ -15,6 +15,7 @@ import {
 	AdminMerchant,
 	AdminTransaction,
 	AdminDefault,
+	LogOutIcon,
 } from "../../../public/svg/icons";
 import styles from "../../../styles/admin/admin-sidebar.module.scss";
 import useWindowDimension from "../../../hooks/useWindowDimension";
@@ -48,13 +49,19 @@ function AdminSidebar({ showSidebar }) {
 			active: <AdminTransaction fill="#743B96" />,
 			url: "/admin/transaction-report",
 		},
-		{ title: "Bid", icon: <AdminDefault />, url: "/admin/bids" },
 		{
-			title: "Auction",
+			title: "All Auctions",
 			icon: <AdminDefault fill="#D5C4DF" />,
 			active: <AdminDefault fill="#743B96" />,
-			url: "/admin/event-management",
+			url: "/admin/all-auctions",
 		},
+		{
+			title: "Approved Auctions",
+			icon: <AdminDefault fill="#D5C4DF" />,
+			active: <AdminDefault fill="#743B96" />,
+			url: "/admin/approved-auctions",
+		},
+
 		{
 			title: "CMS",
 			icon: <AdminDefault ill="#D5C4DF" />,
@@ -121,6 +128,15 @@ function AdminSidebar({ showSidebar }) {
 								</Link>
 							</>
 						))}
+
+						{/* <li
+							className={`flex items-center   cursor-pointer`}
+						>
+							<button onClick={() => setModalDisplay(true)}>
+								<LogOutIcon />
+								<span className=" ml-3 text-white text-2xl">Log out</span>
+							</button>
+						</li> */}
 					</ul>
 				</div>
 			)}

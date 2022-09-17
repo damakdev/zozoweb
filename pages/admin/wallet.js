@@ -245,3 +245,4 @@ function Wallet() {
 }
 
 export default Wallet;
+Wallet.requireAdminAuth = true;

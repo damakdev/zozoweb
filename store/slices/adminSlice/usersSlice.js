@@ -28,9 +28,9 @@ const initialState = {
 		merchantDetailsLoading: false,
 		user: null,
 	},
-	verifyUser:{
-		isLoading:false
-	}
+	verifyUser: {
+		isLoading: false,
+	},
 };
 
 // CUSTOMERS
@@ -51,7 +51,6 @@ export const verifyUser = createAsyncThunk("users/verifyUser", async (body) => {
 
 //MERCHANT
 export const merchantList = createAsyncThunk("users/merchantList", async () => {
-	
 	return await getMerchants();
 });
 
@@ -73,14 +72,16 @@ export const usersSlice = createSlice({
 		},
 		[customerList.fulfilled]: (state, action) => {
 			state.customers.isLoading = false;
-			state.customers.users = action.payload.data.customer;
+		
+		
+			state.customers.users = action.payload.data.customer.sort((a,b)=>b.id - a.id).map((el, index)=>({...el, newIndex : ++index}));
 		},
 
 		[singleCustomer.pending]: (state) => {
 			state.customerDetails.customerDetailsLoading = true;
 		},
 		[singleCustomer.fulfilled]: (state, action) => {
-			state.customerDetails.customerDetailsLoading= false;
+			state.customerDetails.customerDetailsLoading = false;
 			state.customerDetails.user = action.payload.data.customer;
 		},
 
@@ -97,21 +98,24 @@ export const usersSlice = createSlice({
 			state.merchantDetails.merchantDetailsLoading = true;
 		},
 		[singleMerchant.fulfilled]: (state, action) => {
-			state.merchantDetails.merchantDetailsLoading= false;
+			state.merchantDetails.merchantDetailsLoading = false;
 			state.merchantDetails.user = action.payload.data.merchant;
 		},
 
 		//VERIFY USER
-		[verifyUser.pending]: (state)=>{
-			state.verifyUser.isLoading = true
+		[verifyUser.pending]: (state) => {
+			state.verifyUser.isLoading = true;
 		},
 
-		[verifyUser.fulfilled]: (state)=>{
-			state.verifyUser.isLoading = false
-			toast.success("User verified Successfully", {
-				autoClose: 4000
-			})
-		}
+		[verifyUser.fulfilled]: (state) => {
+			state.verifyUser.isLoading = false;
+			setTimeout(()=>{
+				toast.success("User verified Successfully", {
+					autoClose: 4000,
+				});
+			},1000)
+			
+		},
 	},
 });
 

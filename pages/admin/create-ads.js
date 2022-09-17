@@ -44,3 +44,4 @@ function CreateAd() {
 }
 
 export default CreateAd;
+CreateAd.requireAdminAuth = true;

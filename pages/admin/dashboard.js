@@ -183,11 +183,7 @@ function Dashboard() {
 				<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 					<h3 className=" ml-6 mb-10">Top Auctions by Bids</h3>
 
-					{allEvent && allEvent.isLoading ? (
-						<div className="py-10">
-							<Loader />
-						</div>
-					) : (
+					{allEvent && (
 						<>
 							<div className="bg-gray-100 py-9">
 								<div className="flex justify-around  mx-auto  font-semibold w-11/12">
@@ -197,6 +193,11 @@ function Dashboard() {
 								</div>
 							</div>
 
+							{!topAuctions && (
+								<div className="py-10">
+									<Loader />
+								</div>
+							)}
 							{topAuctions &&
 								topAuctions.map((item, index) => {
 									return (
