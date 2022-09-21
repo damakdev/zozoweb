@@ -22,9 +22,7 @@ export default function Index() {
 	const { loading, token } = useSelector((state) => state.auth.admin);
 
 	async function loginHandler(e) {
-    console.log(password)
 		e.preventDefault();
-		console.log("yh");
 		dispatch(loginAdmin({ email, password }));
 	}
 
@@ -86,8 +84,7 @@ export default function Index() {
 				</div>
 
 				<Button onClick={loginHandler}>
-          Log in
-					{/* {loading ? <ClipLoader color="#ffffff" size={15} /> : "Log In"} */}
+					{loading ? <ClipLoader color="#ffffff" size={15} /> : "Log In"}
 				</Button>
 
 				<p>

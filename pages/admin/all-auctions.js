@@ -16,12 +16,6 @@ import {
 	getProducts,
 	createBidEvent,
 } from "../../services/merchant";
-// import {
-// 	adminAddProduct,
-// 	adminSingleEvent,
-// 	getAllEventsList,
-// 	// createBidEvent,
-// } from "../../services/admin";
 import {
 	getAllEvents,
 	getSingleEvent,
@@ -33,7 +27,7 @@ import {
 } from "../../store/slices/adminSlice/adminEventSlice";
 import { formatNumber, truncateString } from "../../utils";
 import styles from "../../styles/admin/merchant-events.module.scss";
-import { DeleteIcon, Plus } from "../../public/svg/icons";
+import { DeleteIcon, ExclamationIcon, Plus } from "../../public/svg/icons";
 import { getAllCategories } from "../../services/customer";
 import { toast } from "react-toastify";
 import Pagination from "../../components/Pagination";
@@ -197,7 +191,6 @@ function AllBids() {
 			merchant_id: "1",
 			// merchant_id: user.merchant.id.toString(),
 		};
-		console.log(body);
 		addProduct(body)
 			.then((response) => {
 				setLoading(false);
@@ -295,11 +288,25 @@ function AllBids() {
 					</div>
 				)}
 
-				{!allEvent ? (
+				{isLoading && (
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
 						<Loader />
 					</div>
-				) : width >= 780 ? (
+				)}
+
+				{paginatedData.length < 1 && (
+					<div className=" h-screen">
+						<div
+							className="flex justify-center mt-20 text-2xl lg:text-4xl items-center"
+							style={{ color: "#743B96", marginTop: "120px" }}
+						>
+							<ExclamationIcon width="35" />
+							<span className="pl-5">No Auctions</span>
+						</div>
+					</div>
+				)}
+
+				{paginatedData.length > 0 && width >= 780 && (
 					<>
 						<Table
 							name="allAuctions"
@@ -318,7 +325,9 @@ function AllBids() {
 							pageSize={pageSize}
 						/>
 					</>
-				) : (
+				)}
+
+				{paginatedData.length > 0 && width < 780 && (
 					<>
 						{paginatedData.map((item, index) => {
 							return (

@@ -8,7 +8,7 @@ import Modal from "../../components/modal/modal";
 import Image from "next/image";
 import Button from "../../components/ui/Button";
 import Link from "next/link";
-import { Bag, Car, Chain } from "../../public/svg/icons";
+import { Bag, Car, Chain, ExclamationIcon } from "../../public/svg/icons";
 import { useSelector, useDispatch } from "react-redux";
 import {
 	customerList,
@@ -32,7 +32,6 @@ function Dashboard() {
 		dispatch(getAllEvents());
 	}, [dispatch]);
 
-	// console.log(allEvent);
 	let fiveMerchant;
 	let fiveCustomer;
 	let topAuctions;
@@ -61,11 +60,13 @@ function Dashboard() {
 				<div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 mt-10  gap-4">
 					<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 						<h3 className=" ml-6 mb-10">Customer list</h3>
-						{customers && merchants.isLoading ? (
+						{customers.isLoading && !fiveCustomer && (
 							<div className="py-10">
 								<Loader />
 							</div>
-						) : (
+						)}
+
+						{fiveCustomer && fiveCustomer.length > 0 ? (
 							<>
 								<div className="bg-gray-100 py-9">
 									<div className="flex justify-around  mx-auto  font-semibold w-11/12">
@@ -116,16 +117,26 @@ function Dashboard() {
 									</Link>
 								</div>
 							</>
+						) : (
+							<div
+								className="flex justify-center  h-full  items-center"
+								style={{ color: "#743B96", marginTop:'-30px' }}
+							>
+								<ExclamationIcon width="25" />{" "}
+								<span className="pl-5">No Registered Customers</span>
+							</div>
 						)}
 					</div>
 
 					<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 						<h3 className=" ml-6 mb-10">Merchant list</h3>
-						{merchants && merchants.isLoading ? (
+						{merchants.isLoading && fiveMerchant && (
 							<div className="py-10">
 								<Loader />
 							</div>
-						) : (
+						)}
+
+						{fiveMerchant && !fiveMerchant.length > 0 ? (
 							<>
 								<div className="bg-gray-100 py-9">
 									<div className="flex justify-around  mx-auto  font-semibold w-11/12">
@@ -175,6 +186,14 @@ function Dashboard() {
 									</Link>
 								</div>
 							</>
+						) : (
+							<div
+								className="flex justify-center  h-full  items-center"
+								style={{ color: "#743B96", marginTop:'-30px' }}
+							>
+								<ExclamationIcon width="25" />{" "}
+								<span className="pl-5">No Registered Merchant</span>
+							</div>
 						)}
 					</div>
 				</div>
@@ -182,6 +201,16 @@ function Dashboard() {
 				{/* TOP AUCTIONS */}
 				<div className="bg-white px-5 pt-10 pb-10 mb-20 rounded-lg shadow-lg">
 					<h3 className=" ml-6 mb-10">Top Auctions by Bids</h3>
+
+					{allEvent < 1 && (
+						<div
+							className="flex justify-center lg:pt-10 pb-10"
+							style={{ color: "#743B96" }}
+						>
+							<ExclamationIcon width="25" />{" "}
+							<span className="pl-5">No Auctions</span>
+						</div>
+					)}
 
 					{allEvent && (
 						<>

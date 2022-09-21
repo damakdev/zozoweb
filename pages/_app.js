@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps, router }) {
 
   useEffect(() => {
     if (localStorage.getItem("persist:zozo")) {
-      const { customer } = JSON.parse(localStorage.getItem("persist:zozo"));
+      const { customer  } = JSON.parse(localStorage.getItem("persist:zozo"));
       const { token } = JSON.parse(customer);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}
       `;

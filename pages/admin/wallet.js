@@ -22,7 +22,9 @@ import { formatNumber, paginate, truncateString } from "../../utils";
 
 function Wallet() {
 	const dispatch = useDispatch();
-	const { wallets } = useSelector((state) => state.wallet.walletList);
+	const { wallets, isLoading } = useSelector(
+		(state) => state.wallet.walletList
+	);
 	const { width } = useWindowDimension();
 	useEffect(() => {
 		dispatch(_getMerchantWallets());
@@ -181,11 +183,7 @@ function Wallet() {
 
 			{/* TABLE */}
 			<div className="mt-20 pb-20">
-				{!wallets ? (
-					<div className="h-screen" style={{ marginTop: "-160px" }}>
-						<Loader />
-					</div>
-				) : width >= 780 ? (
+				{wallets && wallets.length > 0 && width >= 780 && (
 					<Table
 						name="adminWallet"
 						thead={thead}
@@ -195,7 +193,9 @@ function Wallet() {
 						isExport={true}
 						//	viewDetails={viewDetails}
 					/>
-				) : (
+				)}
+
+				{wallets && wallets.length > 0 && width < 780 && (
 					<>
 						{paginatedData.map((item, index) => {
 							return (

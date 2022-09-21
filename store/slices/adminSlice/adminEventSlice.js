@@ -83,12 +83,19 @@ const adminEventSlice = createSlice({
 			state.allEvents.allEvent = action.payload.data.bidding_event.sort((a,b)=>b.id - a.id).map((el, index)=>({...el, newIndex : ++index}));;
 		},
 
+		[getAllEvents.rejected]: (state, action) => {
+			state.allEvents.isLoading = false;
+		},
+
 		[getSingleEvent.pending]: (state) => {
 			state.singleEvent.singleEventLoading = true;
 		},
 		[getSingleEvent.fulfilled]: (state, { payload }) => {
 			state.singleEvent.event = payload.data.bidding_event;
 			state.singleEvent.singleEventLoading = false;
+		},
+		[getSingleEvent.rejected]: (state, action) => {
+			state.allEvents.isLoading = false;
 		},
 
 		[startBid.fulfilled]: () => {

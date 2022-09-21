@@ -12,7 +12,11 @@ import Modal from "../../components/modal/modal";
 import Table from "../../components/Table/Table";
 import Button from "../../components/ui/Button";
 import styles from "../../styles/admin/customerMgt.module.scss";
-import { GreenMarker, VerifiedMarkIcon } from "../../public/svg/icons";
+import {
+	ExclamationIcon,
+	GreenMarker,
+	VerifiedMarkIcon,
+} from "../../public/svg/icons";
 import Pagination from "../../components/Pagination";
 import { paginate, truncateString } from "../../utils";
 import Loader from "../../components/loader";
@@ -61,11 +65,26 @@ function MerchantMgt() {
 				<h3 className="lg:py-20  py-10 lg:text-5xl  text-4xl font-semibold mt-1 text-semibold text-black">
 					Merchant Management
 				</h3>
-				{!users ? (
+
+				{paginatedData && paginatedData.length < 1 && (
+					<div className=" h-screen">
+						<div
+							className="flex justify-center mt-20 text-2xl lg:text-4xl items-center"
+							style={{ color: "#743B96", marginTop: "120px" }}
+						>
+							<ExclamationIcon width="35" />
+							<span className="pl-5">No Registered merchant</span>
+						</div>
+					</div>
+				)}
+
+				{merchantDetailsLoading && (
 					<div className="h-screen" style={{ marginTop: "-160px" }}>
 						<Loader />
 					</div>
-				) : width >= 780 ? (
+				)}
+
+				{paginatedData && paginatedData.length > 1 && width >= 780 && (
 					<>
 						<Table
 							name="merchantMgt"
@@ -82,7 +101,9 @@ function MerchantMgt() {
 							pageSize={pageSize}
 						/>
 					</>
-				) : (
+				)}
+
+				{paginatedData && paginatedData.length > 1 && width < 780 && (
 					<>
 						{paginatedData.map((item, index) => {
 							return (
