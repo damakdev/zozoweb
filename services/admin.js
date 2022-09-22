@@ -49,14 +49,14 @@ export function adminAddProduct(body) {
 }
 
 export function createBidEvent(body) {
-	return axios.post(`merchant/bidding`, body);
+	return axios.post(`/merchant/bidding`, body);
 }
 export function createCategory(body) {
 	return axios.post("/admin/category/create", body);
 }
 
 export function approveBid(id) {
-	return axios.post(`admin/bidding/approve/${id}`);
+	return axios.post(`/admin/bidding/approve/${id}`);
 }
 
 export function getMerchantWallets() {

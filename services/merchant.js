@@ -17,7 +17,7 @@ export function getProducts(merchant_id) {
 }
 
 export function createBidEvent(body) {
-  return axios.post(`merchant/bidding`, body);
+  return axios.post(`/merchant/bidding`, body);
 }
 
 export function getBidEvents(merchant_id) {

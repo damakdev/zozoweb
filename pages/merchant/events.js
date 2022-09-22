@@ -74,8 +74,8 @@ function Events() {
 			start_time: toLocaleString(
 				`${eventForm.startDate} ${eventForm.startTime}`
 			),
-			end_time: toLocaleString(`${eventForm.endDate} ${eventForm.endTime}`),
-			access_amount: eventForm.accessFee,
+			//end_time: toLocaleString(`${eventForm.endDate} ${eventForm.endTime}`),
+			//access_amount: eventForm.accessFee,
 			minimum_amount: eventForm.minimumBid,
 		};
 		console.log(body);
@@ -482,7 +482,7 @@ function Events() {
 								onChange={updateEventForm}
 							/>
 						</fieldset>
-
+{/* 
 						<fieldset>
 							<label htmlFor="accessFee">
 								Access Fee <span>*</span>{" "}
@@ -493,7 +493,7 @@ function Events() {
 								className="w-full rounded-lg"
 								onChange={updateEventForm}
 							/>
-						</fieldset>
+						</fieldset> */}
 					</div>
 
 					<div className="grid grid-cols-2 gap-8">
@@ -522,7 +522,7 @@ function Events() {
 						</fieldset>
 					</div>
 
-					<div className="grid grid-cols-2 gap-8">
+					{/* <div className="grid grid-cols-2 gap-8">
 						<fieldset>
 							<label>
 								End Date <span>*</span>
@@ -546,7 +546,7 @@ function Events() {
 								onChange={updateEventForm}
 							/>
 						</fieldset>
-					</div>
+					</div> */}
 
 					<Button>
 						{loading ? <ClipLoader color="#ffffff" size={15} /> : "Submit"}
