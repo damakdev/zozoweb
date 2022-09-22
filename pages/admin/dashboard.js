@@ -120,7 +120,7 @@ function Dashboard() {
 						) : (
 							<div
 								className="flex justify-center  h-full  items-center"
-								style={{ color: "#743B96", marginTop:'-30px' }}
+								style={{ color: "#743B96", marginTop: "-30px" }}
 							>
 								<ExclamationIcon width="25" />{" "}
 								<span className="pl-5">No Registered Customers</span>
@@ -136,7 +136,7 @@ function Dashboard() {
 							</div>
 						)}
 
-						{fiveMerchant && !fiveMerchant.length > 0 ? (
+						{fiveMerchant && !fiveMerchant.length < 0 ? (
 							<>
 								<div className="bg-gray-100 py-9">
 									<div className="flex justify-around  mx-auto  font-semibold w-11/12">
@@ -189,7 +189,7 @@ function Dashboard() {
 						) : (
 							<div
 								className="flex justify-center  h-full  items-center"
-								style={{ color: "#743B96", marginTop:'-30px' }}
+								style={{ color: "#743B96", marginTop: "-30px" }}
 							>
 								<ExclamationIcon width="25" />{" "}
 								<span className="pl-5">No Registered Merchant</span>

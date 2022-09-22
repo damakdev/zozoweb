@@ -14,11 +14,17 @@ import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps, router }) {
   const [errorMessage, setErrorMessage] = useState(null);
-
+let adminToken, merchanToken, customerToken
   axios.interceptors.request.use(
     function (config) {
-      // console.log(config);
+      let url = config.url.split("/")
+   if(adminToken || merchanToken || customerToken){
+    if(url[1] == "admin") config.headers.Authorization= `Bearer ${adminToken}`
+    if(url[1] == "merchant") config.headers.Authorization= `Bearer ${merchanToken}`
+    if(url[1] == "customer") config.headers.Authorization= `Bearer ${customerToken}`
+   }
       return config;
+         // console.log(config);
     },
     function (error) {
       // console.log(error);
@@ -52,11 +58,11 @@ function MyApp({ Component, pageProps, router }) {
 
   useEffect(() => {
     if (localStorage.getItem("persist:zozo")) {
-      const { customer  } = JSON.parse(localStorage.getItem("persist:zozo"));
-      const { token } = JSON.parse(customer);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}
-      `;
-      console.log(token);
+      const { admin, customer, merchant  } = JSON.parse(localStorage.getItem("persist:zozo"));
+     adminToken = JSON.parse(admin).token;
+    customerToken = JSON.parse(customer).token;
+     merchanToken = JSON.parse(merchant).token;
+  
     }
     axios.defaults.baseURL = "https://bilikie.com/api/v1";
     axios.defaults.headers.post["Content-Type"] = "application/json";
