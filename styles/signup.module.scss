@@ -49,6 +49,7 @@
         left: -3.5rem;
         width: 6rem;
         height: 6rem;
+        cursor: pointer;
         svg {
           width: 1rem;
           margin-right: 1rem;
@@ -115,6 +116,12 @@
           height: 2rem;
           width: 2rem;
           cursor: pointer;
+        }
+        span {
+          position: absolute;
+          right: 0;
+          font-size: 1.3rem;
+          color: #cd3737;
         }
       }
       input[type="checkbox"] {

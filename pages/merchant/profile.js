@@ -2,8 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { merchantUpdate } from "../../store/slices/authSlice";
-import { updateProfile, updateAddress, addBankAccount } from "../../services/merchant";
+import {
+  updateProfile,
+  updateAddress,
+  addBankAccount,
+} from "../../services/merchant";
 import { uploadAvatar, updateAvatar } from "../../services/profile";
+import { verifyAccount } from "../../services/customer";
 import { ClipLoader } from "react-spinners";
 import { Widget } from "@uploadcare/react-widget";
 import {
@@ -19,11 +24,11 @@ import Button from "../../components/ui/button/";
 import styles from "../../styles/merchant/profile.module.scss";
 import { toast } from "react-toastify";
 
-function Profile() {
+export default function Profile() {
   const widgetApi = useRef();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth.merchant);
-  const [banks, setBanks] = useState(null)
+  const [banks, setBanks] = useState(null);
   const [activeTab, setActiveTab] = useState("about");
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,17 +55,34 @@ function Profile() {
     });
   }
 
+  function verifyAccountHandler() {
+    toast.promise(verifyAccount({ account_email: user.email }), {
+      pending: "Sending mail...",
+      success: {
+        render(response) {
+          return response.data.data.message;
+        },
+      },
+      error: "An error occurred",
+    });
+    // verifyAccount({ account_email: user.email }).then((response) => {
+    //   console.log(response);
+    //   toast.success(response.data.message)
+    // });
+  }
+
   function uploadImageHandler(e) {
     const { cdnUrl } = e;
     setProfileData({ ...profileData, image: cdnUrl });
-    uploadAvatar(user.merchant.account_id, { avatar: cdnUrl }).then((response) => {
-      console.log(response)
-      toast.success("Updated successfully")
-    }).catch(() => {
-      setLoading(false)
-      toast.error("An error occurred")
-    })
-
+    uploadAvatar(user.merchant.account_id, { avatar: cdnUrl })
+      .then((response) => {
+        console.log(response);
+        toast.success("Updated successfully");
+      })
+      .catch(() => {
+        setLoading(false);
+        toast.error("An error occurred");
+      });
   }
 
   function updateUserProfile() {
@@ -71,15 +93,17 @@ function Profile() {
       phone_number: profileData.number,
     };
     console.log(body);
-    updateProfile(user.merchant.id, body).then((response) => {
-      console.log(response);
-      setLoading(false);
-      toast.success("Updated successfully")
-      // dispatch(merchantUpdate(user.merchant.id));
-    }).catch(() => {
-      setLoading(false)
-      toast.error("An error occurred")
-    })
+    updateProfile(user.merchant.id, body)
+      .then((response) => {
+        console.log(response);
+        setLoading(false);
+        toast.success("Updated successfully");
+        // dispatch(merchantUpdate(user.merchant.id));
+      })
+      .catch(() => {
+        setLoading(false);
+        toast.error("An error occurred");
+      });
   }
 
   function updateUserAddress() {
@@ -91,14 +115,16 @@ function Profile() {
       state: profileData.state,
       zip_code: profileData.zipCode,
     };
-    updateAddress(user.merchant.id, body).then((response) => {
-      setLoading(false);
-      console.log(response);
-      toast.success("Updated successfully")
-    }).catch(() => {
-      setLoading(false)
-      toast.error("An error occurred")
-    })
+    updateAddress(user.merchant.id, body)
+      .then((response) => {
+        setLoading(false);
+        console.log(response);
+        toast.success("Updated successfully");
+      })
+      .catch(() => {
+        setLoading(false);
+        toast.error("An error occurred");
+      });
   }
 
   function updateUserBank() {
@@ -110,58 +136,64 @@ function Profile() {
       bank_name: banks.find((bank) => bank.code === profileData.bankCode).name,
     };
     console.log(body);
-    addBankAccount(user.merchant.id, body).then((response) => {
-      console.log(response);
-      setLoading(false);
-    }).catch(() => {
-      setLoading(false)
-      toast.error("An error occurred")
-    })
+    addBankAccount(user.merchant.id, body)
+      .then((response) => {
+        console.log(response);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        toast.error("An error occurred");
+      });
   }
 
   function getAllBanks() {
-    axios.get(`https://api.paystack.co/bank`).then((response) => setBanks(response.data.data))
+    axios
+      .get(`https://api.paystack.co/bank`)
+      .then((response) => setBanks(response.data.data));
   }
 
   return (
     <MerchantLayout title="My Profile">
       <div className={styles.container}>
         <div className={styles.preview}>
-          {profileData.image && <motion.img
-            src={profileData.image}
-            alt=""
-          />}
+          {profileData.image && <motion.img src={profileData.image} alt="" />}
           <span onClick={() => widgetApi.current.openDialog()}>
             <EditIcon />
           </span>
-          <div style={{ display: "none", position: "fixed" }} className="uploadcare-button">
+          <div
+            style={{ display: "none", position: "fixed" }}
+            className="uploadcare-button"
+          >
             <Widget
               ref={widgetApi}
               onChange={uploadImageHandler}
               publicKey="db374fee85cbc01904a3"
             />
           </div>
-          {!profileData.image && <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={0.8}
-            stroke="currentColor"
-            width="27rem"
-            height="27rem"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>}
+          {!profileData.image && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={0.8}
+              stroke="currentColor"
+              width="27rem"
+              height="27rem"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          )}
 
           <div>
             <h1>{`${user?.first_name} ${user?.last_name}`}</h1>
             <p>
               <LocationIcon />
-              {user.address.state}
+              {user?.address?.state}
             </p>
             {user.verified && (
               <h2>
@@ -169,8 +201,17 @@ function Profile() {
                 <CheckMark />
               </h2>
             )}
+            {!user.verified && (
+              <h2 style={{ color: "#e66a6a" }}>
+                Unverified
+                {/* <CheckMark /> */}
+              </h2>
+            )}
             <div>
-              <Button>DEACTIVATE ACCOUNT</Button>
+              {user.verified && <Button>DEACTIVATE ACCOUNT</Button>}
+              {!user.verified && (
+                <Button onClick={verifyAccountHandler}>VERIFY ACCOUNT</Button>
+              )}
               <Button>RESET PASSWORD</Button>
             </div>
           </div>
@@ -200,7 +241,7 @@ function Profile() {
               onClick={() => {
                 setActiveTab("bank");
                 setEdit(false);
-                getAllBanks()
+                getAllBanks();
               }}
               className={activeTab === "bank" ? styles.active : ""}
             >
@@ -366,15 +407,21 @@ function Profile() {
                   </li>
                   <li>
                     <label htmlFor="bankCode">Bank Name</label>
-                    <select name="bankCode" id="bankCode"
+                    <select
+                      name="bankCode"
+                      id="bankCode"
                       disabled={!edit}
                       value={profileData.bankCode}
                       onChange={updateForm}
                     >
-                      <option value="" disabled>{banks ? "Select Bank" : "Loading Banks..."}</option>
-                      {banks?.map((bank) => <option key={bank.id} value={bank.code}>
-                        {bank.name}
-                      </option>)}
+                      <option value="" disabled>
+                        {banks ? "Select Bank" : "Loading Banks..."}
+                      </option>
+                      {banks?.map((bank) => (
+                        <option key={bank.id} value={bank.code}>
+                          {bank.name}
+                        </option>
+                      ))}
                     </select>
                   </li>
                   <li>
@@ -414,4 +461,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+Profile.requireMerchantAuth = true;

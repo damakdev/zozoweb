@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { getBalance, getBidEvents } from "../../../services/merchant";
 import { formatNumber, truncateString } from "../../../utils";
@@ -23,8 +24,10 @@ import Loader from "../../../components/loader";
 import LineChart from "../../../components/line-chart";
 import PieChart from "../../../components/pie-chart";
 import styles from "../../../styles/merchant/dashboard.module.scss";
+import { toast } from "react-toastify";
 
 export default function Index() {
+  const router = useRouter();
   const { user } = useSelector((state) => state.auth.merchant);
   const [bidEvents, setBidEvents] = useState(null);
   const [wallet, setWallet] = useState(null);
@@ -50,20 +53,28 @@ export default function Index() {
       },
     ],
   });
-  
+
   useEffect(() => {
-    getBalance(user.merchant.id).then((response) =>
-      setWallet(response.data.wallet)
-    );
-    getBidEvents(user.merchant.id).then((response) => {
-      setBidEvents(response.data.bidding_event);
-    });
+    if (user.merchant) {
+      getBalance(user.merchant.id).then((response) =>
+        setWallet(response.data.wallet)
+      );
+      getBidEvents(user.merchant.id).then((response) => {
+        setBidEvents(response.data.bidding_event);
+      });
+    }
   }, []);
+  
+  if (!user.merchant) {
+    toast.warning("Verify account to continue");
+    router.push("/merchant/profile");
+    return
+  }
 
   return (
     <MerchantLayout title="My Dashboard">
       {!bidEvents && !wallet && <Loader />}
-      {bidEvents && wallet && (
+      {bidEvents && (
         <section className={styles.container}>
           {/* <div className={styles.recent}>
         <CloseIcon />
