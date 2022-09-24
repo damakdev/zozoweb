@@ -46,7 +46,10 @@ export default function ProductsSection({ title, products }) {
           </span>
         </div>
         {products && (
-          <div className={styles.content}>
+          <div
+            className={styles.content}
+            style={products.length < 4 ? { display: "flex" } : null}
+          >
             {products?.map((product) => (
               <Card
                 key={product.product_id}
