@@ -197,6 +197,7 @@ export const authSlice = createSlice({
       if (!action.payload.data) {
         return;
       }
+      console.log(action.payload.data)
       if (action.payload.data?.user.account_type !== "admin") {
         toast.error(
           "This account is not an admin. Login with an admin account"
