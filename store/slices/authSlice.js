@@ -101,7 +101,7 @@ export const authSlice = createSlice({
         return;
       }
       state.customer.user = action.payload.data?.account;
-      state.customer.token = action.payload.data?.account.token;
+      // state.customer.token = action.payload.data?.account.token;
     });
     builder.addCase(_loginCustomer.pending, (state) => {
       state.customer.loading = true;
@@ -116,7 +116,7 @@ export const authSlice = createSlice({
         console.log("no data");
         return;
       }
-      if (action.payload.data?.user.account_type !== "customer") {
+      if (!action.payload.data?.user.customer) {
         toast.error(
           "This account is not a customer. Login with a customer account"
         );
@@ -154,7 +154,7 @@ export const authSlice = createSlice({
       if (!action.payload.data) {
         return;
       }
-      if (action.payload.data?.user.account_type !== "merchant") {
+      if (!action.payload.data?.user.merchant) {
         toast.error(
           "This account is not a merchant. Login with a merchant account"
         );
