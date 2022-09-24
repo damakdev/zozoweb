@@ -25,6 +25,26 @@
     h1 {
       margin-bottom: 2rem;
     }
+    .go-back {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      position: absolute;
+      top: 30%;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      left: -3.5rem;
+      width: 6rem;
+      height: 6rem;
+      cursor: pointer;
+      svg {
+        width: 1rem;
+        margin-right: 1rem;
+        path {
+          fill: var(--bg-white);
+        }
+      }
+    }
     .google-auth {
       display: flex;
       align-items: center;
@@ -76,6 +96,13 @@
         width: 2rem;
         cursor: pointer;
       }
+      span {
+        position: absolute;
+        top: -1.5rem;
+        right: 0;
+        font-size: 1.3rem;
+        color: #cd3737;
+      }
     }
     button {
       margin-top: 3rem;
@@ -93,5 +120,31 @@
   }
   & > div {
     width: 50%;
+  }
+}
+
+.modal {
+  margin: auto;
+  h3 {
+    font-size: 1.7rem;
+    text-align: center;
+  }
+  p {
+    text-align: center;
+    line-height: 1.2;
+    color: #eb5757;
+    margin-top: 1rem;
+  }
+  & > div {
+    display: flex;
+    justify-content: center;
+    column-gap: 2rem;
+    margin-top: 2rem;
+    button {
+      font-size: 1.6rem;
+      height: 3.5rem;
+      width: 7rem;
+      box-shadow: initial;
+    }
   }
 }
