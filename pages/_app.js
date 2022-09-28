@@ -49,7 +49,9 @@ function MyApp({ Component, pageProps, router }) {
           return;
         setErrorMessage(error.response.data.message);
       } else {
-        setErrorMessage("An error occurred.");
+        setErrorMessage(
+          "Something went wrong, check your internet connection."
+        );
       }
       return Promise.reject(error);
     }
@@ -87,7 +89,7 @@ function MyApp({ Component, pageProps, router }) {
         hideProgressBar={true}
         pauseOnFocusLoss={false}
         transition={Zoom}
-		limit={1}
+        limit={1}
       />
       <PersistGate loading={null} persistor={persistor}>
         <Layout key={router.route}>
