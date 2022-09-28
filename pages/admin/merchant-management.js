@@ -243,7 +243,7 @@ function MerchantMgt() {
 															account_id: user.account.id.toString(),
 														})
 													);
-													router.reload(window.location.pathname);
+													//router.reload(window.location.pathname);
 												}}
 											/>
 										)}
@@ -293,3 +293,4 @@ function MerchantMgt() {
 }
 
 export default MerchantMgt;
+MerchantMgt.requireAdminAuth = true;

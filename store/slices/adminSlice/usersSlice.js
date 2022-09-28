@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import { toast } from "react-toastify";
 import {
 	getCustomers,
@@ -72,9 +73,10 @@ export const usersSlice = createSlice({
 		},
 		[customerList.fulfilled]: (state, action) => {
 			state.customers.isLoading = false;
-		
-		
-			state.customers.users = action.payload.data.customer.sort((a,b)=>b.id - a.id).map((el, index)=>({...el, newIndex : ++index}));
+
+			state.customers.users = action.payload.data.customer
+				.sort((a, b) => b.id - a.id)
+				.map((el, index) => ({ ...el, newIndex: ++index }));
 		},
 
 		[singleCustomer.pending]: (state) => {
@@ -83,6 +85,7 @@ export const usersSlice = createSlice({
 		[singleCustomer.fulfilled]: (state, action) => {
 			state.customerDetails.customerDetailsLoading = false;
 			state.customerDetails.user = action.payload.data.customer;
+			Router.reload(window.location.pathname);
 		},
 
 		//MERCHANTS
@@ -109,12 +112,11 @@ export const usersSlice = createSlice({
 
 		[verifyUser.fulfilled]: (state) => {
 			state.verifyUser.isLoading = false;
-			setTimeout(()=>{
+			setTimeout(() => {
 				toast.success("User verified Successfully", {
 					autoClose: 4000,
 				});
-			},1000)
-			
+			}, 1000);
 		},
 	},
 });
