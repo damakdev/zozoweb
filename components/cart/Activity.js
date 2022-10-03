@@ -140,7 +140,7 @@ const Activity = () => {
 							{" "}
 							<h3 className="text-center lg:mt-20 text-3xl ">
 								{" "}
-								No Won Bids
+								No Won Bids Pending Payment
 							</h3>{" "}
 							<Link href="/">
 								<Button

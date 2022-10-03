@@ -1,8 +1,4 @@
 import styles from "../../styles/watchlist.module.scss";
-import Image from "next/image";
-import greenswitch from "../../assets/greenswitch.svg";
-import shoes from "../../assets/shoes.svg";
-import star from "../../assets/star.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { _getCustomerEvents } from "../../store/slices/eventsSlice";
 import { useEffect } from "react";
@@ -12,7 +8,6 @@ import useWindowDimension from "../../hooks/useWindowDimension";
 export const Events = ({ item }) => {
 	let thead = ["Item", "Access amount", "Stake", "Final Price", "Status"];
 	const { width } = useWindowDimension();
-	console.log(item);
 	return (
 		<>
 			{width >= 780 && (
@@ -33,35 +28,43 @@ export const Events = ({ item }) => {
 						>
 							{item.paymentApproved || !item.paymentApproved ? "Won" : "LOST"}
 						</div>
-						<div className={`flex justify-between`}>
-							<h3 className={`${styles.item_row}`}>Items</h3>
-							<h3 className="">Access Bid</h3>
-							<h3 className="">Stake</h3>
-							<h3 className="">Final Price</h3>
-						</div>
-						<div className={`flex justify-between`}>
-							<p className={`flex items-center  `}>
-								<img src={item.bidding_event.product.images.main} />
-								<span className="ml-5">
-									{truncateString(item.bidding_event.product.name, 20)}
-								</span>
-							</p>
-							<p>
-								&#x20A6;
-								<span>
-									{Number(item.bidding_event.access_amount).toLocaleString()}
-								</span>
-							</p>
-							<p>
-								&#x20A6;
-								<span>{Number(item.bidding_event.stake).toLocaleString()}</span>
-							</p>
-							<p>
-								{" "}
-								&#x20A6;{" "}
-								{Number(item.bidding_event.last_amount).toLocaleString()}
-							</p>
-						</div>
+
+						<table
+							className="w-full"
+							id={styles.customers}
+							cellSpacing="0"
+							cellPadding="0"
+						>
+							<thead>
+								<tr>
+									<th>Items</th>
+									<th>Access Bid</th>
+									<th>Stake</th>
+									<th>Final Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td className="flex justify-center">
+										<img
+											src={item.bidding_event.product.images.main}
+											className="mr-3"
+										/>
+										{truncateString(item.bidding_event.product.name, 50)}
+									</td>
+									<td>
+										&#x20A6;{" "}
+										{Number(item.bidding_event.access_amount).toLocaleString()}
+									</td>
+									<td>&#x20A6; {Number(item.stake).toLocaleString()}</td>
+									<td>
+										{" "}
+										&#x20A6;{" "}
+										{Number(item.bidding_event.last_amount).toLocaleString()}
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			)}
@@ -122,7 +125,7 @@ const BidHistory = () => {
 	const { events } = useSelector((state) => state.events.customer);
 
 	useEffect(() => {
-		if(user) dispatch(_getCustomerEvents(user.customer.id));
+		if (user) dispatch(_getCustomerEvents(user.customer.id));
 	}, [dispatch]);
 	return (
 		<div className={`${styles.bid_history} pb-60`}>
@@ -132,12 +135,12 @@ const BidHistory = () => {
 					return <Events key={index} item={item} />;
 				})}
 
-			{events && events.length < 1  && (
+			{events && events.length < 1 && (
 				<p className="justify-center text-center mt-20 ">
 					You haven't participated in any Bidding events
 				</p>
 			)}
-			{!user  && (
+			{!user && (
 				<p className="justify-center text-center mt-20 ">
 					Please Login to view your History
 				</p>

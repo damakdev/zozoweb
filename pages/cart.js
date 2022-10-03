@@ -32,7 +32,7 @@ const Cart = () => {
 			<h1 className="text-5xl pt-10 pl-5">Your Bids</h1>
 			<div className={` flex  flex-col md:flex-row gap-20 mt-16 `}>
 				<div className={`${styles.wrapper} bg-white  lg:px-10 pt-10 w-full `}>
-					<div className={`${styles.nav} flex justify-between px-4 lg:w-6/12`}>
+					<div className={`${styles.nav} flex justify-between px-4 lg:w-9/12`}>
 						<div
 							className={`${
 								currentItem == 1
@@ -41,7 +41,7 @@ const Cart = () => {
 							}`}
 							onClick={() => setCurrentItem(1)}
 						>
-							<a href="#">Won Bids</a>
+							<a href="#">Won Bids (Pending Payments)</a>
 						</div>
 						<div
 							className={`${
