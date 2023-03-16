@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps, router }) {
 				customerToken = JSON.parse(customer).token;
 				merchanToken = JSON.parse(merchant).token;
 			}
-			axios.defaults.baseURL = "https://bilikie.com/api/v1";
+			axios.defaults.baseURL = "http://bilikie.com/api/v1";
 			axios.defaults.headers.post["Content-Type"] = "application/json";
 
 			let url = config.url.split("/");
@@ -85,7 +85,7 @@ function MyApp({ Component, pageProps, router }) {
 			customerToken = JSON.parse(customer).token;
 			merchanToken = JSON.parse(merchant).token;
 		}
-		axios.defaults.baseURL = "https://bilikie.com/api/v1";
+		axios.defaults.baseURL = "http://bilikie.com/api/v1";
 		axios.defaults.headers.post["Content-Type"] = "application/json";
 	}, []);
 
