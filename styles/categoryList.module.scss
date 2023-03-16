@@ -1,0 +1,150 @@
+.categoryNames {
+	background-color: #f9f9f9;
+	width: 100%;
+	margin-top: auto;
+
+	ul {
+		display: flex;
+		justify-content: space-around;
+		padding: 20px;
+	}
+
+	.active{
+		background-color: var(--accent-color);
+		color: white;
+	}
+
+	li {
+		text-transform: capitalize;
+		cursor: pointer;
+		color: black;
+		font-weight: 400;
+		font-size: 13px;
+		border-radius: 3px;
+		transition: 0.5s ease ;
+	}
+}
+
+.content,
+.content-loading {
+	.card {
+		position: relative;
+		padding: 3rem;
+		text-align: center;
+		transition: all 0.3s;
+		border-radius: 0.5rem;
+		border: 1px solid transparent;
+		// border-radius: 0.5rem;
+		// border: 1px solid var(--accent-color);
+		img {
+			width: 20rem;
+			height: 20rem;
+			object-fit: cover;
+			margin: 0 auto;
+		}
+		h3 {
+			font-size: 1.8rem;
+			margin-top: 1.6rem;
+			color: #004ce8;
+		}
+		p {
+		}
+		span {
+		}
+		b {
+			top: 1rem;
+			right: 1rem;
+			position: absolute;
+			background-color: var(--accent-color);
+			padding: 0.3rem 0.6rem;
+			color: var(--text-white);
+			font-size: 1.1rem;
+			line-height: 1;
+			border-radius: 01rem;
+			filter: drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.15));
+		}
+		&:hover {
+			border-radius: 0.5rem;
+			border: 1px solid var(--accent-color);
+		}
+	}
+}
+
+@media screen and (max-width: 912px) {
+	.categoryNames {
+		.cateContainer {
+			width: 95%;
+			margin-top: auto;
+			overflow-x: scroll;
+			ul {
+				width: 300% !important;
+			}
+			li {
+				width: 150px !important;
+				padding: 10px;
+			}
+		}
+
+		::-webkit-scrollbar {
+			height: 0.3rem !important;
+		}
+		::-webkit-scrollbar-track {
+			background-color: #d9d9d9;
+		}
+		::-webkit-scrollbar-thumb {
+			background-color: var(--accent-color);
+			height: 100px !important;
+			border-radius: 20rem;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background-color: var(--accent-color);
+		}
+	}
+}
+@media screen and (max-width: 580px) {
+	.categoryNames {
+		.cateContainer {
+			width: 95%;
+			margin-top: auto;
+			overflow-x: scroll;
+			ul {
+				width: 420% !important;
+			}
+			li {
+				width: 150px !important;
+				padding: 10px;
+			}
+		}
+
+		::-webkit-scrollbar {
+			height: 0.3rem !important;
+		}
+		::-webkit-scrollbar-track {
+			background-color: #d9d9d9;
+		}
+		::-webkit-scrollbar-thumb {
+			background-color: var(--accent-color);
+			height: 100px !important;
+			border-radius: 20rem;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background-color: var(--accent-color);
+		}
+	}
+
+	.content,
+	.content-loading {
+		grid-template-columns: 2fr 2fr;
+
+		.card {
+			padding: 1rem 0;
+			img {
+				width: 13rem;
+				height: 13rem;
+			}
+			h3 {
+				font-size: 1.4rem;
+			}
+		}
+	}
+}

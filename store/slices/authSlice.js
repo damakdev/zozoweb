@@ -6,6 +6,7 @@ import {
 import {
   register as registerMerchant,
   login as loginMerchant,
+  getProfile,
 } from "../../services/merchant";
 import { toast } from "react-toastify";
 import { logAdmin } from "../../services/admin";
@@ -41,6 +42,14 @@ export const _loginMerchant = createAsyncThunk(
   `merchant/login`,
   async (body) => {
     const response = await loginMerchant(body);
+    return response;
+  }
+);
+
+export const merchantUpdate = createAsyncThunk(
+  `merchant/update`,
+  async (merchant_id) => {
+    const response = await getProfile(merchant_id);
     return response;
   }
 );
@@ -92,7 +101,7 @@ export const authSlice = createSlice({
         return;
       }
       state.customer.user = action.payload.data?.account;
-      state.customer.token = action.payload.data?.account.token;
+      // state.customer.token = action.payload.data?.account.token;
     });
     builder.addCase(_loginCustomer.pending, (state) => {
       state.customer.loading = true;
@@ -107,7 +116,7 @@ export const authSlice = createSlice({
         console.log("no data");
         return;
       }
-      if (action.payload.data?.user.account_type !== "customer") {
+      if (!action.payload.data?.user.customer) {
         toast.error(
           "This account is not a customer. Login with a customer account"
         );
@@ -145,7 +154,7 @@ export const authSlice = createSlice({
       if (!action.payload.data) {
         return;
       }
-      if (action.payload.data?.user.account_type !== "merchant") {
+      if (!action.payload.data?.user.merchant) {
         toast.error(
           "This account is not a merchant. Login with a merchant account"
         );
@@ -154,7 +163,32 @@ export const authSlice = createSlice({
       state.merchant.user = action.payload.data.user;
       state.merchant.token = action.payload.data.token;
     });
-    
+
+    builder.addCase(merchantUpdate.pending, (state) => {
+      state.merchant.loading = true;
+    });
+    builder.addCase(merchantUpdate.rejected, (state) => {
+      state.merchant.loading = false;
+    });
+    builder.addCase(merchantUpdate.fulfilled, (state, action) => {
+      console.log(action);
+      state.merchant.loading = false;
+      // state.merchant.user = action.payload.data.merchant.account;
+      // state.merchant.user.merchant = action.payload.data.merchant;
+
+      //  if (!action.payload.data) {
+      //    return;
+      //  }
+      //  if (action.payload.data?.user.account_type !== "merchant") {
+      //    toast.error(
+      //      "This account is not a merchant. Login with a merchant account"
+      //    );
+      //    return;
+      //  }
+      //  state.merchant.user = action.payload.data.user;
+      //  state.merchant.token = action.payload.data.token;
+    });
+
     builder.addCase(loginAdmin.pending, (state) => {
       state.admin.loading = true;
     });
@@ -163,6 +197,7 @@ export const authSlice = createSlice({
       if (!action.payload.data) {
         return;
       }
+      console.log(action.payload.data)
       if (action.payload.data?.user.account_type !== "admin") {
         toast.error(
           "This account is not an admin. Login with an admin account"

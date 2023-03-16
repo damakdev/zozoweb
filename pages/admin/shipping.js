@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AdminLayout from "../../components/Admin/AdminLayout";
 import Table from "../../components/Table/Table";
 
-function Audit() {
+function Shipping() {
 	// const [modalDisplay, setModalDisplay] = useState(false);
 
 	// const viewDetails = () => {
@@ -41,4 +41,5 @@ function Audit() {
 	);
 }
 
-export default Audit;
+export default Shipping;
+Shipping.requireAdminAuth = true;

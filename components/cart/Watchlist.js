@@ -1,93 +1,57 @@
 import Link from "next/link";
 
-import styles from "../../styles/cart.module.scss";
+import styles from "../../styles/watchlist.module.scss";
 import Image from "next/image";
 import greenswitch from "../../assets/greenswitch.svg";
 import headphones from "../../assets/headphones.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { useCountdown } from "react-countdown-circle-timer";
+import { useCountdown } from '../../hooks/useCountdown';
 import { useState } from "react";
 import { formatNumber, truncateString } from "../../utils";
 import { removeCartItem, clearCart } from "../../store/slices/cartSlice";
 
-const Watchlist = () => {
-	const { cart } = useSelector((state) => state.cart);
-	const dispatch = useDispatch();
+const Watchlist = ({ details }) => {
+	// const { cart } = useSelector((state) => state.cart);
 
+	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.auth.customer);
+	const [days, hours, minutes, seconds] = useCountdown(
+		details.start,
+		details.end
+	);
 	return (
-		<div className="activity_form w-11/12 mx-auto">
-			<div className="flex justify-between py-20">
-				<div>
-					<p className="text-3xl text-semibold">Bids to watch</p>
-				</div>
-				<div className="flex gap-6 cursor-pointer">
-					<div
-						className="text-3xl text-semibold"
-						onClick={() => dispatch(clearCart())}
-					>
-						Clear Watchlist
+		<Link
+			href={user ? `/product/${details.id}` : "javascript:void(0)"}
+			className=""
+		>
+			<div className={styles.watch_item}>
+				<div className={styles.cancel}>x</div>
+				<div className="py-8 w-10/12 mx-auto flex justify-between mt-7">
+					<img src={details.image} alt={details.name} width="120" />
+					<div>
+						<h4>
+							<span>Name:</span> {details.name}
+						</h4>
+						<h4>
+							{" "}
+							<span>Minimum bid :</span> #{formatNumber(details.minimum_amount)}
+						</h4>
+						<h4>
+							<span>Access amount:</span> #{formatNumber(details.access_amount)}
+						</h4>
+					{!details.ended && (
+						<p>
+							Ends in: {formatNumber(days)}:{formatNumber(hours)}:
+							{formatNumber(minutes)}:{formatNumber(seconds)}
+						</p>
+					)}
+					{details.ended && (
+						<p style={{ color: "#cd3737" }}>Ended: 00:00:00:00</p>
+					)}
 					</div>
 				</div>
 			</div>
-
-			<div>
-				<table className="w-full border-separate border-spacing-x-0 border-spacing-y-20">
-					<thead>
-						<tr>
-							<th className="">Items</th>
-							<th className="">Access fee</th>
-							<th className="">Minimum Bid</th>
-							<th className="">Start time</th>
-							<th className="">End time</th>
-							<th className="">Remove</th>
-						</tr>
-					</thead>
-					<tbody>
-						{cart.length > 0 &&
-							cart.map((item, index) => {
-								return (
-									<tr key={index} className="text-2xl">
-										<td className="flex items-center">
-											<img src={item.image} width="100px" height="100px" />
-											<span className="ml-5">
-												{truncateString(item.name, 20)}
-											</span>
-										</td>
-										<td>
-											# <span>{formatNumber(item.access_amount)}</span>
-										</td>
-										<td>
-											# <span>{formatNumber(item.minimum_amount)}</span>
-										</td>
-										<td>
-											<span>{new Date(item.start).toDateString()}</span>
-										</td>
-										<td>
-											<span>{new Date(item.end).toDateString()}</span>
-										</td>
-
-										<td> {item.timer}</td>
-										<td onClick={() => dispatch(removeCartItem(item))}>
-											<svg
-												width="11"
-												height="10"
-												viewBox="0 0 11 10"
-												fill="none"
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path
-													d="M6.71881 4.98928L10.5051 1.35242L9.46596 0.270631L5.67971 3.90749L2.04285 0.121237L0.961058 1.16034L4.59792 4.9466L0.811665 8.58346L1.85077 9.66525L5.63702 6.02838L9.27389 9.81464L10.3557 8.77554L6.71881 4.98928Z"
-													fill="black"
-												/>
-											</svg>
-										</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div>
-		</div>
+		</Link>
 	);
 };
 

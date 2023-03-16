@@ -11,6 +11,7 @@
   .title {
     h1 {
       font-size: 2rem;
+      text-transform: capitalize;
     }
     span {
       display: flex;
@@ -33,7 +34,7 @@
       background-color: var(--bg-primary);
       content: "";
     }
-    svg {
+    & > svg {
       margin-right: 3rem;
     }
     & > div {
@@ -60,5 +61,12 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    margin-left: 20rem;
+    width: calc(100% - 20rem);
   }
 }

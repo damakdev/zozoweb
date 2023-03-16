@@ -1,4 +1,4 @@
-import React ,{useRef}from "react";
+import React, { useRef } from "react";
 import {
 	Bell,
 	BlackDot,
@@ -12,7 +12,7 @@ import searchIcon from "../../assets/search.svg";
 import Image from "next/image";
 import styles from "../Table/table.module.scss";
 import Button from "../ui/Button";
-import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { DownloadTableExcel } from "react-export-table-to-excel";
 function Table({
 	data,
 	thead,
@@ -50,18 +50,18 @@ function Table({
 	const tableRef = useRef(null);
 	return (
 		<>
-			<div className="flex mb-10 flex-row-reverse mr-20">
+			<div className="flex mb-10 flex-row-reverse">
 				{isExport && (
-					 <DownloadTableExcel
-					 filename="Zozo information"
-					 sheet={name}
-					 currentTableRef={tableRef.current}
-				   >
-					<div className={styles.exportButton}>
-						<ExportIcon />
-						<button className="mr-3">Export</button>
-						{/* <DropdownIcon /> */}
-					</div>
+					<DownloadTableExcel
+						filename="Zozo information"
+						sheet={name}
+						currentTableRef={tableRef.current}
+					>
+						<div className={styles.exportButton}>
+							<ExportIcon />
+							<button className="mr-3">Export</button>
+							{/* <DropdownIcon /> */}
+						</div>
 					</DownloadTableExcel>
 				)}
 
@@ -98,7 +98,7 @@ function Table({
 							{head}
 						</tr>
 					</thead>
-          
+
 					<tbody>
 						{name == "item-order" &&
 							data.map((item, index) => {
@@ -153,7 +153,7 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										<td >{item.id}</td>
+										<td>{item.newIndex}</td>
 										<td>{new Date(item.account.createdAt).toDateString()}</td>
 										<td>{item.account.first_name}</td>
 										<td>{item.account.last_name}</td>
@@ -184,17 +184,25 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										{/* <td>
-										<input type="checkbox" />
-									</td> */}
-										<td>{item.date}</td>
-										<td>{item.firstName}</td>
-										<td>{item.lastName}</td>
-										<td>{item.phone}</td>
-										<td>{item.email}</td>
-										<td>{item.status}</td>
+										<td>{item.id}</td>
+										<td>{new Date(item.account.createdAt).toDateString()}</td>
+										<td>{item.account.first_name}</td>
+										<td>{item.account.last_name}</td>
+										<td>{truncateString(item.account.email, 20)}</td>
+										<td>{item.auctions.length}</td>
+										<td>
+											<span
+												className={`${
+													item.account.verified
+														? "text-green-600 "
+														: "text-red-600 "
+												} text-2xl`}
+											>
+												{item.account.verified ? "Verified" : "Unverified"}
+											</span>
+										</td>
 										<td
-											onClick={viewDetails}
+											onClick={() => viewDetails(item.id)}
 											colSpan="2"
 											className="cursor-pointer tracking-widest"
 										>
@@ -225,7 +233,7 @@ function Table({
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
-										<td>{item.id}</td>
+										<td>{item.newIndex}</td>
 										<td>{truncateString(item.product.name, 20)}</td>
 										<td>{formatAmount(item.access_amount)}</td>
 										<td>{formatAmount(item.minimum_amount)}</td>
@@ -256,19 +264,27 @@ function Table({
 								);
 							})}
 
-						{name == "eventMgt" &&
+						{name == "allAuctions" &&
 							data.map((item, index) => {
 								return (
 									<tr key={index}>
 										{/* <td>
 										<input type="checkbox" />
 									</td> */}
-										<td>{item.id}</td>
+										<td>{item.newIndex}</td>
 										<td>{item.product.name.substr(0, 22)}</td>
 										<td>{new Date(item.start_time).toDateString()}</td>
 										<td>{new Date(item.end_time).toDateString()}</td>
 										<td>{item.merchant_name}</td>
-										<td>{eventStatus(item.approved)}</td>
+										<td>
+											<span
+												className={`${
+													item.approved ? "text-green-600 " : "text-red-600 "
+												} text-2xl`}
+											>
+												{item.approved ? "Verified" : "Unverified"}
+											</span>
+										</td>
 										<td>{formatAmount(item.minimum_amount)}</td>
 										<td
 											onClick={() => viewDetails(item.id)}
@@ -406,10 +422,14 @@ function Table({
 								return (
 									<tr key={index}>
 										<td className="flex items-center ">{item.id}</td>
-										<td>{item.name}</td>
-										<td>{item.bid}</td>
-										<td>{item.value}</td>
-										<td>{item.profit}</td>
+										<td className="capitalize">
+											{item.merchant.account.last_name}{" "}
+											{item.merchant.account.first_name}
+										</td>
+										<td>{item.merchant.account.email} </td>
+										<td>{item.merchant.account.phone_number}</td>
+										<td>{formatAmount(item.escrow_balance)}</td>
+										<td>{formatAmount(item.withdrawable)}</td>
 									</tr>
 								);
 							})}

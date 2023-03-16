@@ -69,3 +69,4 @@ function CMS() {
 }
 
 export default CMS;
+CMS.requireAdminAuth = true;

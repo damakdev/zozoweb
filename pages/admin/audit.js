@@ -39,3 +39,4 @@ function Audit() {
 }
 
 export default Audit;
+Audit.requireAdminAuth = true;

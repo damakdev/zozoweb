@@ -7,6 +7,8 @@ import { _loginCustomer } from "../store/slices/authSlice";
 import { ClipLoader } from "react-spinners";
 import { EyeOn, EyeOff, GoogleIcon } from "../public/svg/icons";
 import { LoginBanner } from "../public/svg/images";
+import useWindowDimension from "../hooks/useWindowDimension";
+import Logo from "../components/logo";
 import Button from "../components/ui/button/";
 import Link from "next/link";
 import styles from "../styles/login.module.scss";
@@ -14,6 +16,7 @@ import styles from "../styles/login.module.scss";
 export default function Index() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { width } = useWindowDimension();
   const { loading } = useSelector((state) => state.auth.customer);
   const { token } = useSelector((state) => state.auth.customer);
   const [email, setEmail] = useState("");
@@ -53,15 +56,20 @@ export default function Index() {
 
     return;
   }
-  if (token) router.push("/");
+  if (token) {
+    router.push("/");
+    return;
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.main}>
         <div>
+          {width > 780 && <Logo />}
           <LoginBanner />
         </div>
         <form onSubmit={loginHandler}>
+          {width <= 780 && <Logo variant="purple" />}
           <h1>Welcome Back</h1>
           <Link href="/">
             <a className={styles["google-auth"]}>
@@ -131,8 +139,8 @@ export default function Index() {
               )}
             </AnimatePresence>
           </fieldset>
-          <div className="df aic asst fw">
-            <div className="df aic">
+          <div className="flex items-center w-full">
+            <div className="flex items-center">
               <input type="checkbox" id="checkbox" name="checkbox" />
               <label htmlFor="checkbox">Remember me</label>
             </div>
@@ -146,7 +154,7 @@ export default function Index() {
 
           <p>
             Don&apos;t have an account?
-            <Link href="/signup"> Sign up for free!</Link>
+            <Link href="/signup"> Sign up here!</Link>
           </p>
         </form>
       </div>

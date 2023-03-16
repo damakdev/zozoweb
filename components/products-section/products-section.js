@@ -5,11 +5,13 @@ import { toast } from "react-toastify";
 import { LeftArrow, RightArrow } from "../../public/svg/icons";
 import { formatNumber, truncateString } from "../../utils";
 import { motion } from "framer-motion";
+import useWindowDimension from "../../hooks/useWindowDimension";
 import Modal from "../modal/modal";
 import Link from "next/link";
 import styles from "./products-section.module.scss";
 
 export default function ProductsSection({ title, products }) {
+  const { width } = useWindowDimension();
   const [sort, setSort] = useState("popularity");
   const [modalDisplay, setModalDisplay] = useState(false);
 
@@ -20,20 +22,22 @@ export default function ProductsSection({ title, products }) {
       <div className={styles.container}>
         <div className={styles.header}>
           <h1>{title}</h1>
-          <form>
-            <label htmlFor="sort">Sort</label>
-            <select
-              name="sort"
-              id="sort"
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-            >
-              <option value="popularity">popularity</option>
-              <option value="rating">product rating</option>
-              <option value="low to high">low to high</option>
-              <option value="high to low">high to low</option>
-            </select>
-          </form>
+          {width >= 580 && (
+            <form>
+              <label htmlFor="sort">Sort</label>
+              <select
+                name="sort"
+                id="sort"
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+              >
+                <option value="popularity">popularity</option>
+                <option value="rating">product rating</option>
+                <option value="low to high">low to high</option>
+                <option value="high to low">high to low</option>
+              </select>
+            </form>
+          )}
           <span>
             <LeftArrow />
           </span>
@@ -42,7 +46,10 @@ export default function ProductsSection({ title, products }) {
           </span>
         </div>
         {products && (
-          <div className={styles.content}>
+          <div
+            className={styles.content}
+            style={products.length < 4 ? { display: "flex" } : null}
+          >
             {products?.map((product) => (
               <Card
                 key={product.product_id}
@@ -87,7 +94,7 @@ export default function ProductsSection({ title, products }) {
   );
 }
 
-function Card({ product }) {
+export function Card({ product }) {
   const [days, hours, minutes, seconds] = useCountdown(
     product.start_time,
     product.end_time
@@ -98,7 +105,7 @@ function Card({ product }) {
     if (user) {
       return;
     }
-    toast.warning("Login to continue!");
+    toast.info("Login to continue!");
   }
 
   return (

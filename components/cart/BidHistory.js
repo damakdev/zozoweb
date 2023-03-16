@@ -1,4 +1,4 @@
-import styles from "../../styles/cart.module.scss";
+import styles from "../../styles/watchlist.module.scss";
 import Image from "next/image";
 import greenswitch from "../../assets/greenswitch.svg";
 import shoes from "../../assets/shoes.svg";
@@ -6,125 +6,144 @@ import star from "../../assets/star.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { _getCustomerEvents } from "../../store/slices/eventsSlice";
 import { useEffect } from "react";
+import { truncateString } from "../../utils";
+import useWindowDimension from "../../hooks/useWindowDimension";
+
+export const Events = ({ item }) => {
+	let thead = ["Item", "Access amount", "Stake", "Final Price", "Status"];
+	const { width } = useWindowDimension();
+	console.log(item);
+	return (
+		<>
+			{width >= 780 && (
+				<div
+					className={`${styles.bid_history} flex mt-10 mb-9 w-10/12 mx-auto`}
+				>
+					<div className={`w-2/12`}>
+						{" "}
+						{new Date(item.bidding_event.end_time).toDateString()}
+					</div>
+					<div className={`w-10/12`}>
+						<div
+							className={` ${
+								item.paymentApproved || !item.paymentApproved
+									? "bg-green-600"
+									: "bg-red-600"
+							}  text-white text-2xl p-4`}
+						>
+							{item.paymentApproved || !item.paymentApproved ? "Won" : "LOST"}
+						</div>
+						<div className={`flex justify-between`}>
+							<h3 className={`${styles.item_row}`}>Items</h3>
+							<h3 className="">Access Bid</h3>
+							<h3 className="">Stake</h3>
+							<h3 className="">Final Price</h3>
+						</div>
+						<div className={`flex justify-between`}>
+							<p className={`flex items-center  `}>
+								<img src={item.bidding_event.product.images.main} />
+								<span className="ml-5">
+									{truncateString(item.bidding_event.product.name, 20)}
+								</span>
+							</p>
+							<p>
+								&#x20A6;
+								<span>
+									{Number(item.bidding_event.access_amount).toLocaleString()}
+								</span>
+							</p>
+							<p>
+								&#x20A6;
+								<span>{Number(item.bidding_event.stake).toLocaleString()}</span>
+							</p>
+							<p>
+								{" "}
+								&#x20A6;{" "}
+								{Number(item.bidding_event.last_amount).toLocaleString()}
+							</p>
+						</div>
+					</div>
+				</div>
+			)}
+
+			{width < 780 && item && (
+				<div
+					className={` grid grid-cols-2  text-2xl my-8 py-5  px-5  ${styles.mobile_div}`}
+				>
+					<div
+						className="py-9 pl-8  shadow-lg font-bold"
+						style={{ background: "#F3F3F3" }}
+					>
+						<ul>
+							{thead.map((item, index) =>
+								item !== "No" ? (
+									<td key={index} className="block py-4">
+										{item}
+									</td>
+								) : (
+									""
+								)
+							)}
+						</ul>
+					</div>
+					<div className="py-9  pl-5 bg-white  shadow-lg ">
+						<ul className="px-2">
+							<td className="block py-4">
+								{truncateString(item.bidding_event.product.name, 20)}
+							</td>
+							<td className="block py-4">
+								{" "}
+								&#x20A6;{" "}
+								{Number(item.bidding_event.access_amount).toLocaleString()}
+							</td>
+							<td className="block py-4">
+								{" "}
+								&#x20A6; {Number(item.stake).toLocaleString()}
+							</td>
+							<td>
+								{" "}
+								&#x20A6;{" "}
+								{Number(item.bidding_event.last_amount).toLocaleString()}
+							</td>
+							<td className="block py-4">
+								{item.paymentApproved || !item.paymentApproved ? "Won" : "LOST"}
+							</td>
+						</ul>
+					</div>
+				</div>
+			)}
+		</>
+	);
+};
 
 const BidHistory = () => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth.customer);
-  const { events } = useSelector((state) => state.events.customer);
+	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.auth.customer);
+	const { events } = useSelector((state) => state.events.customer);
 
-  useEffect(() => {
-    dispatch(_getCustomerEvents(user.customer.id));
-  }, [dispatch]);
-  return (
-    <div className={`${styles.bid_history} pb-60`}>
-      {/* <div className="flex justify-between px-12 mb-12 ">
-				<div>
-					<ul className="flex gap-20 ">
-						<li className={`${styles.grey}`}>Unsettled</li>
-						<li className={`${styles.purple}`}>Settled</li>
-						<li className={`${styles.grey}`}>All</li>
-					</ul>
-				</div>
-				<div className={`${styles.dates}`}>
-					<select name="" id="">
-						<option value="">All dates</option>
-					</select>
-				</div>
-			</div> */}
+	useEffect(() => {
+		if(user) dispatch(_getCustomerEvents(user.customer.id));
+	}, [dispatch]);
+	return (
+		<div className={`${styles.bid_history} pb-60`}>
+			{events &&
+				events.length > 0 &&
+				events.map((item, index) => {
+					return <Events key={index} item={item} />;
+				})}
 
-      {/* <hr className="" /> */}
-
-      {events && events.length > 0 && (
-        <div>
-          <div className="flex gap-6 justify-end  p-10">
-            <p>Show only my winning bids</p>
-            <span>
-              <Image src={greenswitch} />
-            </span>
-          </div>
-          <div className="flex gap-40 px-20 ">
-            <div>12 June</div>
-            <div className={`${styles.rectangle} flex justify-between`}>
-              <div className="text-white">Won</div>
-              <div>
-                <Image src={star} />
-              </div>
-            </div>
-          </div>
-          <div>
-            <table className="w-2/3 ml-96 mt-10">
-              <thead>
-                <tr>
-                  <th className="">Items</th>
-                  <th className="">Access amount</th>
-                  <th className="">Minimum amount</th>
-                  <th className="">Final Price</th>
-                  <th className="">Started</th>
-                  <th className="">Ended</th>
-                </tr>
-              </thead>
-
-              {events &&
-                events.map((item, index) => {
-                  return (
-                    <tr key={index} className="text-2xl">
-                      <td className="flex items-center">
-                        <img
-                          src={item.bidding_event.product.images.main}
-                          width="100px"
-                          height="100px"
-                        />
-                        <span className="ml-5">
-                          {item.bidding_event.product.name}
-                        </span>
-                      </td>
-                      <td>
-                        #{" "}
-                        <span>
-                          {Number(
-                            item.bidding_event.access_amount
-                          ).toLocaleString()}
-                        </span>
-                      </td>
-                      <td>
-                        #{" "}
-                        <span>
-                          {Number(
-                            item.bidding_event.minimum_amount
-                          ).toLocaleString()}
-                        </span>
-                      </td>
-                      <td>
-                        #{" "}
-                        <span>
-                          {Number(
-                            item.bidding_event.last_amount
-                          ).toLocaleString()}
-                        </span>
-                      </td>
-                      <td>
-                        {" "}
-                        {new Date(item.bidding_event.start_time).toDateString()}
-                      </td>
-                      <td>
-                        {" "}
-                        {new Date(item.bidding_event.end_time).toDateString()}
-                      </td>
-                    </tr>
-                  );
-                })}
-            </table>
-          </div>
-        </div>
-      )}
-
-      {events && events.length < 1 && (
-        <p className="justify-center text-center mt-20 ">
-          You haven't participated in any Bidding events
-        </p>
-      )}
-    </div>
-  );
+			{events && events.length < 1  && (
+				<p className="justify-center text-center mt-20 ">
+					You haven't participated in any Bidding events
+				</p>
+			)}
+			{!user  && (
+				<p className="justify-center text-center mt-20 ">
+					Please Login to view your History
+				</p>
+			)}
+		</div>
+	);
 };
 
 export default BidHistory;

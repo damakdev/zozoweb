@@ -3,49 +3,51 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
 export function CustomerAuthGuard({ children }) {
-  const router = useRouter();
-  const { user } = useSelector((state) => state.auth.customer);
+	const router = useRouter();
+	const { user } = useSelector((state) => state.auth.customer);
 
-  useEffect(() => {
-    if (!user || user.account_type !== "customer") {
-      router.push("/");
-    }
-  }, [user, router]);
+	useEffect(() => {
+		if (!user || !user.customer) {
+			router.push("/");
+		}
+	}, [user, router]);
 
-  if (!user) {
-  }
+	if (!user) {
+	}
 
-  return <>{children}</>;
+	return <>{children}</>;
 }
 
 export function MerchantAuthGuard({ children }) {
-  const router = useRouter();
-  const { user } = useSelector((state) => state.auth.merchant);
+	const router = useRouter();
+	const { user, token } = useSelector((state) => state.auth.merchant);
 
-  useEffect(() => {
-    if (!user || user.account_type !== "merchant") {
-      router.push("/merchant");
-    }
-  }, [user, router]);
+	useEffect(() => {
+		if (!user || !user.merchant) {
+			router.push("/merchant");
+		}
+	}, [user, router]);
 
-  if (!user) {
-  }
+	if (!user) {
+		return null;
+	}
 
-  return <>{children}</>;
+	return <>{children}</>;
 }
 
 export function AdminAuthGuard({ children }) {
-  const router = useRouter();
-  const { user } = useSelector((state) => state.auth.admin);
+	const router = useRouter();
+	const { user } = useSelector((state) => state.auth.admin);
 
-  useEffect(() => {
-    if (!user) {
-      router.push("/");
-    }
-  }, [user, router]);
+	useEffect(() => {
+		if (!user) {
+			router.push("/admin/login");
+		}
+	}, [user, router]);
 
-  if (!user) {
-  }
+	if (!user) {
+		return null;
+	}
 
-  return <>{children}</>;
+	return <>{children}</>;
 }

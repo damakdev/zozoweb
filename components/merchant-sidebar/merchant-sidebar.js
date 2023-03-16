@@ -68,18 +68,14 @@ export default function MerchantSideBar() {
 
         <ul>
           {links.map((item, index) => (
-            <>
-              <li key={index}>
-                <Link href={item.url}>
-                  <a
-                    className={router.pathname == item.url ? styles.active : ""}
-                  >
-                    {router.pathname == item.url ? item.active : item.icon}
-                    <h3 className="text-2xl">{item.title}</h3>
-                  </a>
-                </Link>
-              </li>
-            </>
+            <li key={index}>
+              <Link href={item.url}>
+                <a className={router.pathname == item.url ? styles.active : ""}>
+                  {router.pathname == item.url ? item.active : item.icon}
+                  <h3 className="text-2xl">{item.title}</h3>
+                </a>
+              </Link>
+            </li>
           ))}
           <li>
             <button onClick={() => setModalDisplay(true)}>

@@ -7,6 +7,8 @@ import {
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { motion } from "framer-motion";
 import Router from "next/router";
+import Logo from "../components/logo";
+import useWindowDimension from "../hooks/useWindowDimension";
 import Link from "next/link";
 import Button from "../components/ui/button/";
 import styles from "../styles/change-password.module.scss";
@@ -21,6 +23,7 @@ export default function Index() {
 }
 
 function ChangePassword() {
+  const { width } = useWindowDimension();
   const [inputType1, setInputType1] = useState("password");
   const [inputType2, setInputType2] = useState("password");
 
@@ -31,9 +34,11 @@ function ChangePassword() {
   return (
     <div className={styles.main}>
       <div>
+        {width > 780 && <Logo />}
         <AccountVerificationBanner />
       </div>
       <form onSubmit={handleSubmit}>
+        {width <= 780 && <Logo variant="purple" />}
         <h1>Change Password</h1>
         <p>Input your desired password below to create a new password</p>
         <div className={styles["form-group"]}>
@@ -64,6 +69,7 @@ function ChangePassword() {
 }
 
 function Success() {
+  const { width } = useWindowDimension();
   useEffect(() => {
     const interval = setInterval(() => {
       Router.push("/");
@@ -76,6 +82,7 @@ function Success() {
   return (
     <div className={styles.main}>
       <div>
+        {width > 780 && <Logo />}
         <ForgotPasswordBanner
           initial={{ opacity: 0, y: 200 }}
           animate={{ opacity: 1, y: 0 }}

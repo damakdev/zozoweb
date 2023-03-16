@@ -95,24 +95,70 @@ ul {
   list-style: none;
 }
 
-.df {
-  display: flex;
+// .df {
+//   display: flex;
+// }
+
+// .aic {
+//   align-items: center;
+// }
+
+// .asst {
+//   align-self: flex-start;
+// }
+
+// .jcc {
+//   justify-content: center;
+// }
+
+// .fw {
+//   width: 100%;
+// }
+
+.Toastify__toast-theme--light.Toastify__toast--info,
+.Toastify__toast-theme--light.Toastify__toast--warning,
+.Toastify__toast-theme--light.Toastify__toast--success,
+.Toastify__toast-theme--light.Toastify__toast--error {
+  color: var(--text-white);
+  svg {
+    fill: #ffffff;
+  }
 }
 
-.aic {
-  align-items: center;
+.Toastify__toast-theme--light.Toastify__toast--success {
+  background-color: var(--accent-color);
 }
 
-.asst {
-  align-self: flex-start;
+.Toastify__toast-theme--light.Toastify__toast--error {
+  background-color: #eb5757;
 }
 
-.jcc {
-  justify-content: center;
+.Toastify__toast-theme--light.Toastify__toast--info {
+  background-color: #5a5a5a;
 }
 
-.fw {
-  width: 100%;
+.Toastify__toast-theme--light.Toastify__toast--warning {
+  background-color: #f1c40f;
+}
+
+.merchant-profile-react-select {
+  &__control {
+    box-shadow: none;
+    &:hover {
+      // border-color: unset !important;
+    }
+  }
+  &__value-container {
+    padding: 0;
+    padding-inline: 1rem;
+    height: 27.25px;
+  }
+  &__single-value {
+    margin: 0;
+  }
+  &__input-container {
+    height: 27.25px;
+  }
 }
 
 .uploadcare-button {
@@ -135,7 +181,7 @@ ul {
 }
 
 ::selection {
-  background-color: var(--accent-color);
+  background-color: #743b96;
   color: #ffffff;
 }
 
@@ -155,6 +201,6 @@ ul {
 
 @media screen and (max-width: 1024px) {
   html {
-    font-size: 60%;
+    font-size: 55%;
   }
 }
